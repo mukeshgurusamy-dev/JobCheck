@@ -201,7 +201,7 @@ export function resolveCompanyName(
 }
 
 /**
- * Resolves or synthesizes the 6-pillar company audit checklist.
+ * Resolves AI company research, or marks company-level evidence unassessed.
  */
 export function resolveCompanyAudit(
   assessment: Assessment,
@@ -211,186 +211,37 @@ export function resolveCompanyAudit(
     return applyCriteriaCounts(assessment.aiIntel.companyAudit, assessment);
   }
 
-  // Synthesize 6-pillar evaluation from engine heuristics
-  const hasFeeFinding = assessment.findings.some(
-    (f) =>
-      f.id.includes("fee") ||
-      f.reason.toLowerCase().includes("fee") ||
-      f.reason.toLowerCase().includes("deposit"),
-  );
-  const hasTypoFinding = assessment.findings.some(
-    (f) =>
-      f.id.includes("typo") ||
-      f.id.includes("impersonation") ||
-      f.id.includes("domain"),
-  );
-  const hasChatFinding = assessment.findings.some(
-    (f) =>
-      f.id.includes("whatsapp") ||
-      f.id.includes("telegram") ||
-      f.reason.toLowerCase().includes("whatsapp") ||
-      f.reason.toLowerCase().includes("telegram"),
-  );
-
-  const legalStatus: CompanyAuditPillar =
-    assessment.level === "High"
-      ? {
-          status: "fail",
-          title: "Unverified Legal Identity",
-          details:
-            "No verifiable MCA Corporate Identification Number (CIN/LLPIN) found for this recruitment entity. Potential shell entity.",
-        }
-      : assessment.level === "Medium"
-        ? {
-            status: "warn",
-            title: "Partial Corporate Verification",
-            details:
-              "Entity claimed matches regional business filings, but corporate recruitment authority remains unconfirmed.",
-          }
-        : {
-            status: "pass",
-            title: "Legitimate Corporate Standing",
-            details:
-              "Verified active corporate records and valid business registration in government corporate registries.",
-          };
-
-  const physicalOffice: CompanyAuditPillar =
-    assessment.level === "High"
-      ? {
-          status: "fail",
-          title: "No Physical Commercial Address",
-          details:
-            "No confirmed physical corporate headquarters or verified commercial address identified. Remote-only or fictitious location.",
-        }
-      : assessment.level === "Medium"
-        ? {
-            status: "warn",
-            title: "Unconfirmed Commercial Location",
-            details:
-              "Physical office location requires independent confirmation with local commercial directory.",
-          }
-        : {
-            status: "pass",
-            title: "Confirmed Office Infrastructure",
-            details:
-              "Operating from established commercial business hub with verifiable geographic address.",
-          };
-
-  const digitalFootprint: CompanyAuditPillar = hasTypoFinding
-    ? {
-        status: "fail",
-        title: "Compromised Domain / Lookalike",
-        details:
-          "Disposable TLD or lookalike domain attempting to mimic authentic corporate brand identity.",
-      }
-    : assessment.level === "High"
-      ? {
-          status: "fail",
-          title: "Suspicious Digital Footprint",
-          details:
-            "Recently registered domain (< 90 days), free web hosting, or missing corporate email MX records.",
-        }
-      : {
-          status: "pass",
-          title: "Authentic Corporate Domain",
-          details:
-            "Mature registered domain (> 1 year old), authenticated SSL certificates, and official corporate infrastructure.",
-        };
-
-  const employeeReviews: CompanyAuditPillar =
-    assessment.level === "High"
-      ? {
-          status: "fail",
-          title: "Zero Verified Employees",
-          details:
-            "No authentic employee profiles, negative fraud warnings, or non-existent Glassdoor/LinkedIn organizational presence.",
-        }
-      : assessment.level === "Medium"
-        ? {
-            status: "warn",
-            title: "Limited Workforce History",
-            details:
-              "Emerging or boutique firm with limited public employee reviews and sentiment records.",
-          }
-        : {
-            status: "pass",
-            title: "Verified Workforce Presence",
-            details:
-              "Consistent employee feedback, verified leadership profiles, and established industry sentiment.",
-          };
-
-  const fraudDatabaseCheck: CompanyAuditPillar =
-    hasFeeFinding || assessment.level === "High"
-      ? {
-          status: "fail",
-          title: "Flagged on Fraud Syndicates",
-          details:
-            "Patterns align with known recruitment syndicates demanding illegal upfront gate passes or task commissions.",
-        }
-      : assessment.level === "Medium"
-        ? {
-            status: "warn",
-            title: "Heuristic Risk Signals Present",
-            details:
-              "Certain risk markers flagged by anti-fraud heuristics. Exercise caution before proceeding.",
-          }
-        : {
-            status: "pass",
-            title: "Clear Anti-Fraud Record",
-            details:
-              "No listings on national cybercrime advisories, UPI payment blacklists, or phishing registries.",
-          };
-
-  const hiringAuthenticity: CompanyAuditPillar = hasFeeFinding
-    ? {
-        status: "fail",
-        title: "Illegal Fee Demand Detected",
-        details:
-          "Prohibited candidate charges (gate passes, training fees, laptop security deposit) violate corporate hiring laws.",
-      }
-    : hasChatFinding
-      ? {
-          status: "warn",
-          title: "Informal Communication Channels",
-          details:
-            "Recruiter redirects candidates to unregulated WhatsApp or Telegram channels instead of official ATS portals.",
-        }
-      : {
-          status: "pass",
-          title: "Standard Professional Hiring",
-          details:
-            "Formal evaluation rounds, corporate email communications, and strictly zero candidate fees.",
-        };
-
-  const pillars = [
-    legalStatus,
-    physicalOffice,
-    digitalFootprint,
-    employeeReviews,
-    fraudDatabaseCheck,
-    hiringAuthenticity,
-  ];
-  const passed = pillars.filter((p) => p.status === "pass").length;
-  const auditScore = Math.round((passed / 6) * 100);
+  // Without an AI company investigation, a low job-post score says nothing
+  // about corporate registration, office presence, reviews, or fraud history.
+  const unavailable = (title: string): CompanyAuditPillar => ({
+    status: "warn",
+    title,
+    details:
+      "Not assessed as a company fact in this scan. Review cited evidence or confirm directly with the employer.",
+  });
+  const pillars = {
+    legalStatus: unavailable("Legal identity not independently assessed"),
+    physicalOffice: unavailable("Office location not independently assessed"),
+    digitalFootprint: unavailable(
+      "Company web presence not independently assessed",
+    ),
+    employeeReviews: unavailable("Employee reviews not independently assessed"),
+    fraudDatabaseCheck: unavailable(
+      "Fraud-report history not independently assessed",
+    ),
+    hiringAuthenticity: unavailable(
+      "Hiring process not independently assessed",
+    ),
+  };
 
   return applyCriteriaCounts(
     {
       companyName,
-      auditScore,
-      criteriaPassedCount: passed,
-      totalCriteriaCount: 6,
-      overallVerdict:
-        assessment.level === "Low"
-          ? "verified"
-          : assessment.level === "Medium"
-            ? "suspicious"
-            : "unverified",
-      legalStatus,
-      physicalOffice,
-      digitalFootprint,
-      employeeReviews,
-      fraudDatabaseCheck,
-      hiringAuthenticity,
+      auditScore: 50,
+      criteriaPassedCount: 0,
+      totalCriteriaCount: 0,
+      overallVerdict: "unverified",
+      ...pillars,
     },
     assessment,
   );
@@ -450,7 +301,11 @@ export function generateAuditReportHtml(
   // LEGITIMATE".
   const verdict = buildFinalVerdict(assessment);
   const verdictEmoji =
-    verdict.variant === "avoid" ? "🚨" : verdict.variant === "verify" ? "⚠️" : "✅";
+    verdict.variant === "avoid"
+      ? "🚨"
+      : verdict.variant === "verify"
+        ? "⚠️"
+        : "✅";
 
   const verdictTitle = verdict.headline.toUpperCase();
   const verdictSummary = verdict.body;
@@ -487,7 +342,7 @@ export function generateAuditReportHtml(
 
   const findingsHtml =
     assessment.findings.length === 0
-      ? `<div class="c-finding-empty">No negative risk indicators detected during scan. All evaluated criteria met integrity standards.</div>`
+      ? `<div class="c-finding-empty">No negative risk indicators were detected in the evidence available for this scan. This does not confirm that the employer or vacancy is genuine.</div>`
       : assessment.findings
           .map((f) => {
             const isRisk = f.kind === "risk";
@@ -515,13 +370,13 @@ export function generateAuditReportHtml(
     assessment.aiIntel.claimVerifications.length > 0
       ? `
       <div class="c-section c-no-break">
-        <h2 class="c-section-title"><span>📑</span> Recruiter Fact-Checks & Claim Grounding</h2>
+        <h2 class="c-section-title"><span>📑</span> AI-assisted claim review</h2>
         <table class="c-audit-table">
           <thead>
             <tr>
               <th>Claim Type</th>
               <th>Recruiter Claim</th>
-              <th>Ground Truth / Verification</th>
+              <th>AI search summary</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -536,9 +391,9 @@ export function generateAuditReportHtml(
                       : "warn";
                 const statusText =
                   cv.verifiedStatus === "verified"
-                    ? "VERIFIED MATCH ✓"
+                    ? "AI REPORTS MATCH ✓"
                     : cv.verifiedStatus === "contradicted"
-                      ? "CONTRADICTED ✗"
+                      ? "AI REPORTS CONTRADICTION ✗"
                       : "UNCONFIRMED ℹ";
                 return `
                 <tr>
@@ -556,6 +411,23 @@ export function generateAuditReportHtml(
     `
       : "";
 
+  const aiSources = (assessment.aiIntel?.sources ?? []).filter((source) => {
+    try {
+      const url = new URL(source.url);
+      return url.protocol === "https:" || url.protocol === "http:";
+    } catch {
+      return false;
+    }
+  });
+  const noSourcesMessage =
+    assessment.aiIntel?.status === "completed"
+      ? "No cited search sources were returned for the AI response."
+      : "The AI web investigation did not complete, so no AI search citations are available.";
+  const sourcesHtml =
+    aiSources.length > 0
+      ? `<div class="c-section c-no-break"><h2 class="c-section-title">Web pages cited in the AI response</h2><p>These pages were cited in an AI-assisted search response. Review them directly; citations do not independently verify every summary claim.</p><ul>${aiSources.map((source) => `<li><a href="${escapeHtml(source.url)}">${escapeHtml(source.title || source.url)}</a></li>`).join("")}</ul></div>`
+      : `<div class="c-section"><h2 class="c-section-title">AI search sources</h2><p>${noSourcesMessage}</p></div>`;
+
   // The 100-criteria checklist, when the engine produced one. Criteria that
   // could not be checked are listed as "not assessed" rather than quietly
   // dropped, and are excluded from the score's denominator.
@@ -564,7 +436,8 @@ export function generateAuditReportHtml(
     criteria && criteria.total > 0
       ? `
     <div class="c-section c-no-break">
-      <h2 class="c-section-title"><span>📋</span> 100-Criteria Employment Integrity Checklist</h2>
+      <h2 class="c-section-title"><span>📋</span> Automated checklist (${criteria.total} criteria)</h2>
+      <p class="c-criteria-summary">These criteria evaluate evidence available in this scan; they are not separate live database checks. Items marked not assessed are excluded from the checklist score.</p>
       <p class="c-criteria-summary">
         <strong>${criteria.passed} passed</strong> ·
         ${criteria.warned} warning${criteria.warned === 1 ? "" : "s"} ·
@@ -598,6 +471,7 @@ export function generateAuditReportHtml(
                 <span class="c-criteria-body">
                   <span class="c-criteria-title">${escapeHtml(r.title)}</span>
                   ${r.detail ? `<span class="c-criteria-detail">${escapeHtml(r.detail)}</span>` : ""}
+                  <span class="c-criteria-source">Evidence to check: ${escapeHtml(r.verifyAgainst)}</span>
                 </span>
               </li>
             `,
@@ -1014,6 +888,11 @@ export function generateAuditReportHtml(
       color: #64748b;
       font-size: 9px;
     }
+    .c-criteria-source {
+      color: #64748b;
+      font-size: 8.5px;
+      font-style: italic;
+    }
 
     /* Audit Table */
     .c-audit-table {
@@ -1190,14 +1069,14 @@ export function generateAuditReportHtml(
     <!-- 2. Target Subject Box -->
     <div class="c-target-banner">
       <div class="c-target-col-left">
-        <div class="c-target-label">Audited Corporate Subject</div>
+        <div class="c-target-label">Employer in this scan</div>
         <div class="c-target-company">${escapeHtml(companyName)}</div>
         ${jobUrl ? `<a href="${escapeHtml(jobUrl)}" class="c-target-url jc-pdf-link" target="_blank" rel="noopener noreferrer">${escapeHtml(jobUrl)}</a>` : ""}
       </div>
       <div class="c-target-col-right">
-        <div class="c-target-label">Audit Integrity Rating</div>
+        <div class="c-target-label">Assessed checklist result</div>
         <div style="font-size: 16px; font-weight: 800; color: ${themeColor};">
-          ${audit.criteriaPassedCount} / ${audit.totalCriteriaCount} Criteria Satisfied
+          ${audit.totalCriteriaCount > 0 ? `${audit.criteriaPassedCount} / ${audit.totalCriteriaCount} assessed criteria passed` : "Company details not assessed"}
         </div>
         <div style="font-size: 10.5px; color: #64748b; margin-top: 2px;">Confidence: ${assessment.confidence}</div>
       </div>
@@ -1229,7 +1108,8 @@ export function generateAuditReportHtml(
 
     <!-- 4. 6-Pillar Corporate Integrity Audit Checklist -->
     <div class="c-section c-no-break">
-      <h2 class="c-section-title"><span>🏛️</span> 6-Pillar Employment Integrity Audit Checklist</h2>
+      <h2 class="c-section-title"><span>🏛️</span> Employer research summary</h2>
+      <p class="c-criteria-summary">This summary may include AI-generated search findings. It is not an official company verification; check linked sources and confirm important claims directly.</p>
       <div class="c-pillars-grid">
         ${pillarsList
           .map(
@@ -1256,6 +1136,9 @@ export function generateAuditReportHtml(
 
     <!-- 5. Recruiter Claims Fact-Check (if present) -->
     ${factChecksHtml}
+
+    <!-- 5a. AI search source links -->
+    ${sourcesHtml}
 
     <!-- 5b. Full 100-criteria checklist (computed, not model-estimated) -->
     ${criteriaHtml}
@@ -1613,7 +1496,8 @@ function computePageBreaks(
   const breaks: number[] = [];
   const ctx = canvas.getContext("2d", { willReadFrequently: true });
   if (!ctx || pageHeightPx <= 0) {
-    for (let y = pageHeightPx; y < canvas.height; y += pageHeightPx) breaks.push(y);
+    for (let y = pageHeightPx; y < canvas.height; y += pageHeightPx)
+      breaks.push(y);
     return breaks;
   }
 
@@ -1626,7 +1510,10 @@ function computePageBreaks(
     const ideal = pageStart + pageHeightPx;
     let cut = ideal;
 
-    const lowest = Math.max(pageStart + Math.floor(pageHeightPx * 0.5), ideal - lookBack);
+    const lowest = Math.max(
+      pageStart + Math.floor(pageHeightPx * 0.5),
+      ideal - lookBack,
+    );
     for (let y = ideal - 1; y >= lowest; y--) {
       if (isBlankRow(ctx, y, canvas.width, colStep)) {
         cut = y;
