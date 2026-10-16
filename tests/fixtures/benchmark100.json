@@ -1,0 +1,802 @@
+[
+  {
+    "id": "linkedin-01",
+    "platform": "LinkedIn",
+    "company": "Tata Consultancy Services (TCS)",
+    "url": "https://www.linkedin.com/jobs/view/tcs-system-engineer-3891024",
+    "description": "Role: System Engineer at Tata Consultancy Services (TCS). Location: Physical office in Siruseri SIPCOT IT Park, Chennai. Requirements: B.E/B.Tech/MCA in Computer Science or IT (2025/2026 batch). Skills: Core Java, Spring Boot, SQL, and Git. The selection process consists of TCS NQT assessment, Technical Interview, and HR Interview. Official communication will originate from tcs.com domain. Equal Opportunity Employer.",
+    "expected": "Low"
+  },
+  {
+    "id": "linkedin-02",
+    "platform": "LinkedIn",
+    "company": "Google India",
+    "url": "https://www.linkedin.com/jobs/view/google-software-engineer-freshers-910243",
+    "description": "Role: Software Engineer, Early Career at Google India. Location: Google Signature Towers, Bangalore. Responsibilities: Design and develop scalable software architectures. Requirements: BS/MS in Computer Science with strong foundation in Data Structures, Algorithms, and Distributed Systems. Rigorous multi-round interview process including coding rounds and system design. Apply with resume via Google Careers.",
+    "expected": "Low"
+  },
+  {
+    "id": "linkedin-03",
+    "platform": "LinkedIn",
+    "company": "Microsoft",
+    "url": "https://www.linkedin.com/jobs/view/microsoft-cloud-engineer-hyderabad-102938",
+    "description": "Role: Cloud Solution Engineer at Microsoft. Location: Microsoft Campus, Gachibowli, Hyderabad. Responsibilities: Assist enterprise clients in migrating workloads to Azure cloud. Requirements: Degree in Engineering, knowledge of C#, Azure, Linux, and networking fundamentals. Interviews conducted via Microsoft Teams with engineering panels.",
+    "expected": "Low"
+  },
+  {
+    "id": "linkedin-04",
+    "platform": "LinkedIn",
+    "company": "Amazon",
+    "url": "https://www.linkedin.com/jobs/view/amazon-sde-1-bangalore-948201",
+    "description": "Role: Software Development Engineer I (SDE 1) at Amazon. Location: World Trade Centre, Brigade Gateway, Bangalore. Qualifications: Bachelor's degree in Computer Science. Strong problem solving skills in C++, Java, or Python. Rigorous coding assessment on Amazon Assessment Portal followed by virtual technical rounds.",
+    "expected": "Low"
+  },
+  {
+    "id": "linkedin-05",
+    "platform": "LinkedIn",
+    "company": "Infosys",
+    "url": "https://www.linkedin.com/jobs/view/infosys-specialist-programmer-293847",
+    "description": "Role: Specialist Programmer at Infosys. Location: Infosys Electronic City, Bangalore / Infosys Pune Phase 2. Eligibility: BE/B.Tech/ME/M.Tech. Hands-on expertise in Full Stack Development, React, and Node.js. Selection through HackWithInfy or official Infosys online test and panel interviews.",
+    "expected": "Low"
+  },
+  {
+    "id": "linkedin-06",
+    "platform": "LinkedIn",
+    "company": "Apex Digital Labs",
+    "url": "https://www.linkedin.com/jobs/view/apex-fresher-selection-994820",
+    "description": "Urgent hiring for Associate Software Engineer at Apex Digital Labs! Selected without interview. Mandatory training kit and laptop courier fee ₹2,500 payable via GPay to confirm gate pass. Send receipt on WhatsApp to receive offer letter.",
+    "expected": "High"
+  },
+  {
+    "id": "linkedin-07",
+    "platform": "LinkedIn",
+    "company": "QuickTask Global",
+    "url": "https://www.linkedin.com/jobs/view/quicktask-social-media-evaluator-192837",
+    "description": "Part time daily tasks online. Complete simple YouTube and Instagram like tasks to earn ₹3,000 to ₹5,000 daily commission. Daily payout in USDT crypto or bank transfer. Top-up wallet balance to unlock VIP orders. Contact Telegram HR @quicktask_support.",
+    "expected": "High"
+  },
+  {
+    "id": "linkedin-08",
+    "platform": "LinkedIn",
+    "company": "Zenith HR Consult",
+    "url": "https://www.linkedin.com/jobs/view/zenith-spot-offer-freshers-839201",
+    "description": "Direct spot offer in leading MNC without interview! Immediate same-day appointment letter. Only 3 slots left. Pay ₹1,800 processing fee before 5 PM to confirm joining. Contact HR on WhatsApp only: 9876543210.",
+    "expected": "High"
+  },
+  {
+    "id": "linkedin-09",
+    "platform": "LinkedIn",
+    "company": "CloudMatrix Ltd",
+    "url": "https://www.linkedin.com/jobs/view/cloudmatrix-remote-support-748291",
+    "description": "Congratulations! You are shortlisted for CloudMatrix Remote Engineer. Please download and install AnyDesk remote access app on your laptop and share your 9-digit code for virtual interview screening and background check.",
+    "expected": "High"
+  },
+  {
+    "id": "linkedin-10",
+    "platform": "LinkedIn",
+    "company": "Global Overseas Careers",
+    "url": "https://www.linkedin.com/jobs/view/global-overseas-canada-placement-482910",
+    "description": "100% guaranteed job in Canada for freshers! Work permit and visa guaranteed with high salary. Visa processing fee and embassy medical deposit ₹35,000 to be paid via PhonePe before visa dispatch.",
+    "expected": "High"
+  },
+  {
+    "id": "naukri-01",
+    "platform": "Naukri",
+    "company": "Wipro",
+    "url": "https://www.naukri.com/job-listings-project-engineer-wipro-technologies-bangalore-283910",
+    "description": "Role: Project Engineer at Wipro Technologies. Location: Sarjapur Road Campus, Bangalore. Eligibility: BE/B.Tech (CSE, ECE, IT). Responsibilities: Application maintenance, automated testing, and software development. Selection via Elite National Talent Hunt (NTH) exam and technical interview rounds. Equal Opportunity Employer.",
+    "expected": "Low"
+  },
+  {
+    "id": "naukri-02",
+    "platform": "Naukri",
+    "company": "HCLTech",
+    "url": "https://www.naukri.com/job-listings-graduate-trainee-hcltech-noida-928374",
+    "description": "Role: Graduate Engineer Trainee at HCLTech. Location: HCL Technology Hub, Sector 126, Noida. Qualifications: Degree in Engineering with minimum 65% aggregate. Technical training in modern tech stack followed by client project deployment. Official communication from hcl.com domain.",
+    "expected": "Low"
+  },
+  {
+    "id": "naukri-03",
+    "platform": "Naukri",
+    "company": "Cognizant",
+    "url": "https://www.naukri.com/job-listings-genc-developer-cognizant-chennai-192837",
+    "description": "Role: GenC Developer at Cognizant. Location: MEPZ SEZ Campus, Tambaram, Chennai. Core skills required: Java, Python, SQL, Cloud fundamentals. Assessment includes aptitude test, coding challenges, and panel technical interview. Official letters issued via Cognizant 1C portal.",
+    "expected": "Low"
+  },
+  {
+    "id": "naukri-04",
+    "platform": "Naukri",
+    "company": "LTIMindtree",
+    "url": "https://www.naukri.com/job-listings-software-engineer-ltimindtree-pune-482910",
+    "description": "Role: Software Engineer at LTIMindtree. Location: Hinjewadi Phase 1, Pune. Eligibility: 2025/2026 Batch B.Tech/M.Tech graduates. Strong problem solving, C#, .NET, and database concepts. Standard multi-round interview process with HR screening.",
+    "expected": "Low"
+  },
+  {
+    "id": "naukri-05",
+    "platform": "Naukri",
+    "company": "Tech Mahindra",
+    "url": "https://www.naukri.com/job-listings-associate-software-engineer-tech-mahindra-hyderabad-384920",
+    "description": "Role: Associate Software Engineer at Tech Mahindra. Location: Tech Mahindra Campus, Hitec City, Hyderabad. Key skills: Python, Linux scripting, Automation testing. Apply through official campus placement or careers portal. Comprehensive background verification post-offer.",
+    "expected": "Low"
+  },
+  {
+    "id": "naukri-06",
+    "platform": "Naukri",
+    "company": "FastTrack BPO Hub",
+    "url": "https://www.naukri.com/job-listings-back-office-fresher-fasttrack-bpo-849201",
+    "description": "Direct joining in MNC BPO! Spot selection without interview. Mandatory uniform, ID card, and gate pass charges ₹1,200 payable before reporting to office. Pay via UPI to confirm your joining date.",
+    "expected": "High"
+  },
+  {
+    "id": "naukri-07",
+    "platform": "Naukri",
+    "company": "Bharat Data Solutions",
+    "url": "https://www.naukri.com/job-listings-data-entry-operator-bharat-data-738291",
+    "description": "Simple copy paste and captcha typing job. 10th and 12th pass can earn ₹3,500 daily. No experience needed. Work 2 hours from mobile. Send resume to hr-jobs@gmail.com or WhatsApp 919876543210.",
+    "expected": "High"
+  },
+  {
+    "id": "naukri-08",
+    "platform": "Naukri",
+    "company": "Star Placement Services",
+    "url": "https://www.naukri.com/job-listings-trainee-software-engineer-star-placement-482910",
+    "description": "Guaranteed 100% placement in top IT company after paid training. Enroll in our 30-day certification course by paying ₹4,999 course fee. Refundable after job confirmation.",
+    "expected": "High"
+  },
+  {
+    "id": "naukri-09",
+    "platform": "Naukri",
+    "company": "Metro Courier Express",
+    "url": "https://www.naukri.com/job-listings-work-from-home-laptop-courier-384920",
+    "description": "Work from home customer executive. Company provides brand new Dell laptop. Pay ₹950 mandatory courier insurance charge before laptop dispatch. Laptop dispatched within 24 hours.",
+    "expected": "High"
+  },
+  {
+    "id": "naukri-10",
+    "platform": "Naukri",
+    "company": "Prime Health Logistics",
+    "url": "https://www.naukri.com/job-listings-junior-office-assistant-prime-health-294810",
+    "description": "Immediate appointment for Office Assistant. You must complete a pre-joining medical checkup at our authorized private clinic. Deposit ₹1,750 medical fee to receive the medical fitness certificate and offer letter.",
+    "expected": "High"
+  },
+  {
+    "id": "indeed-01",
+    "platform": "Indeed",
+    "company": "Accenture India",
+    "url": "https://in.indeed.com/viewjob?jk=accenture-associate-software-engineer-bangalore-910243",
+    "description": "Role: Associate Software Engineer at Accenture India. Location: Pritech Park, Bellandur, Bangalore. Responsibilities: Design, develop, and test software components. Minimum qualification: BE/B.Tech/MCA/M.Sc. Rigorous multi-stage assessment on Accenture recruiting platform. Equal Opportunity Employer.",
+    "expected": "Low"
+  },
+  {
+    "id": "indeed-02",
+    "platform": "Indeed",
+    "company": "Capgemini",
+    "url": "https://in.indeed.com/viewjob?jk=capgemini-cloud-developer-mumbai-849201",
+    "description": "Role: Cloud Developer at Capgemini. Location: Airoli Mindspace, Navi Mumbai. Responsibilities: Building microservices and cloud-native solutions on AWS/GCP. Requirements: Degree in Engineering or MCA. Technical interview rounds conducted virtually.",
+    "expected": "Low"
+  },
+  {
+    "id": "indeed-03",
+    "platform": "Indeed",
+    "company": "IBM India",
+    "url": "https://in.indeed.com/viewjob?jk=ibm-application-developer-bangalore-738291",
+    "description": "Role: Application Developer at IBM India. Location: Manyata Embassy Business Park, Bangalore. Skills: Java, Spring Framework, Cloud APIs. Comprehensive recruitment process including cognitive ability evaluation and coding test.",
+    "expected": "Low"
+  },
+  {
+    "id": "indeed-04",
+    "platform": "Indeed",
+    "company": "Deloitte India",
+    "url": "https://in.indeed.com/viewjob?jk=deloitte-analyst-cybersecurity-hyderabad-482910",
+    "description": "Role: Analyst - Cyber Risk at Deloitte India. Location: Hitec City, Hyderabad. Responsibilities: Security architecture review, vulnerability assessment, and risk management. Apply directly through official Deloitte careers portal.",
+    "expected": "Low"
+  },
+  {
+    "id": "indeed-05",
+    "platform": "Indeed",
+    "company": "Ernst & Young (EY)",
+    "url": "https://in.indeed.com/viewjob?jk=ey-technology-consultant-gurgaon-384920",
+    "description": "Role: Technology Consultant at EY India. Location: Cyber Hub, DLF Phase 2, Gurgaon. Qualifications: B.Tech/B.E/MBA. Strong analytical capabilities, SQL, Power BI, and business process modeling. Structured evaluation panel rounds.",
+    "expected": "Low"
+  },
+  {
+    "id": "indeed-06",
+    "platform": "Indeed",
+    "company": "Quantum Digital Tasks",
+    "url": "https://in.indeed.com/viewjob?jk=quantum-rating-part-time-earn-daily-294810",
+    "description": "Part time hotel rating job! Rate 5-star hotels on Google Maps to earn ₹4,000 daily commission. Deposit wallet recharge of ₹800 to unlock daily rating tasks. Immediate payout in crypto USDT.",
+    "expected": "High"
+  },
+  {
+    "id": "indeed-07",
+    "platform": "Indeed",
+    "company": "Swift Hire Consultancy",
+    "url": "https://in.indeed.com/viewjob?jk=swift-hire-fresher-documents-192837",
+    "description": "Urgent opening for confidential MNC. Submit your Aadhaar card copy, PAN card, bank account number, and IFSC code before scheduling interview round. Send details to swifthire@gmail.com.",
+    "expected": "High"
+  },
+  {
+    "id": "indeed-08",
+    "platform": "Indeed",
+    "company": "Royal Placement Cell",
+    "url": "https://in.indeed.com/viewjob?jk=royal-placement-stamp-paper-fee-928374",
+    "description": "Direct joining in MNC. Selected without exam. Pay ₹2,200 for legal stamp paper agreement drafting and bond verification before receiving appointment letter.",
+    "expected": "High"
+  },
+  {
+    "id": "indeed-09",
+    "platform": "Indeed",
+    "company": "Online E-Commerce Mart",
+    "url": "https://in.indeed.com/viewjob?jk=online-mart-merchant-orders-839201",
+    "description": "E-commerce merchant order processing part-time job. Earn 20% commission on daily tasks. Recharge account wallet with ₹1,000 to unlock high-commission merchant orders.",
+    "expected": "High"
+  },
+  {
+    "id": "indeed-10",
+    "platform": "Indeed",
+    "company": "Alpha Aviation Hub",
+    "url": "https://in.indeed.com/viewjob?jk=alpha-aviation-ground-staff-spot-748291",
+    "description": "Airport Ground Staff and Cabin Crew direct joining! Spot offer letter issued. Pay ₹3,000 uniform and security gate pass charges via PhonePe to confirm airport reporting date.",
+    "expected": "High"
+  },
+  {
+    "id": "glassdoor-01",
+    "platform": "Glassdoor",
+    "company": "Zoho Corporation",
+    "url": "https://www.glassdoor.co.in/job-listing/software-developer-zoho-chennai-102938",
+    "description": "Role: Software Developer at Zoho Corporation. Location: Estancia IT Park, Guduvanchery, Chennai. Technical stack: Java, C++, Systems Programming, Web Development. The hiring process consists of written programming test, machine coding rounds, and technical face-to-face interviews.",
+    "expected": "Low"
+  },
+  {
+    "id": "glassdoor-02",
+    "platform": "Glassdoor",
+    "company": "Freshworks",
+    "url": "https://www.glassdoor.co.in/job-listing/software-engineer-freshworks-chennai-948201",
+    "description": "Role: Software Engineer at Freshworks. Location: Global Infocity Park, Perungudi, Chennai. Requirements: Degree in Computer Science, expertise in Ruby on Rails, React, and cloud architectures. Comprehensive coding evaluation on HackerRank.",
+    "expected": "Low"
+  },
+  {
+    "id": "glassdoor-03",
+    "platform": "Glassdoor",
+    "company": "Cisco",
+    "url": "https://www.glassdoor.co.in/job-listing/software-engineer-cisco-bangalore-293847",
+    "description": "Role: Software Engineer, Early Career at Cisco. Location: Cessna Business Park, Kadubeesanahalli, Bangalore. Requirements: Solid knowledge of TCP/IP networking, Python, C++, and Linux OS. Rigorous campus or online assessment process.",
+    "expected": "Low"
+  },
+  {
+    "id": "glassdoor-04",
+    "platform": "Glassdoor",
+    "company": "Oracle India",
+    "url": "https://www.glassdoor.co.in/job-listing/cloud-software-engineer-oracle-hyderabad-994820",
+    "description": "Role: Cloud Software Engineer at Oracle India. Location: Hitec City, Hyderabad. Responsibilities: Developing Oracle Cloud Infrastructure (OCI) services. Requirements: BS/MS in CS with distributed systems and Java experience.",
+    "expected": "Low"
+  },
+  {
+    "id": "glassdoor-05",
+    "platform": "Glassdoor",
+    "company": "SAP Labs India",
+    "url": "https://www.glassdoor.co.in/job-listing/associate-developer-sap-labs-bangalore-192837",
+    "description": "Role: Associate Developer at SAP Labs India. Location: Whitefield, Bangalore. Requirements: Degree in Engineering, understanding of enterprise software, ABAP, Java, and cloud principles. Panel interviews with SAP engineering managers.",
+    "expected": "Low"
+  },
+  {
+    "id": "glassdoor-06",
+    "platform": "Glassdoor",
+    "company": "WebCore Technologies",
+    "url": "https://www.glassdoor.co.in/job-listing/webcore-security-deposit-fresher-839201",
+    "description": "Hiring freshers for software engineer role. Contact recruiter at webcorehr@gmail.com. Selected candidates must pay ₹1,500 refundable security deposit for company hardware protection before receiving joining letter.",
+    "expected": "High"
+  },
+  {
+    "id": "glassdoor-07",
+    "platform": "Glassdoor",
+    "company": "Falcon Crypto Trading",
+    "url": "https://www.glassdoor.co.in/job-listing/falcon-crypto-affiliate-network-748291",
+    "description": "Forex and cryptocurrency affiliate trading assistant. Build your own network and refer 5 members to unlock weekly passive income. Earn 25% lifetime referral bonus. Start with ₹2,000 joining investment.",
+    "expected": "High"
+  },
+  {
+    "id": "glassdoor-08",
+    "platform": "Glassdoor",
+    "company": "Mega Infotech",
+    "url": "https://www.glassdoor.co.in/job-listing/mega-infotech-urgent-24h-ultimatum-482910",
+    "description": "Urgent opening for direct joining in Mega Infotech! Offer valid for 24 hours only. Pay ₹1,800 gate pass verification fee via UPI before 6 PM today to confirm your slot, otherwise job offer will be cancelled.",
+    "expected": "High"
+  },
+  {
+    "id": "glassdoor-09",
+    "platform": "Glassdoor",
+    "company": "Elite Data Miners",
+    "url": "https://www.glassdoor.co.in/job-listing/elite-teamviewer-remote-screening-384920",
+    "description": "Remote screening process: Candidates must install TeamViewer application on PC to connect with HR for automated skills evaluation. Share your TeamViewer connection ID on WhatsApp to start.",
+    "expected": "High"
+  },
+  {
+    "id": "glassdoor-10",
+    "platform": "Glassdoor",
+    "company": "Horizon Gulf Placements",
+    "url": "https://www.glassdoor.co.in/job-listing/horizon-gulf-dubai-airport-visa-294810",
+    "description": "Dubai International Airport hiring freshers! 100% guaranteed UAE work visa. Visa processing fee and embassy medical test advance ₹40,000 to be transferred via PhonePe to licensed recruiting agent.",
+    "expected": "High"
+  },
+  {
+    "id": "internshala-01",
+    "platform": "Internshala",
+    "company": "Razorpay",
+    "url": "https://internshala.com/internship/detail/software-engineering-internship-at-razorpay-910243",
+    "description": "Role: Software Engineering Intern at Razorpay. Location: SJR Cyber, Koramangala, Bangalore. Stipend: ₹45,000 / month. Responsibilities: Building payment APIs, fintech workflows, Golang/Node.js microservices. Assessment involves take-home coding assignment and technical rounds.",
+    "expected": "Low"
+  },
+  {
+    "id": "internshala-02",
+    "platform": "Internshala",
+    "company": "Zerodha",
+    "url": "https://internshala.com/internship/detail/frontend-internship-at-zerodha-849201",
+    "description": "Role: Frontend Development Intern at Zerodha. Location: JP Nagar 4th Phase, Bangalore. Stipend: ₹40,000 / month. Skills: Vanilla JavaScript, React, WebSockets, HTML5 canvas. Selection based on GitHub code portfolio and technical interview.",
+    "expected": "Low"
+  },
+  {
+    "id": "internshala-03",
+    "platform": "Internshala",
+    "company": "Postman",
+    "url": "https://internshala.com/internship/detail/api-engineering-internship-at-postman-738291",
+    "description": "Role: API Engineering Intern at Postman. Location: Indiranagar, Bangalore. Stipend: ₹50,000 / month. Responsibilities: Contributing to open API specs, developer documentation, and core Postman platform features.",
+    "expected": "Low"
+  },
+  {
+    "id": "internshala-04",
+    "platform": "Internshala",
+    "company": "CRED",
+    "url": "https://internshala.com/internship/detail/backend-internship-at-cred-482910",
+    "description": "Role: Backend Engineering Intern at CRED. Location: Indiranagar, Bangalore. Stipend: ₹50,000 / month. Tech stack: Java, Kafka, Redis, AWS. Rigorous technical screening including algorithmic problem solving.",
+    "expected": "Low"
+  },
+  {
+    "id": "internshala-05",
+    "platform": "Internshala",
+    "company": "Swiggy",
+    "url": "https://internshala.com/internship/detail/data-science-internship-at-swiggy-384920",
+    "description": "Role: Data Science Intern at Swiggy. Location: Devarabisanahalli, Bangalore. Stipend: ₹45,000 / month. Responsibilities: Logistics optimization, delivery ETA prediction models using Python, PyTorch, and SQL. Multi-round technical interview.",
+    "expected": "Low"
+  },
+  {
+    "id": "internshala-06",
+    "platform": "Internshala",
+    "company": "SkillBoost Academy",
+    "url": "https://internshala.com/internship/detail/skillboost-internship-cum-placement-fee-294810",
+    "description": "Guaranteed 100% placement internship! Candidates must pay ₹4,999 for mandatory onboarding and cloud lab access fee. Fee refundable upon completing the 3-month internship program.",
+    "expected": "High"
+  },
+  {
+    "id": "internshala-07",
+    "platform": "Internshala",
+    "company": "Viral Media Agency",
+    "url": "https://internshala.com/internship/detail/viral-media-youtube-like-tasks-192837",
+    "description": "Social media marketing intern. Complete daily tasks of liking YouTube videos and commenting on Instagram reels. Earn ₹500 to ₹1,500 daily commission. Payout in USDT or GPay.",
+    "expected": "High"
+  },
+  {
+    "id": "internshala-08",
+    "platform": "Internshala",
+    "company": "EdTech Growth Labs",
+    "url": "https://internshala.com/internship/detail/edtech-growth-referral-pyramid-928374",
+    "description": "Campus ambassador internship. Earn unlimited commission by referring students and adding team members to your downline. No technical skills required. Achieve passive income.",
+    "expected": "High"
+  },
+  {
+    "id": "internshala-09",
+    "platform": "Internshala",
+    "company": "NextGen Robotics",
+    "url": "https://internshala.com/internship/detail/nextgen-hardware-kit-shipping-charge-839201",
+    "description": "Embedded systems and IoT internship. Free company hardware kit provided. Candidate must transfer ₹1,450 courier and handling fee to company accountant via PhonePe.",
+    "expected": "High"
+  },
+  {
+    "id": "internshala-10",
+    "platform": "Internshala",
+    "company": "CloudSpark Ventures",
+    "url": "https://internshala.com/internship/detail/cloudspark-gmail-recruiter-direct-offer-748291",
+    "description": "Direct selection for Web Development Intern! Selected without interview. Contact hr-cloudspark@gmail.com on WhatsApp to receive offer letter immediately.",
+    "expected": "High"
+  },
+  {
+    "id": "foundit-01",
+    "platform": "Foundit",
+    "company": "Persistent Systems",
+    "url": "https://www.foundit.in/job/persistent-systems-software-engineer-pune-910243",
+    "description": "Role: Software Engineer at Persistent Systems. Location: Hinjewadi Phase 1, Pune. Eligibility: B.E/B.Tech/MCA with minimum 60% marks. Core competencies: Java, Spring Boot, Microservices, and REST APIs. Technical assessment on Persistent evaluation platform.",
+    "expected": "Low"
+  },
+  {
+    "id": "foundit-02",
+    "platform": "Foundit",
+    "company": "KPIT Technologies",
+    "url": "https://www.foundit.in/job/kpit-embedded-software-engineer-bangalore-849201",
+    "description": "Role: Embedded Software Engineer at KPIT Technologies. Location: Electronic City, Bangalore. Requirements: Embedded C, AUTOSAR, CAN protocol, and microcontrollers. Written test followed by technical discussion with automotive domain experts.",
+    "expected": "Low"
+  },
+  {
+    "id": "foundit-03",
+    "platform": "Foundit",
+    "company": "Cyient",
+    "url": "https://www.foundit.in/job/cyient-trainee-engineer-hyderabad-738291",
+    "description": "Role: Trainee Engineer at Cyient. Location: Manikonda, Hyderabad. Qualifications: Degree in Mechanical, Aerospace, or Civil Engineering. Skills: CAD modeling, engineering documentation, and GD&T. Official communication from cyient.com.",
+    "expected": "Low"
+  },
+  {
+    "id": "foundit-04",
+    "platform": "Foundit",
+    "company": "Hexaware Technologies",
+    "url": "https://www.foundit.in/job/hexaware-associate-software-engineer-chennai-482910",
+    "description": "Role: Associate Software Engineer at Hexaware Technologies. Location: SIPCOT IT Park, Siruseri, Chennai. Requirements: Graduates from 2025/2026 batches. Skills in Full Stack, Cloud, or Automation. Online aptitude test and technical interview.",
+    "expected": "Low"
+  },
+  {
+    "id": "foundit-05",
+    "platform": "Foundit",
+    "company": "Mphasis",
+    "url": "https://www.foundit.in/job/mphasis-trainee-software-engineer-bangalore-384920",
+    "description": "Role: Trainee Software Engineer at Mphasis. Location: Bagmane World Technology Centre, Mahadevapura, Bangalore. Skills: Java, SQL, Cloud foundations. Comprehensive background screening post-offer. Equal Opportunity Employer.",
+    "expected": "Low"
+  },
+  {
+    "id": "foundit-06",
+    "platform": "Foundit",
+    "company": "SuperFast Typing Hub",
+    "url": "https://www.foundit.in/job/superfast-captcha-typing-earn-20k-weekly-294810",
+    "description": "Simple captcha entry and typing work from home. Earn ₹20,000 weekly guaranteed income. No skills or interview needed. Contact WhatsApp HR 9876543210 to get daily typing links.",
+    "expected": "High"
+  },
+  {
+    "id": "foundit-07",
+    "platform": "Foundit",
+    "company": "Global Logistics Corp",
+    "url": "https://www.foundit.in/job/global-logistics-delivery-bag-uniform-fee-192837",
+    "description": "Delivery Executive immediate joining! Spot selection. Mandatory company delivery bag and uniform fee ₹1,800 payable via GPay before reporting to central warehouse.",
+    "expected": "High"
+  },
+  {
+    "id": "foundit-08",
+    "platform": "Foundit",
+    "company": "Target Overseas Recruitment",
+    "url": "https://www.foundit.in/job/target-overseas-singapore-warehouse-permit-928374",
+    "description": "Singapore warehouse job openings for freshers. 100% guaranteed work permit. Advance embassy fee ₹25,000 to be paid to overseas placement agent via PhonePe.",
+    "expected": "High"
+  },
+  {
+    "id": "foundit-09",
+    "platform": "Foundit",
+    "company": "Spark BPO Services",
+    "url": "https://www.foundit.in/job/spark-bpo-spot-selection-gate-pass-fee-839201",
+    "description": "Direct spot selection for BPO executive without interview! Deposit ₹1,400 gate pass verification charges via UPI to confirm your reporting seat.",
+    "expected": "High"
+  },
+  {
+    "id": "foundit-10",
+    "platform": "Foundit",
+    "company": "Future Wealth Advisory",
+    "url": "https://www.foundit.in/job/future-wealth-stock-tips-commission-748291",
+    "description": "Online stock advisory assistant. Share telegram stock market links and invite people to earn daily commission. Top up your wallet to activate daily VIP signal tasks.",
+    "expected": "High"
+  },
+  {
+    "id": "googlejobs-01",
+    "platform": "Google Jobs",
+    "company": "Flipkart",
+    "url": "https://www.google.com/search?q=flipkart+software-development-engineer-bangalore-910243",
+    "description": "Role: Software Development Engineer 1 at Flipkart. Location: Flipkart Campus, Outer Ring Road, Devarabeesanahalli, Bangalore. Qualifications: B.Tech in CS/IT. Strong algorithmic problem solving, Object-Oriented Design, and Java skills. Apply via Flipkart Careers portal.",
+    "expected": "Low"
+  },
+  {
+    "id": "googlejobs-02",
+    "platform": "Google Jobs",
+    "company": "Zomato",
+    "url": "https://www.google.com/search?q=zomato+frontend-engineer-gurgaon-849201",
+    "description": "Role: Frontend Engineer at Zomato. Location: Ground Floor, Tower A, Pioneer Square, Gurgaon. Requirements: React, React Native, TypeScript, Web Performance optimization. Evaluation includes live machine coding round and architecture review.",
+    "expected": "Low"
+  },
+  {
+    "id": "googlejobs-03",
+    "platform": "Google Jobs",
+    "company": "Paytm",
+    "url": "https://www.google.com/search?q=paytm+backend-engineer-noida-738291",
+    "description": "Role: Backend Engineer at Paytm (One97 Communications). Location: Paytm HQ, Sector 98, Noida. Responsibilities: Building scalable payment gateway microservices. Tech stack: Java, Spring Boot, MySQL, Kafka. Standard technical screening.",
+    "expected": "Low"
+  },
+  {
+    "id": "googlejobs-04",
+    "platform": "Google Jobs",
+    "company": "PhonePe",
+    "url": "https://www.google.com/search?q=phonepe+software-engineer-bangalore-482910",
+    "description": "Role: Software Engineer at PhonePe. Location: Bellandur, Bangalore. Requirements: Degree in Engineering, strong computer science fundamentals, concurrency, and distributed transactions. Technical interviews with engineering team.",
+    "expected": "Low"
+  },
+  {
+    "id": "googlejobs-05",
+    "platform": "Google Jobs",
+    "company": "MakeMyTrip",
+    "url": "https://www.google.com/search?q=makemytrip+software-engineer-gurgaon-384920",
+    "description": "Role: Associate Software Engineer at MakeMyTrip. Location: DLF Cyber City, Gurgaon. Requirements: B.Tech/M.Tech. Hands-on experience with Java, Spring, Microservices, and cloud deployments. Apply on official careers portal.",
+    "expected": "Low"
+  },
+  {
+    "id": "googlejobs-06",
+    "platform": "Google Jobs",
+    "company": "Quick Cash Online",
+    "url": "https://www.google.com/search?q=quick-cash-google-review-tasks-294810",
+    "description": "Google Maps review rating job. Earn ₹500 per review by rating local business listings. Daily cash payouts via GPay. Pay ₹700 registration fee to receive list of daily merchant review links.",
+    "expected": "High"
+  },
+  {
+    "id": "googlejobs-07",
+    "platform": "Google Jobs",
+    "company": "City Cargo Express",
+    "url": "https://www.google.com/search?q=city-cargo-laptop-courier-insurance-192837",
+    "description": "Customer support work from home. Free company laptop shipped. Pay ₹1,200 laptop insurance courier deposit via PhonePe to track courier dispatch.",
+    "expected": "High"
+  },
+  {
+    "id": "googlejobs-08",
+    "platform": "Google Jobs",
+    "company": "Top MNC Client Undisclosed",
+    "url": "https://www.google.com/search?q=top-mnc-confidential-60k-salary-freshers-928374",
+    "description": "Leading Fortune 500 MNC is hiring confidential client. 10th/12th pass can earn ₹60,000 monthly. No experience or skill needed. Send resume to quickhiring2026@gmail.com.",
+    "expected": "High"
+  },
+  {
+    "id": "googlejobs-09",
+    "platform": "Google Jobs",
+    "company": "Global Tech Innovations",
+    "url": "https://www.google.com/search?q=global-tech-rustdesk-remote-test-839201",
+    "description": "Shortlisted for online screening! Install RustDesk remote desktop application on your PC and connect with our recruiter to complete background verification.",
+    "expected": "High"
+  },
+  {
+    "id": "googlejobs-10",
+    "platform": "Google Jobs",
+    "company": "National Recruitment Drive",
+    "url": "https://www.google.com/search?q=national-recruitment-forms-gle-aadhaar-pan-748291",
+    "description": "Government affiliated national recruitment drive. Apply at https://forms.gle/9x8y7z6a5b4c. Submit your Aadhaar card, PAN card, and bank account details with ₹500 registration fee.",
+    "expected": "High"
+  },
+  {
+    "id": "wellfound-01",
+    "platform": "Wellfound",
+    "company": "Hasura",
+    "url": "https://wellfound.com/jobs/hasura-backend-engineer-bangalore-910243",
+    "description": "Role: Backend Engineer at Hasura. Location: Indiranagar, Bangalore (Remote/Hybrid). Tech stack: Haskell, Go, GraphQL, Postgres. Qualifications: Strong understanding of compilers, database engines, and distributed systems. Code review and technical interviews.",
+    "expected": "Low"
+  },
+  {
+    "id": "wellfound-02",
+    "platform": "Wellfound",
+    "company": "BrowserStack",
+    "url": "https://wellfound.com/jobs/browserstack-software-engineer-mumbai-849201",
+    "description": "Role: Software Engineer at BrowserStack. Location: Mindspace, Malad West, Mumbai. Tech stack: Ruby on Rails, Node.js, React, Docker. Requirements: Degree in Engineering with strong problem-solving skills and clean coding practices.",
+    "expected": "Low"
+  },
+  {
+    "id": "wellfound-03",
+    "platform": "Wellfound",
+    "company": "Chargebee",
+    "url": "https://wellfound.com/jobs/chargebee-full-stack-engineer-chennai-738291",
+    "description": "Role: Full Stack Engineer at Chargebee. Location: DLF Cybercity, Manapakkam, Chennai. Responsibilities: Subscription billing APIs and merchant dashboard. Skills: Java, Spring Boot, Vue.js / React, MySQL. Technical panel evaluation.",
+    "expected": "Low"
+  },
+  {
+    "id": "wellfound-04",
+    "platform": "Wellfound",
+    "company": "InVideo",
+    "url": "https://wellfound.com/jobs/invideo-frontend-developer-mumbai-482910",
+    "description": "Role: Frontend Developer at InVideo. Location: Andheri East, Mumbai. Requirements: WebGL, WebAssembly, Canvas rendering, TypeScript, React. Fast-paced product engineering environment. Rigorous portfolio review.",
+    "expected": "Low"
+  },
+  {
+    "id": "wellfound-05",
+    "platform": "Wellfound",
+    "company": "Khatabook",
+    "url": "https://wellfound.com/jobs/khatabook-android-developer-bangalore-384920",
+    "description": "Role: Android Developer at Khatabook. Location: HSR Layout, Bangalore. Requirements: Kotlin, Jetpack Compose, Coroutines, MVVM architecture, SQLite. Evaluation includes Android machine coding assignment.",
+    "expected": "Low"
+  },
+  {
+    "id": "wellfound-06",
+    "platform": "Wellfound",
+    "company": "Stealth AI Labs",
+    "url": "https://wellfound.com/jobs/stealth-ai-whatsapp-test-kit-fee-294810",
+    "description": "Stealth AI startup hiring freshers. Contact recruiter directly on WhatsApp only. Selected candidate must pay ₹2,000 for AI developer assessment environment license before interview.",
+    "expected": "High"
+  },
+  {
+    "id": "wellfound-07",
+    "platform": "Wellfound",
+    "company": "Decentralized DAO Ops",
+    "url": "https://wellfound.com/jobs/dao-ops-telegram-crypto-tasks-deposit-192837",
+    "description": "Web3 community manager. Complete daily social media tasks on Telegram to earn USDT. Deposit ₹1,500 security balance into smart contract to unlock high-yield tasks.",
+    "expected": "High"
+  },
+  {
+    "id": "wellfound-08",
+    "platform": "Wellfound",
+    "company": "Growth Hacking Agency",
+    "url": "https://wellfound.com/jobs/growth-hacking-referral-pyramid-downline-928374",
+    "description": "Growth marketer. Earn passive residual income by referring friends to our agency platform. Build your downline network to earn 30% lifetime commission.",
+    "expected": "High"
+  },
+  {
+    "id": "wellfound-09",
+    "platform": "Wellfound",
+    "company": "Global Remote Assistants",
+    "url": "https://wellfound.com/jobs/global-remote-training-onboarding-fee-839201",
+    "description": "Executive virtual assistant. Direct hiring without interview. Candidate must pay ₹2,500 mandatory onboarding training kit fee via GPay to receive appointment letter.",
+    "expected": "High"
+  },
+  {
+    "id": "wellfound-10",
+    "platform": "Wellfound",
+    "company": "Web3 Studio Labs",
+    "url": "https://wellfound.com/jobs/web3-studio-connect-wallet-identity-748291",
+    "description": "Frontend Web3 developer. Connect your private MetaMask wallet and sign transaction to verify candidate identity and complete registration for interview round.",
+    "expected": "High"
+  },
+  {
+    "id": "unstop-01",
+    "platform": "Unstop",
+    "company": "Larsen & Toubro (L&T)",
+    "url": "https://unstop.com/jobs/larsen-toubro-graduate-engineer-trainee-chennai-910243",
+    "description": "Role: Graduate Engineer Trainee (GET) at Larsen & Toubro (L&T). Location: L&T Construction HQ, Mount Poonamallee Road, Manapakkam, Chennai. Eligibility: 2025/2026 Batch B.E/B.Tech graduates. Selection through L&T national aptitude assessment and technical panel interviews.",
+    "expected": "Low"
+  },
+  {
+    "id": "unstop-02",
+    "platform": "Unstop",
+    "company": "Reliance Jio",
+    "url": "https://unstop.com/jobs/reliance-jio-graduate-engineer-trainee-navi-mumbai-849201",
+    "description": "Role: Graduate Engineer Trainee at Reliance Jio. Location: Reliance Corporate Park, Ghansoli, Navi Mumbai. Qualifications: BE/B.Tech in Telecom, ECE, or Computer Science. Skills: 5G network architecture, Python scripting, Cloud computing. Official recruitment drive on jio.com.",
+    "expected": "Low"
+  },
+  {
+    "id": "unstop-03",
+    "platform": "Unstop",
+    "company": "Aditya Birla Group",
+    "url": "https://unstop.com/jobs/aditya-birla-group-leadership-trainee-mumbai-738291",
+    "description": "Role: Group Leadership Trainee at Aditya Birla Group. Location: Aditya Birla Centre, Worli, Mumbai. Eligibility: Top-tier engineering and business graduates. Multi-stage assessment, case study challenge, and executive panel interviews.",
+    "expected": "Low"
+  },
+  {
+    "id": "unstop-04",
+    "platform": "Unstop",
+    "company": "Tata Motors",
+    "url": "https://unstop.com/jobs/tata-motors-graduate-engineer-trainee-pune-482910",
+    "description": "Role: Graduate Engineer Trainee at Tata Motors. Location: Pimpri, Pune. Qualifications: B.E/B.Tech in Mechanical, Automobile, or Electrical Engineering. Automotive product development, EV powertrains, and CAD modeling. Official campus hiring drive.",
+    "expected": "Low"
+  },
+  {
+    "id": "unstop-05",
+    "platform": "Unstop",
+    "company": "ITC Infotech",
+    "url": "https://unstop.com/jobs/itc-infotech-associate-consultant-bangalore-384920",
+    "description": "Role: Associate Consultant at ITC Infotech. Location: ITC Infotech Park, Banaswadi, Bangalore. Requirements: Degree in Engineering, Java, Cloud computing, or Data Analytics. Standard aptitude screening and technical interview rounds.",
+    "expected": "Low"
+  },
+  {
+    "id": "unstop-06",
+    "platform": "Unstop",
+    "company": "TechHire Academy",
+    "url": "https://unstop.com/jobs/techhire-hackathon-placement-fee-294810",
+    "description": "Congratulations! You won direct placement through TechHire Hackathon. Pay ₹7,500 corporate placement and onboarding fee via UPI to confirm your offer letter.",
+    "expected": "High"
+  },
+  {
+    "id": "unstop-07",
+    "platform": "Unstop",
+    "company": "Campus Ambassador Network",
+    "url": "https://unstop.com/jobs/campus-ambassador-mlm-buy-products-192837",
+    "description": "Campus ambassador to PPO program. Buy mandatory company starter product kit for ₹2,999 and refer 10 college students to unlock guaranteed Pre-Placement Offer.",
+    "expected": "High"
+  },
+  {
+    "id": "unstop-08",
+    "platform": "Unstop",
+    "company": "Direct Onboarding Hub",
+    "url": "https://unstop.com/jobs/direct-onboarding-interview-kit-charge-928374",
+    "description": "Direct joining without test or interview! Immediate spot selection. Pay ₹1,850 interview evaluation kit charges via PhonePe to receive joining confirmation.",
+    "expected": "High"
+  },
+  {
+    "id": "unstop-09",
+    "platform": "Unstop",
+    "company": "Creative Reviewers Club",
+    "url": "https://unstop.com/jobs/creative-reviewers-app-rating-daily-commission-839201",
+    "description": "App rating and review commission job. Rate 5 apps daily on Google Play Store to earn ₹2,500 commission. Deposit wallet balance to unlock premium tasks.",
+    "expected": "High"
+  },
+  {
+    "id": "unstop-10",
+    "platform": "Unstop",
+    "company": "Medical Coding Solutions",
+    "url": "https://unstop.com/jobs/medical-coding-unaccredited-medical-exam-fee-748291",
+    "description": "Medical coding fresher opening. Selected candidates must pay ₹1,950 for medical fitness screening fee at our authorized clinic before receiving offer letter.",
+    "expected": "High"
+  },
+  {
+    "id": "ats-01",
+    "platform": "Direct ATS",
+    "company": "Google Careers",
+    "url": "https://careers.google.com/jobs/results/10293847-software-engineer-iii",
+    "description": "Software Engineer III at Google. Location: Google Hyderabad Campus. Requirements: BS/MS in Computer Science, 4+ years of software development experience with Java, C++, or Go. Distributed systems design and API architecture. Official Google application.",
+    "expected": "Low"
+  },
+  {
+    "id": "ats-02",
+    "platform": "Direct ATS",
+    "company": "Microsoft Careers",
+    "url": "https://careers.microsoft.com/us/en/job/91827364/software-engineer-ii",
+    "description": "Software Engineer II at Microsoft. Location: Microsoft India Development Centre, Hyderabad. Responsibilities: Core cloud infrastructure development on Azure. Strong C#, data structures, and multithreading.",
+    "expected": "Low"
+  },
+  {
+    "id": "ats-03",
+    "platform": "Direct ATS",
+    "company": "Stripe",
+    "url": "https://jobs.lever.co/stripe/839201-backend-engineer",
+    "description": "Backend Engineer at Stripe. Hosted on official Lever ATS. Responsibilities: Payments infrastructure, fraud modeling APIs, and financial ledger scaling. Apply directly on Lever ATS.",
+    "expected": "Low"
+  },
+  {
+    "id": "ats-04",
+    "platform": "Direct ATS",
+    "company": "Airbnb",
+    "url": "https://boards.greenhouse.io/airbnb/jobs/482910-software-engineer",
+    "description": "Software Engineer at Airbnb. Hosted on official Greenhouse ATS. Location: Bangalore, India. Requirements: Full stack web development, Java, React, GraphQL, and microservice architectures.",
+    "expected": "Low"
+  },
+  {
+    "id": "ats-05",
+    "platform": "Direct ATS",
+    "company": "Salesforce",
+    "url": "https://salesforce.wd1.myworkdayjobs.com/en-US/External_Career_Site/job/Bangalore/Software-Engineer_JR102938",
+    "description": "Software Engineer at Salesforce. Hosted on official Workday ATS. Location: Bagmane Tech Park, Bangalore. Developing cloud CRM platforms with Java, Apex, and Lightning Web Components.",
+    "expected": "Low"
+  },
+  {
+    "id": "ats-06",
+    "platform": "Direct ATS",
+    "company": "TCS Lookalike Portal",
+    "url": "https://careers-tcs-entry.xyz/apply-freshers",
+    "description": "TCS Fresher Trainee Drive 2026. Deposit ₹1,500 refundable security deposit to confirm your interview gate pass. Transfer via UPI to hr-tcs@paytm.",
+    "expected": "High"
+  },
+  {
+    "id": "ats-07",
+    "platform": "Direct ATS",
+    "company": "Infosys Lookalike Portal",
+    "url": "https://infosyss.com/fresher-registration",
+    "description": "Infosys campus drive 2026. Submit your Aadhaar card copy, PAN card, and bank account details with cancelled cheque before the telephonic interview round.",
+    "expected": "High"
+  },
+  {
+    "id": "ats-08",
+    "platform": "Direct ATS",
+    "company": "Raw IP Host Portal",
+    "url": "http://185.220.101.5:8080/jobs/apply-direct",
+    "description": "Direct joining in Amazon customer care! No interview needed. Work 2 hours daily from mobile to earn ₹3,000. Contact WhatsApp 9876543210 to receive offer letter.",
+    "expected": "High"
+  },
+  {
+    "id": "ats-09",
+    "platform": "Direct ATS",
+    "company": "Wipro Lookalike Disposable TLD",
+    "url": "https://wipro-jobs-fresher.top/apply",
+    "description": "Wipro Technologies overseas UK placement. 100% guaranteed visa and flight ticket. Mandatory visa processing fee ₹45,000 payable to agent before visa issuance.",
+    "expected": "High"
+  },
+  {
+    "id": "ats-10",
+    "platform": "Direct ATS",
+    "company": "Shortener AnyDesk Scam",
+    "url": "https://bit.ly/hcl-spot-joining-remote",
+    "description": "HCL direct spot joining without interview! Install AnyDesk remote control app on your computer and connect session with HR to verify your system for joining.",
+    "expected": "High"
+  }
+]

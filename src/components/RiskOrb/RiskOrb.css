@@ -1,0 +1,224 @@
+/* ==========================================================================
+   RiskOrb Component Styles
+
+   Three stacked layers, no images, no canvas, no filters, and a hollow centre:
+     __glow         a soft ring wash in the orb's colour
+     __swirl        a long arc on a circular border, rotating
+     __swirl-inner  a shorter arc counter-rotating
+
+   The centre stays transparent because in the result panel the score number
+   sits there. Everything that carries colour is a border or a ring gradient, so
+   the number keeps the contrast it has against the panel surface.
+
+   Every animation is a `transform` or an `opacity`. The colour comes from one
+   `--orb-accent` custom property per state, so the orb can never disagree with
+   the badge and the gauge beside it — they read the same risk tokens.
+
+   Quality levels are published on the root element by utils/motion.ts:
+     (no attribute) / "off"  static rings, nothing animates
+     "lite"                  glow breathe + one arc
+     "full"                  glow breathe + two counter-rotating arcs
+   ========================================================================== */
+
+.c-risk-orb {
+  --orb-accent: var(--color-primary);
+  --orb-size: 96px;
+
+  position: relative;
+  width: var(--orb-size);
+  height: var(--orb-size);
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  /* No background and no border of its own: the orb is entirely the rings
+     above it, so whatever is underneath shows through the middle. */
+}
+
+.c-risk-orb__glow,
+.c-risk-orb__swirl,
+.c-risk-orb__swirl-inner {
+  position: absolute;
+  border-radius: var(--radius-full);
+}
+
+/* A ring rather than a filled circle. The transparent inner stop is what
+   keeps the middle of the orb clear. */
+.c-risk-orb__glow {
+  inset: 0;
+  background-image: radial-gradient(
+    circle,
+    transparent 0 40%,
+    var(--orb-accent) 62%,
+    transparent 84%
+  );
+  opacity: 0.4;
+}
+
+/* An arc, not a ring: a transparent border with two coloured sides reads as a
+   sweep without needing a mask, and rotating it is a composited transform. */
+.c-risk-orb__swirl,
+.c-risk-orb__swirl-inner {
+  inset: 8%;
+  border: 2px solid transparent;
+  border-top-color: var(--orb-accent);
+  border-right-color: var(--orb-accent);
+  opacity: 0.5;
+}
+
+.c-risk-orb__swirl-inner {
+  inset: 22%;
+  border-width: 1px;
+  border-top-color: transparent;
+  border-bottom-color: var(--orb-accent);
+  opacity: 0.35;
+}
+
+/* --- State colours -------------------------------------------------------- */
+
+.c-risk-orb--low {
+  --orb-accent: var(--color-risk-low);
+}
+
+.c-risk-orb--medium {
+  --orb-accent: var(--color-risk-medium);
+}
+
+.c-risk-orb--high {
+  --orb-accent: var(--color-risk-high);
+}
+
+.c-risk-orb--scanning {
+  --orb-accent: var(--color-trust);
+}
+
+/* --- Motion, by quality level --------------------------------------------- */
+
+@keyframes c-orb-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 0.5;
+  }
+}
+
+@keyframes c-orb-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes c-orb-counter-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+/* "lite": the ring breathes, one arc turns. */
+:root[data-quality="lite"] .c-risk-orb__glow {
+  animation: c-orb-breathe 4s var(--ease-in-out) infinite;
+}
+
+:root[data-quality="lite"] .c-risk-orb__swirl {
+  animation: c-orb-spin 9s linear infinite;
+}
+
+:root[data-quality="lite"] .c-risk-orb__swirl-inner {
+  opacity: 0.2;
+}
+
+/* "full": slower breathing and both arcs turning against each other, which is
+   what makes the orb read as three-dimensional without a shader. */
+:root[data-quality="full"] .c-risk-orb__glow {
+  animation: c-orb-breathe 7s var(--ease-in-out) infinite;
+}
+
+:root[data-quality="full"] .c-risk-orb__swirl {
+  animation: c-orb-spin 14s linear infinite;
+}
+
+:root[data-quality="full"] .c-risk-orb__swirl-inner {
+  animation: c-orb-counter-spin 22s linear infinite;
+}
+
+/* The scanning orb turns faster than a settled result does: while the user is
+   waiting, it is the only thing on screen that can move. */
+:root[data-quality="lite"] .c-risk-orb--scanning .c-risk-orb__swirl,
+:root[data-quality="full"] .c-risk-orb--scanning .c-risk-orb__swirl {
+  animation-duration: 3.2s;
+}
+
+:root[data-quality="full"] .c-risk-orb--scanning .c-risk-orb__swirl-inner {
+  animation-duration: 5.5s;
+}
+
+/* --- Sizes ---------------------------------------------------------------- */
+
+/* Behind the score gauge: exactly sized to match the gauge stack so the arcs stay perfectly aligned */
+.c-result-panel__orb .c-risk-orb {
+  --orb-size: 100%;
+  width: 100%;
+  height: 100%;
+}
+
+/* Above the loading copy, where there is no number to keep clear. */
+.c-loading__orb .c-risk-orb {
+  --orb-size: clamp(84px, 20vw, 108px);
+}
+
+/* ==========================================================================
+   RiskOrb Responsive Media Queries
+   ========================================================================== */
+
+/* 1. Compact Mobile (300px - 450px) */
+@media (min-width: 300px) and (max-width: 450px) {
+  .c-result-panel__orb .c-risk-orb {
+    --orb-size: 100%;
+    width: 100%;
+    height: 100%;
+  }
+
+  .c-loading__orb .c-risk-orb {
+    --orb-size: 80px;
+  }
+}
+
+/* 2. Standard Mobile (451px - 720px) */
+@media (min-width: 451px) and (max-width: 720px) {
+  .c-result-panel__orb .c-risk-orb {
+    --orb-size: 100%;
+    width: 100%;
+    height: 100%;
+  }
+
+  .c-loading__orb .c-risk-orb {
+    --orb-size: 90px;
+  }
+}
+
+/* 3. Tablets & Narrow Laptops (max-width: 1040px) */
+@media (max-width: 1040px) {
+  .c-result-panel__orb .c-risk-orb {
+    --orb-size: 100%;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* 4. Desktop & Wide Screens (max-width: 1500px) */
+@media (max-width: 1500px) {
+  .c-result-panel__orb .c-risk-orb {
+    --orb-size: 100%;
+    width: 100%;
+    height: 100%;
+  }
+}
+

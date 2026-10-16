@@ -1,0 +1,90 @@
+/* ==========================================================================
+   CSS Reset
+   Modern, resilient reset for JobCheck
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+  line-height: var(--leading-body);
+}
+
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: var(--leading-body);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-canvas);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+/* Accessible focus visible outlines.
+   An outline rather than a box-shadow: it is not clipped by an ancestor with
+   overflow: hidden, it follows border-radius, and it is honoured in
+   forced-colors mode where a box-shadow is dropped entirely. Components may
+   add their own ring on top; none may remove this one. */
+:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* Windows High Contrast / forced-colors: let the system paint the ring. */
+@media (forced-colors: active) {
+  :focus-visible {
+    outline: 3px solid Highlight;
+  }
+}
+
+/* Images and SVG */
+img,
+picture,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+/* Lists */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Links */
+a {
+  color: inherit;
+  text-decoration-skip-ink: auto;
+}
+
+/* Remove default table borders */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}

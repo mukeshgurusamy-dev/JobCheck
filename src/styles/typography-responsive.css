@@ -1,0 +1,1401 @@
+/* ==========================================================================
+   Typography Responsive Scales
+   Progressive typography scaling across 4 breakpoints
+
+   Breakpoint 1: 300px - 400px   (Compact Mobile)
+   Breakpoint 2: 401px - 724px   (Standard Mobile)
+   Breakpoint 3: 725px - 1024px  (Tablet)
+   Breakpoint 4: 1025px - 1500px (Desktop)
+   ========================================================================== */
+
+/* ========================================================================
+   BREAKPOINT 1: Compact Mobile (300px - 400px)
+   Minimum readable sizes, tight spacing
+   ======================================================================== */
+
+@media (min-width: 300px) and (max-width: 400px) {
+  /* Navigation */
+  .c-nav__brand {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-bold);
+  }
+
+  .c-nav__link {
+    font-size: 0.7rem;
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .c-nav__brand-badge {
+    font-size: 0.65rem;
+    font-weight: var(--font-weight-extrabold);
+    padding: var(--space-0-5) var(--space-1-5);
+  }
+
+  /* Hero Section */
+  .c-ent-hero__title {
+    font-size: 1.75rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+  }
+
+  .c-ent-hero__subtitle {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  /* Section Headers */
+  .c-ent-section__title {
+    font-size: 1.1rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  .c-ent-section__desc {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  /* Stats Cards */
+  .c-stat-card__number {
+    font-size: 1.3rem;
+    font-weight: var(--font-weight-bold);
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  .c-stat-card__label {
+    font-size: 0.65rem;
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.3;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* Pipeline Cards */
+  .c-pipeline-card__step {
+    font-size: 0.65rem;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .c-pipeline-card__title {
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .c-pipeline-card__desc {
+    font-size: 0.7rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  /* Threat Cards */
+  .c-threat-card__title {
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .c-threat-card__desc {
+    font-size: 0.7rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  .c-threat-card__item {
+    font-size: 0.65rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  /* AI Cards */
+  .c-ai-card__title {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .c-ai-card__desc {
+    font-size: 0.65rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  /* AI Powered By */
+  .c-ai-powered-by {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-regular);
+  }
+
+  .c-ai-powered-by__google {
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-bold);
+    background: linear-gradient(135deg, #4285f4 0%, #ea4335 25%, #fbbc05 50%, #34a853 75%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Score Cards */
+  .c-score-card__range {
+    font-size: 1.3rem;
+    font-weight: var(--font-weight-bold);
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  .c-score-card__label {
+    font-size: 0.65rem;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .c-score-card__desc {
+    font-size: 0.7rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  /* Checker Form */
+  .c-checker-form__label {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .c-checker-form__input,
+  .c-checker-form__textarea {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  .c-checker-form__button {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  /* Loading Animation */
+  .c-loading__title {
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .c-loading__elapsed {
+    font-size: 0.7rem;
+    font-weight: var(--font-weight-semibold);
+    font-family: var(--font-mono);
+    letter-spacing: 0.02em;
+  }
+
+  .c-loading__status {
+    font-size: 0.7rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  .c-loading__step-label {
+    font-size: 0.65rem;
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.3;
+  }
+
+  .c-loading__step-desc {
+    font-size: 0.6rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.3;
+  }
+
+  /* Result Panel */
+  .c-result-panel__title {
+    font-size: 1rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .c-result-panel__subtitle {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  .c-result-panel__section-title {
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .c-result-panel__finding-title {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .c-result-panel__finding-desc {
+    font-size: 0.65rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  .c-badge {
+    font-size: 0.65rem;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .c-criteria__section-title {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .c-criteria__item {
+    font-size: 0.7rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  .c-criteria__chip {
+    font-size: 0.6rem;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  /* Audit Section */
+  .c-result-panel__audit-title {
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.25;
+  }
+
+  .c-result-panel__audit-subtitle {
+    font-size: 0.6rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.3;
+  }
+
+  .c-result-panel__audit-pillar-name {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.25;
+  }
+
+  .c-result-panel__audit-card-desc {
+    font-size: 0.65rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.3;
+  }
+
+  .c-pillar-box__title {
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .c-pillar-box__desc {
+    font-size: 0.7rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  .c-pillar-box__list {
+    font-size: 0.65rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  /* Text Classes */
+  .text-heading-xl {
+    font-size: 1.3rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .text-heading-lg {
+    font-size: 1.05rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .text-heading-md {
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .text-body {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  .text-body-sm {
+    font-size: 0.7rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  .text-caption {
+    font-size: 0.65rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.3;
+  }
+}
+
+/* ========================================================================
+   BREAKPOINT 2: Standard Mobile (401px - 724px)
+   Moderate sizes with improved readability
+   ======================================================================== */
+
+@media (min-width: 401px) and (max-width: 724px) {
+  /* Navigation */
+  .c-nav__brand {
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-bold);
+  }
+
+  .c-nav__link {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .c-nav__brand-badge {
+    font-size: 0.7rem;
+    font-weight: var(--font-weight-extrabold);
+    padding: var(--space-0-5) var(--space-2);
+  }
+
+  /* Hero Section */
+  .c-ent-hero__title {
+    font-size: 2rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+
+  .c-ent-hero__subtitle {
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.5;
+  }
+
+  /* Section Headers */
+  .c-ent-section__title {
+    font-size: 1.25rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  .c-ent-section__desc {
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.5;
+  }
+
+  /* Stats Cards */
+  .c-stat-card__number {
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-bold);
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  .c-stat-card__label {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.3;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* Pipeline Cards */
+  .c-pipeline-card__step {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .c-pipeline-card__title {
+    font-size: 1rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .c-pipeline-card__desc {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  /* Threat Cards */
+  .c-threat-card__title {
+    font-size: 0.95rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .c-threat-card__desc {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  .c-threat-card__item {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  /* AI Cards */
+  .c-ai-card__title {
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .c-ai-card__desc {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  /* AI Powered By */
+  .c-ai-powered-by {
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-regular);
+  }
+
+  .c-ai-powered-by__google {
+    font-size: 1rem;
+    font-weight: var(--font-weight-bold);
+    background: linear-gradient(135deg, #4285f4 0%, #ea4335 25%, #fbbc05 50%, #34a853 75%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Score Cards */
+  .c-score-card__range {
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-bold);
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  .c-score-card__label {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .c-score-card__desc {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  /* Checker Form */
+  .c-checker-form__label {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .c-checker-form__input,
+  .c-checker-form__textarea {
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.5;
+  }
+
+  .c-checker-form__button {
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  /* Loading Animation */
+  .c-loading__title {
+    font-size: 1rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .c-loading__elapsed {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-semibold);
+    font-family: var(--font-mono);
+    letter-spacing: 0.02em;
+  }
+
+  .c-loading__status {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  .c-loading__step-label {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.3;
+  }
+
+  .c-loading__step-desc {
+    font-size: 0.7rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  /* Result Panel */
+  .c-result-panel__title {
+    font-size: 1.1rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .c-result-panel__subtitle {
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  .c-result-panel__section-title {
+    font-size: 1rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .c-result-panel__finding-title {
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .c-result-panel__finding-desc {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  .c-badge {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .c-criteria__section-title {
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .c-criteria__item {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  .c-criteria__chip {
+    font-size: 0.7rem;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  /* Audit Section */
+  .c-result-panel__audit-title {
+    font-size: 1rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.25;
+  }
+
+  .c-result-panel__audit-subtitle {
+    font-size: 0.7rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.3;
+  }
+
+  .c-result-panel__audit-pillar-name {
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.25;
+  }
+
+  .c-result-panel__audit-card-desc {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  .c-pillar-box__title {
+    font-size: 0.95rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .c-pillar-box__desc {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  .c-pillar-box__list {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  /* Text Classes */
+  .text-heading-xl {
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .text-heading-lg {
+    font-size: 1.2rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .text-heading-md {
+    font-size: 1rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .text-body {
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.5;
+  }
+
+  .text-body-sm {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  .text-caption {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+}
+
+/* ========================================================================
+   BREAKPOINT 3: Tablet (725px - 1024px)
+   Balanced sizes for medium screens
+   ======================================================================== */
+
+@media (min-width: 725px) and (max-width: 1024px) {
+  /* Navigation */
+  .c-nav__brand {
+    font-size: 0.95rem;
+    font-weight: var(--font-weight-bold);
+  }
+
+  .c-nav__link {
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .c-nav__brand-badge {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-extrabold);
+    padding: var(--space-1) var(--space-2-5);
+  }
+
+  /* Hero Section */
+  .c-ent-hero__title {
+    font-size: 2.5rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+  }
+
+  .c-ent-hero__subtitle {
+    font-size: 1.05rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.5;
+  }
+
+  /* Section Headers */
+  .c-ent-section__title {
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+  }
+
+  .c-ent-section__desc {
+    font-size: 0.95rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.5;
+  }
+
+  /* Stats Cards */
+  .c-stat-card__number {
+    font-size: 1.85rem;
+    font-weight: var(--font-weight-bold);
+    font-family: var(--font-display);
+    letter-spacing: -0.025em;
+  }
+
+  .c-stat-card__label {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.3;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* Pipeline Cards */
+  .c-pipeline-card__step {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .c-pipeline-card__title {
+    font-size: 1.1rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .c-pipeline-card__desc {
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.5;
+  }
+
+  /* Threat Cards */
+  .c-threat-card__title {
+    font-size: 1.05rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .c-threat-card__desc {
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.5;
+  }
+
+  .c-threat-card__item {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  /* AI Cards */
+  .c-ai-card__title {
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .c-ai-card__desc {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.5;
+  }
+
+  /* AI Powered By */
+  .c-ai-powered-by {
+    font-size: 0.95rem;
+    font-weight: var(--font-weight-regular);
+  }
+
+  .c-ai-powered-by__google {
+    font-size: 1.125rem;
+    font-weight: var(--font-weight-bold);
+    background: linear-gradient(135deg, #4285f4 0%, #ea4335 25%, #fbbc05 50%, #34a853 75%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Score Cards */
+  .c-score-card__range {
+    font-size: 1.85rem;
+    font-weight: var(--font-weight-bold);
+    font-family: var(--font-display);
+    letter-spacing: -0.025em;
+  }
+
+  .c-score-card__label {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .c-score-card__desc {
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.5;
+  }
+
+  /* Checker Form */
+  .c-checker-form__label {
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .c-checker-form__input,
+  .c-checker-form__textarea {
+    font-size: 0.95rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.5;
+  }
+
+  .c-checker-form__button {
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  /* Loading Animation */
+  .c-loading__title {
+    font-size: 1.1rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .c-loading__elapsed {
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-semibold);
+    font-family: var(--font-mono);
+    letter-spacing: 0.02em;
+  }
+
+  .c-loading__status {
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.5;
+  }
+
+  .c-loading__step-label {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.3;
+  }
+
+  .c-loading__step-desc {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  /* Result Panel */
+  .c-result-panel__title {
+    font-size: 1.25rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .c-result-panel__subtitle {
+    font-size: 0.95rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.5;
+  }
+
+  .c-result-panel__section-title {
+    font-size: 1.1rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .c-result-panel__finding-title {
+    font-size: 0.95rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .c-result-panel__finding-desc {
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.5;
+  }
+
+  .c-badge {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .c-criteria__section-title {
+    font-size: 0.95rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .c-criteria__item {
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.5;
+  }
+
+  .c-criteria__chip {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  /* Audit Section */
+  .c-result-panel__audit-title {
+    font-size: 1.1rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.25;
+  }
+
+  .c-result-panel__audit-subtitle {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  .c-result-panel__audit-pillar-name {
+    font-size: 1rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.25;
+  }
+
+  .c-result-panel__audit-card-desc {
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.5;
+  }
+
+  .c-pillar-box__title {
+    font-size: 1rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .c-pillar-box__desc {
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.5;
+  }
+
+  .c-pillar-box__list {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.5;
+  }
+
+  /* Text Classes */
+  .text-heading-xl {
+    font-size: 1.85rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .text-heading-lg {
+    font-size: 1.35rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .text-heading-md {
+    font-size: 1.1rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .text-body {
+    font-size: 0.95rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.5;
+  }
+
+  .text-body-sm {
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.5;
+  }
+
+  .text-caption {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+}
+
+/* ========================================================================
+   BREAKPOINT 4: Desktop (1025px - 1500px)
+   Full comfortable sizes for maximum readability
+   ======================================================================== */
+
+@media (min-width: 1025px) and (max-width: 1500px) {
+  /* Navigation */
+  .c-nav__brand {
+    font-size: 1rem;
+    font-weight: var(--font-weight-bold);
+  }
+
+  .c-nav__link {
+    font-size: 0.9375rem;
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .c-nav__brand-badge {
+    font-size: 0.8125rem;
+    font-weight: var(--font-weight-extrabold);
+    padding: var(--space-1) var(--space-3);
+  }
+
+  /* Hero Section */
+  .c-ent-hero__title {
+    font-size: 3.125rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+  }
+
+  .c-ent-hero__subtitle {
+    font-size: 1.1875rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.65;
+  }
+
+  /* Section Headers */
+  .c-ent-section__title {
+    font-size: 1.875rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+
+  .c-ent-section__desc {
+    font-size: 1.0625rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.65;
+  }
+
+  /* Stats Cards */
+  .c-stat-card__number {
+    font-size: 2.25rem;
+    font-weight: var(--font-weight-bold);
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
+  }
+
+  .c-stat-card__label {
+    font-size: 0.9375rem;
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.35;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Pipeline Cards */
+  .c-pipeline-card__step {
+    font-size: 0.9375rem;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .c-pipeline-card__title {
+    font-size: 1.375rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.35;
+  }
+
+  .c-pipeline-card__desc {
+    font-size: 1.0625rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.55;
+  }
+
+  /* Threat Cards */
+  .c-threat-card__title {
+    font-size: 1.1875rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.35;
+  }
+
+  .c-threat-card__desc {
+    font-size: 1rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.55;
+  }
+
+  .c-threat-card__item {
+    font-size: 0.9375rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.55;
+  }
+
+  /* AI Cards */
+  .c-ai-card__title {
+    font-size: 1.0625rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.35;
+  }
+
+  .c-ai-card__desc {
+    font-size: 0.9375rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.55;
+  }
+
+  /* AI Powered By */
+  .c-ai-powered-by {
+    font-size: 1.0625rem;
+    font-weight: var(--font-weight-regular);
+  }
+
+  .c-ai-powered-by__google {
+    font-size: 1.375rem;
+    font-weight: var(--font-weight-bold);
+    background: linear-gradient(135deg, #4285f4 0%, #ea4335 25%, #fbbc05 50%, #34a853 75%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Score Cards */
+  .c-score-card__range {
+    font-size: 2.25rem;
+    font-weight: var(--font-weight-bold);
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
+  }
+
+  .c-score-card__label {
+    font-size: 0.9375rem;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .c-score-card__desc {
+    font-size: 1rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.55;
+  }
+
+  /* Checker Form */
+  .c-checker-form__label {
+    font-size: 0.9375rem;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .c-checker-form__input,
+  .c-checker-form__textarea {
+    font-size: 1.0625rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.55;
+  }
+
+  .c-checker-form__button {
+    font-size: 1rem;
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  /* Loading Animation */
+  .c-loading__title {
+    font-size: 1.375rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.35;
+  }
+
+  .c-loading__elapsed {
+    font-size: 0.9375rem;
+    font-weight: var(--font-weight-semibold);
+    font-family: var(--font-mono);
+    letter-spacing: 0.03em;
+  }
+
+  .c-loading__status {
+    font-size: 0.9375rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.55;
+  }
+
+  .c-loading__step-label {
+    font-size: 0.9375rem;
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.35;
+  }
+
+  .c-loading__step-desc {
+    font-size: 0.8125rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.45;
+  }
+
+  /* Result Panel */
+  .c-result-panel__title {
+    font-size: 1.625rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+  }
+
+  .c-result-panel__subtitle {
+    font-size: 1.0625rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.55;
+  }
+
+  .c-result-panel__section-title {
+    font-size: 1.375rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.35;
+  }
+
+  .c-result-panel__finding-title {
+    font-size: 1.0625rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.35;
+  }
+
+  .c-result-panel__finding-desc {
+    font-size: 0.9375rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.55;
+  }
+
+  .c-badge {
+    font-size: 0.9375rem;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .c-criteria__section-title {
+    font-size: 1.1875rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.35;
+  }
+
+  .c-criteria__item {
+    font-size: 1rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.55;
+  }
+
+  .c-criteria__chip {
+    font-size: 0.8125rem;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  /* Audit Section */
+  .c-result-panel__audit-title {
+    font-size: 1.375rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.25;
+  }
+
+  .c-result-panel__audit-subtitle {
+    font-size: 0.9375rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.45;
+  }
+
+  .c-result-panel__audit-pillar-name {
+    font-size: 1.1875rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.25;
+  }
+
+  .c-result-panel__audit-card-desc {
+    font-size: 1rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.55;
+  }
+
+  .c-pillar-box__title {
+    font-size: 1.25rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.35;
+  }
+
+  .c-pillar-box__desc {
+    font-size: 1.0625rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.55;
+  }
+
+  .c-pillar-box__list {
+    font-size: 0.9375rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.55;
+  }
+
+  /* Text Classes */
+  .text-heading-xl {
+    font-size: 2.375rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.25;
+  }
+
+  .text-heading-lg {
+    font-size: 1.75rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+  }
+
+  .text-heading-md {
+    font-size: 1.375rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.35;
+  }
+
+  .text-body {
+    font-size: 1.0625rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.65;
+  }
+
+  .text-body-sm {
+    font-size: 0.9375rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.55;
+  }
+
+  .text-caption {
+    font-size: 0.8125rem;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.45;
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "site": {
+    "name": "JobCheck",
+    "baseUrl": "https://jobcheck.in",
+    "shortDescription": "Scam vs. legit job-link checker for Indian freshers",
+    "fullDescription": "JobCheck analyzes job postings in real-time to identify scams. Detects fees, task scams, WhatsApp recruiters, lookalike domains, and 100+ risk signals with AI-powered verification.",
+    "logo": "https://jobcheck.in/logo.png",
+    "logoDark": "https://jobcheck.in/logo-dark.png",
+    "favicon": "https://jobcheck.in/logo.png",
+    "themeColor": "#090d16",
+    "themeColorLight": "#f8fafc",
+    "language": "en",
+    "region": "IN"
+  },
+  "social": {
+    "twitter": "@jobcheck_in",
+    "linkedin": "company/jobcheck",
+    "github": "jobcheck/jobcheck"
+  },
+  "keywords": [
+    "job scam detector",
+    "job posting verification",
+    "Indian job scams",
+    "fake job alerts",
+    "recruitment scam check",
+    "job verification tool",
+    "phishing job links",
+    "lookalike domains",
+    "work from home scams",
+    "fee scams",
+    "WhatsApp recruitment",
+    "job posting analysis",
+    "scam detection",
+    "fresher jobs",
+    "legitimate job postings"
+  ],
+  "ogp": {
+    "type": "website",
+    "image": "https://jobcheck.in/og-image.png",
+    "imageWidth": 1200,
+    "imageHeight": 630,
+    "imageAlt": "JobCheck - Scam vs. Legit Job Checker",
+    "imageType": "image/png"
+  },
+  "robots": {
+    "index": true,
+    "follow": true,
+    "maxSnippet": -1,
+    "maxImagePreview": "large",
+    "maxVideoPreview": -1
+  },
+  "canonical": "https://jobcheck.in/",
+  "author": "JobCheck Team",
+  "creator": "JobCheck",
+  "publisher": "JobCheck",
+  "contentRating": "General"
+}

@@ -1,0 +1,259 @@
+/* ==========================================================================
+   Modern Loading Animation with Progress Tracking
+   ========================================================================== */
+
+.c-loading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-8);
+  background: var(--color-bg-surface);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--color-border-subtle);
+}
+
+.c-loading__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.c-loading__title {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0;
+  line-height: 1.35;
+}
+
+.c-loading__elapsed {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  background: var(--color-primary-subtle);
+  padding: var(--space-1-5) var(--space-3);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.c-loading__status {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-bg-subtle);
+  border-radius: var(--radius-lg);
+  border-left: 3px solid var(--color-primary);
+}
+
+/* Progress Bar */
+.c-loading__progress-bar {
+  width: 100%;
+  height: 4px;
+  background: var(--color-border-subtle);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.c-loading__progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-trust));
+  border-radius: var(--radius-full);
+  width: 0%;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Steps Section */
+.c-loading__steps-label {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  margin: var(--space-2) 0;
+}
+
+.c-loading__steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.c-loading__step {
+  display: flex;
+  gap: var(--space-3);
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.c-loading__step--active {
+  opacity: 1;
+}
+
+.c-loading__step--done {
+  opacity: 0.8;
+}
+
+.c-loading__step-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--color-border-subtle);
+  border: 2px solid transparent;
+  flex-shrink: 0;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.c-loading__step--active .c-loading__step-dot {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  animation: spinDot 1s linear infinite;
+}
+
+@keyframes spinDot {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.c-loading__step--done .c-loading__step-dot {
+  background: var(--color-risk-low);
+  border-color: var(--color-risk-low);
+}
+
+.c-loading__step--done .c-loading__step-dot::after {
+  content: '✓';
+  position: absolute;
+  color: white;
+  font-weight: bold;
+  font-size: 0.75rem;
+}
+
+.c-loading__step-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  justify-content: center;
+}
+
+.c-loading__step-label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.c-loading__step--active .c-loading__step-label {
+  color: var(--color-primary);
+}
+
+.c-loading__step-desc {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+}
+
+.c-loading__step--active .c-loading__step-desc {
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .c-loading {
+    padding: var(--space-5);
+    gap: var(--space-4);
+  }
+
+  .c-loading__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+
+  .c-loading__title {
+    font-size: 1.0625rem;
+    word-break: break-word;
+  }
+
+  .c-loading__elapsed {
+    align-self: flex-start;
+    font-size: 0.9rem;
+    padding: var(--space-1) var(--space-2);
+  }
+
+  .c-loading__status {
+    font-size: 0.875rem;
+    word-break: break-word;
+  }
+
+  .c-loading__step-label {
+    font-size: 0.875rem;
+    word-break: break-word;
+  }
+
+  .c-loading__step-desc {
+    font-size: 0.75rem;
+    word-break: break-word;
+  }
+}
+
+@media (max-width: 450px) {
+  .c-loading {
+    padding: var(--space-4);
+    gap: var(--space-3);
+  }
+
+  .c-loading__title {
+    font-size: 1rem;
+  }
+
+  .c-loading__header {
+    gap: var(--space-1);
+  }
+
+  .c-loading__elapsed {
+    font-size: 0.875rem;
+    padding: var(--space-0-5) var(--space-1-5);
+  }
+
+  .c-loading__status {
+    font-size: 0.8125rem;
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .c-loading__steps-label {
+    font-size: 0.75rem;
+  }
+
+  .c-loading__step-dot {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .c-loading__step-label {
+    font-size: 0.8125rem;
+  }
+
+  .c-loading__step-desc {
+    font-size: 0.7rem;
+    line-height: 1.3;
+  }
+}

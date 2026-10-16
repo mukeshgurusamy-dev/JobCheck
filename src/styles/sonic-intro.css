@@ -1,0 +1,220 @@
+/* ===================================================================
+   Sonic Logo Intro Component - Professional Hero Video Style
+   (Inspired by Mastercard, Stripe, and modern enterprise patterns)
+   =================================================================== */
+
+.c-sonic-intro {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #0a0e16 0%, #1a1f2e 100%);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 0.6s ease-out;
+  overflow: hidden;
+}
+
+.c-sonic-intro--fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Video container - professional hero sizing */
+.c-sonic-intro__video-container {
+  position: relative;
+  width: 90%;
+  max-width: 1200px;
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+/* Video - maintains aspect ratio, fills container */
+.c-sonic-intro__video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: linear-gradient(135deg, #0a0e16 0%, #1a1f2e 100%);
+}
+
+/* Skip button - bottom right, transparent glassmorphism */
+.c-sonic-intro__skip {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  padding: 0.875rem 1.75rem;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 2.5rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  z-index: 10001;
+  font-family: inherit;
+}
+
+.c-sonic-intro__skip:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
+}
+
+.c-sonic-intro__skip:active {
+  transform: translateY(0);
+}
+
+.c-sonic-intro__skip:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.3);
+  outline-offset: 2px;
+}
+
+/* Progress bar - bottom edge of screen */
+.c-sonic-intro__progress {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  z-index: 10000;
+}
+
+.c-sonic-intro__progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(
+    90deg,
+    #3b82f6 0%,
+    #60a5fa 50%,
+    #3b82f6 100%
+  );
+  transition: width 0.05s linear;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
+}
+
+/* Tablet responsive */
+@media (max-width: 1024px) {
+  .c-sonic-intro__video-container {
+    width: 92%;
+    height: 65vh;
+    border-radius: 12px;
+  }
+
+  .c-sonic-intro__skip {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.8125rem;
+  }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .c-sonic-intro__video-container {
+    width: 94%;
+    max-width: 100%;
+    height: 60vh;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .c-sonic-intro__skip {
+    bottom: 1.25rem;
+    right: 1.25rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.8125rem;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .c-sonic-intro__video-container {
+    width: 96%;
+    height: 50vh;
+    border-radius: 6px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .c-sonic-intro__skip {
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .c-sonic-intro {
+    transition: none;
+  }
+
+  .c-sonic-intro--fade-out {
+    display: none;
+  }
+
+  .c-sonic-intro__skip {
+    transition: none;
+  }
+
+  .c-sonic-intro__video-container {
+    box-shadow: none;
+  }
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .c-sonic-intro {
+  background: linear-gradient(135deg, #0a0e16 0%, #1a1f2e 100%);
+}
+
+[data-theme="dark"] .c-sonic-intro__video {
+  background: linear-gradient(135deg, #0a0e16 0%, #1a1f2e 100%);
+}
+
+[data-theme="dark"] .c-sonic-intro__skip {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+[data-theme="dark"] .c-sonic-intro__skip:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Light theme adjustments */
+[data-theme="light"] .c-sonic-intro {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+[data-theme="light"] .c-sonic-intro__video {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+[data-theme="light"] .c-sonic-intro__skip {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="light"] .c-sonic-intro__skip:hover {
+  background: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.15);
+  color: rgba(0, 0, 0, 0.9);
+}

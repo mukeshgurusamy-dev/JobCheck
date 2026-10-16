@@ -1,0 +1,29 @@
+{
+  "name": "jobcheck",
+  "version": "1.0.0",
+  "description": "Scam vs. legit job-link checker for Indian freshers",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "evaluate": "vitest run tests/evaluate.test.ts",
+    "benchmark": "vitest run tests/benchmark100.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@netlify/functions": "^6.0.2",
+    "@types/node": "^22.10.2",
+    "happy-dom": "^20.14.5",
+    "sharp": "^0.35.5",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.3",
+    "vitest": "^2.1.8"
+  },
+  "dependencies": {
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.2.1"
+  }
+}

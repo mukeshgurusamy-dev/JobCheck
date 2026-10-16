@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="JobCheck: A scam vs. legit job-link checker for Indian freshers. Real-time risk analysis on fees, task scams, WhatsApp recruiters, and lookalike domains." />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#090d16" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
+    <title>JobCheck — Scam vs. Legit Job Checker for Indian Freshers</title>
+    <!--
+      Fonts are self-hosted (src/styles/fonts.css, public/fonts/README.md).
+      The previous Google Fonts <link> and its two preconnects were refused by
+      the style-src 'self' CSP in netlify.toml, so they never rendered and only
+      cost a blocked request each.
+
+      The preload for the Geist face is deliberately absent while the woff2
+      files are not in the repository: preloading a file that is not on disk is
+      a 404 on the critical path of every page load, which is worse than the
+      font arriving one round-trip later. Restore it together with the three
+      url() sources in fonts.css:
+
+        <link rel="preload" href="/fonts/geist-latin-var.woff2"
+              as="font" type="font/woff2" crossorigin />
+    -->
+    <link rel="icon" type="image/webp" href="/logo.webp" />
+    <link rel="apple-touch-icon" href="/logo.png" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
