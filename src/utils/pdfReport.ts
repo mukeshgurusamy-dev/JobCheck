@@ -503,14 +503,25 @@ export function generateAuditReportHtml(
     }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      color: #0f172a;
-      background: #ffffff;
+      color: #0f172a !important;
+      background: #ffffff !important;
       line-height: 1.45;
       font-size: 12px;
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
+      color-scheme: light;
       word-wrap: break-word;
       overflow-wrap: break-word;
+    }
+
+    /* Force text visibility for html2canvas rendering */
+    * {
+      color-scheme: light;
+    }
+
+    body, body * {
+      color: inherit !important;
+      fill: currentColor !important;
     }
     .c-report-container {
       width: 100%;
