@@ -1281,20 +1281,20 @@ export async function exportDirectPdfBlob(
   const reportBody = parsedDoc.body.innerHTML;
   const styles = parsedDoc.head.querySelector("style")?.innerHTML || "";
 
-  // Create isolated off-screen rendering container (hidden under root via z-index, but full opacity for rasterization)
+  // Create isolated off-screen rendering container - use absolute positioning to ensure proper rendering
   const container = document.createElement("div");
   container.className = "jc-pdf-offscreen-render";
-  container.style.position = "fixed";
-  container.style.left = "0";
+  container.style.position = "absolute";
+  container.style.left = "-99999px"; // Far off-screen but in document flow
   container.style.top = "0";
   container.style.width = "794px"; // 210mm at 96 DPI
-  container.style.minHeight = "1123px"; // 297mm at 96 DPI
-  container.style.zIndex = "-99999";
+  container.style.height = "auto";
   container.style.opacity = "1"; // Must be 1 so html2canvas captures full color & contrast!
   container.style.pointerEvents = "none";
   container.style.backgroundColor = "#ffffff";
   container.style.boxSizing = "border-box";
   container.style.padding = "20px 24px";
+  container.style.visibility = "visible"; // Ensure it's visible to html2canvas
 
   // Inject scoped styles and HTML
   const styleEl = document.createElement("style");
@@ -1308,18 +1308,45 @@ export async function exportDirectPdfBlob(
   document.body.appendChild(container);
 
   try {
-    // Wait for fonts and any assets to render
-    await new Promise((r) => setTimeout(r, 150));
+    // Wait for fonts, images, and layout to fully render
+    await new Promise((r) => setTimeout(r, 500));
 
-    // Render DOM to high-DPI canvas
-    const canvas = await html2canvas(container, {
-      scale: 2, // 2x DPI for crisp text and graphics
-      useCORS: true,
-      allowTaint: true,
-      backgroundColor: "#ffffff",
-      logging: false,
-      windowWidth: 794,
-    });
+    // Force layout recalculation
+    void container.offsetHeight;
+
+    // Render DOM to high-DPI canvas with explicit error checking
+    let canvas: HTMLCanvasElement;
+    try {
+      canvas = await html2canvas(container, {
+        scale: 2, // 2x DPI for crisp text and graphics
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: "#ffffff",
+        logging: false,
+        windowWidth: 794,
+        imageTimeout: 5000,
+        removeContainer: true,
+      });
+    } catch (error) {
+      console.error("html2canvas failed:", error);
+      throw new Error(`PDF rendering failed: ${error instanceof Error ? error.message : "Unknown error"}`);
+    }
+
+    // Verify canvas has actual content
+    if (canvas.width === 0 || canvas.height === 0) {
+      throw new Error("Canvas rendered with zero dimensions - content not captured");
+    }
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      throw new Error("Could not get 2D context from canvas");
+    }
+
+    // Check if canvas has any pixel data (simple verification)
+    const imageData = ctx.getImageData(0, 0, Math.min(10, canvas.width), Math.min(10, canvas.height));
+    if (imageData.data.length === 0) {
+      throw new Error("Canvas appears empty - no pixel data captured");
+    }
 
     // Initialize A4 PDF in mm
     const pdf = new jsPDF({
