@@ -1,0 +1,114 @@
+/* ==========================================================================
+   Icon Component Styles
+   ========================================================================== */
+
+.c-icon {
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: middle;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Size modifiers */
+.c-icon--xs {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.c-icon--sm {
+  width: 1rem;
+  height: 1rem;
+}
+
+.c-icon--md {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.c-icon--lg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.c-icon--xl {
+  width: 2rem;
+  height: 2rem;
+}
+
+/* Color modifiers */
+.c-icon--primary {
+  color: var(--color-primary);
+}
+
+.c-icon--risk-low {
+  color: var(--color-risk-low);
+}
+
+.c-icon--risk-medium {
+  color: var(--color-risk-medium);
+}
+
+.c-icon--risk-high {
+  color: var(--color-risk-high);
+}
+
+.c-icon--trust {
+  color: var(--color-trust);
+}
+
+.c-icon--spin {
+  animation: c-icon-spin 1s linear infinite;
+}
+
+@keyframes c-icon-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==========================================================================
+   Icon Responsive Media Queries
+   ========================================================================== */
+
+/* 1. Compact Mobile (300px - 450px) */
+@media (min-width: 300px) and (max-width: 450px) {
+  .c-icon--lg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .c-icon--xl {
+    width: 1.625rem;
+    height: 1.625rem;
+  }
+}
+
+/* 2. Standard Mobile (451px - 720px) */
+@media (min-width: 451px) and (max-width: 720px) {
+  .c-icon--xl {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+}
+
+/* 3. Tablets & Narrow Laptops (max-width: 1040px) */
+@media (max-width: 1040px) {
+  .c-icon {
+    vertical-align: middle;
+  }
+}
+
+/* 4. Desktop & Wide Screens (max-width: 1500px) */
+@media (max-width: 1500px) {
+  .c-icon {
+    flex-shrink: 0;
+  }
+}
+

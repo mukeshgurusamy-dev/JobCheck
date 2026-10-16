@@ -1,0 +1,219 @@
+/* CRITICAL PATH CSS - Inlined in <head> for fastest first paint */
+/* This contains: tokens, reset basics, nav, hero, form, and gauge styles */
+/* Non-critical styles are deferred via media query technique */
+
+:root {
+  /* Design Tokens - Critical subset */
+  --font-display: "Unbounded", "Plus Jakarta Sans", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: "Geist", "Plus Jakarta Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --font-mono: "Geist Mono", "JetBrains Mono", "SF Mono", Menlo, Consolas, Monaco, "Liberation Mono", monospace;
+
+  --text-display-xl: clamp(2.75rem, 1.8rem + 4.5vw, 6rem);
+  --text-h2: clamp(1.75rem, 1.35rem + 1.2vw, 2.375rem);
+  --text-h3: clamp(1.25rem, 1.15rem + 0.5vw, 1.625rem);
+  --text-body: 1.0625rem;
+  --text-small: 0.9375rem;
+
+  --leading-display-xl: 1.05;
+  --leading-h2: 1.25;
+  --leading-body: 1.65;
+
+  --tracking-display-xl: -0.04em;
+  --tracking-h2: -0.025em;
+
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+
+  --radius-md: 0.5rem;
+  --radius-sm: 0.25rem;
+  --radius-full: 9999px;
+
+  --z-sticky: 100;
+  --z-skip-link: 1000;
+
+  --duration-fast: 150ms;
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Light theme colors (default) */
+  --color-bg-canvas: #f8fafc;
+  --color-bg-surface: #ffffff;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-border-subtle: #e2e8f0;
+  --color-primary: #2563eb;
+  --color-primary-text: #ffffff;
+  --color-primary-subtle: #dbeafe;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg-canvas: #090d16;
+    --color-bg-surface: #0f172a;
+    --color-text-primary: #f1f5f9;
+    --color-text-secondary: #cbd5e1;
+    --color-border-subtle: #1e293b;
+    --color-primary: #3b82f6;
+    --color-primary-text: #ffffff;
+    --color-primary-subtle: #1e3a8a;
+  }
+}
+
+:root[data-theme="dark"] {
+  --color-bg-canvas: #090d16;
+  --color-bg-surface: #0f172a;
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #cbd5e1;
+  --color-border-subtle: #1e293b;
+  --color-primary: #3b82f6;
+  --color-primary-text: #ffffff;
+  --color-primary-subtle: #1e3a8a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+}
+
+body {
+  background-color: var(--color-bg-canvas);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Critical Layout */
+.l-container {
+  width: 100%;
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(var(--space-4), 4vw, var(--space-8));
+  padding-right: clamp(var(--space-4), 4vw, var(--space-8));
+}
+
+.l-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.l-stack--gap-lg { gap: var(--space-6); }
+.l-stack--gap-md { gap: var(--space-4); }
+
+/* Critical Nav */
+.c-nav {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  width: 100%;
+  background-color: var(--color-bg-canvas);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.c-nav__inner {
+  display: flex;
+  align-items: center;
+  min-height: 4.25rem;
+  padding-left: clamp(var(--space-4), 4vw, var(--space-8));
+  padding-right: clamp(var(--space-4), 4vw, var(--space-8));
+}
+
+.c-nav__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+  color: var(--color-text-primary);
+  flex-shrink: 0;
+}
+
+.c-header__logo-wrapper {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.c-header__logo-wrapper img,
+.c-header__logo-wrapper picture {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Critical Hero */
+.c-ent-hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-8) 0;
+}
+
+.c-ent-hero__title {
+  font-size: var(--text-display-xl);
+  font-weight: 800;
+  line-height: var(--leading-display-xl);
+  letter-spacing: var(--tracking-display-xl);
+  color: var(--color-text-primary);
+}
+
+.c-ent-hero__gradient-text {
+  background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.c-ent-hero__subtitle {
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+  max-width: 60ch;
+}
+
+/* Critical Form/Gauge */
+.c-checker-form {
+  background-color: var(--color-bg-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-8);
+  margin: var(--space-6) 0;
+}
+
+/* Skip link */
+.c-skip-link {
+  position: fixed;
+  top: var(--space-3);
+  left: var(--space-4);
+  padding: var(--space-3) var(--space-5);
+  background-color: var(--color-primary);
+  color: #ffffff;
+  font-size: var(--text-small);
+  border-radius: var(--radius-md);
+  z-index: var(--z-skip-link);
+  text-decoration: none;
+  transform: translateY(calc(-100% - var(--space-6)));
+  transition: transform var(--duration-fast) var(--ease-in-out);
+}
+
+.c-skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+@media (pointer: coarse) {
+  .c-skip-link {
+    display: none;
+  }
+}

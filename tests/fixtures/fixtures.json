@@ -1,0 +1,182 @@
+[
+  {
+    "id": "scam-01",
+    "url": "https://careers-tcs-entry.xyz/apply",
+    "description": "Dear Candidate, you have been selected for TCS Fresher Trainee role. Pay ₹1,500 refundable security deposit to confirm your interview gate pass. Transfer via UPI to hr-tcs@paytm.",
+    "expected": "High"
+  },
+  {
+    "id": "scam-02",
+    "url": "https://forms.gle/9a8b7c6d5e4f3g2h1",
+    "description": "Urgent hiring for Amazon Back Office Data Entry! 10th/12th pass can earn ₹2,500 per day. No interview needed. Work 2 hours daily from mobile. Contact HR on WhatsApp only: 9876543210.",
+    "expected": "High"
+  },
+  {
+    "id": "scam-03",
+    "url": "https://t.me/freshers_daily_tasks_earn",
+    "description": "Daily YouTube and Instagram like task job. Complete 10 tasks to earn ₹3,000 commission. Daily payout in USDT or bank transfer. Top-up wallet with ₹500 to unlock VIP merchant tasks.",
+    "expected": "High"
+  },
+  {
+    "id": "scam-04",
+    "url": "https://infosyss.com/fresher-registration",
+    "description": "Infosys campus drive 2026. Submit your Aadhaar card copy, PAN card, and bank account details with cancelled cheque before the telephonic interview round.",
+    "expected": "High"
+  },
+  {
+    "id": "scam-05",
+    "url": "https://bit.ly/wipro-instant-offer",
+    "description": "Direct joining in Wipro Technologies without interview! Immediate spot joining. Mandatory training kit charges ₹2,999 payable via GPay before receiving offer letter.",
+    "expected": "High"
+  },
+  {
+    "id": "scam-06",
+    "url": "https://apply-google-careers.online/register",
+    "description": "Google India work from home customer support. Guaranteed income ₹75,000 per month for freshers. Registration fee ₹950 for laptop courier and verification.",
+    "expected": "High"
+  },
+  {
+    "id": "scam-07",
+    "url": "https://hcl-technologies-jobs.top/canada",
+    "description": "Canada work permit visa job offer. 100% guaranteed visa placement for fresh graduates. Visa processing fee ₹45,000 to be paid to authorized visa agent via PhonePe.",
+    "expected": "High"
+  },
+  {
+    "id": "scam-08",
+    "url": "https://freshers-hiring-now.wixsite.com/jobs",
+    "description": "Leading MNC is hiring for confidential client. High earnings. Refer 5 friends to earn 20% passive income referral bonus. Build your team and achieve financial freedom.",
+    "expected": "High"
+  },
+  {
+    "id": "scam-09",
+    "url": "https://jobalert202688.com/apply-now",
+    "description": "Simple copy paste form filling work from home. Earn ₹15,000 to ₹25,000 weekly guaranteed payout. No experience or skill needed. Send resume to quickjobs@gmail.com.",
+    "expected": "High"
+  },
+  {
+    "id": "scam-10",
+    "url": "https://flipkart-delivery-hub.buzz/hub",
+    "description": "Flipkart Delivery Executive and Office Boy openings. Selected without interview. Deposit ₹850 for uniform, ID card, and safety kit before reporting to warehouse.",
+    "expected": "High"
+  },
+  {
+    "id": "scam-11",
+    "url": "https://tcs.com.apply-online.xyz/careers",
+    "description": "Tata Consultancy Services direct hiring drive. Send CV on WhatsApp only: https://wa.me/919988776655. Offer letter within 24 hours of form submission.",
+    "expected": "High"
+  },
+  {
+    "id": "scam-12",
+    "url": "https://g00gle.com/jobs-india",
+    "description": "Google Operations Center fresher recruitment. Review Google Maps and hotel listings to earn ₹500 per review. Daily cash payment credited to UPI.",
+    "expected": "High"
+  },
+  {
+    "id": "scam-13",
+    "url": "https://accenture-careers-portal.site/entry",
+    "description": "Accenture paid training cum placement program. Pay ₹12,000 training fee with 100% guaranteed job placement upon course completion or money back.",
+    "expected": "High"
+  },
+  {
+    "id": "scam-14",
+    "url": "https://tinyurl.com/deloitte-analyst-job",
+    "description": "Deloitte Analyst opening for 2025/2026 batch. Selected candidate must submit selfie with ID card and transfer ₹2,000 processing fee to confirm slot.",
+    "expected": "High"
+  },
+  {
+    "id": "scam-15",
+    "url": "https://microsofft.com/openings",
+    "description": "Microsoft India support engineer. Apply immediately! Limited seats remaining! URGENT OPENING!!! Contact hr-recruitment@outlook.com for appointment letter.",
+    "expected": "High"
+  },
+  {
+    "id": "genuine-01",
+    "url": "https://careers.tcs.com/job/tcs-ninja-fresher-2026",
+    "description": "About the Company: Tata Consultancy Services is a global leader in IT services. Key Responsibilities: Develop, test, and maintain code modules under technical mentorship. Qualifications: B.E/B.Tech/MCA graduates with minimum 60% throughout academics. Realistic CTC: 3.36 LPA - 3.6 LPA.",
+    "expected": "Low"
+  },
+  {
+    "id": "genuine-02",
+    "url": "https://careers.infosys.com/jobs/systems-engineer-trainee",
+    "description": "Company Overview: Infosys is a digital transformation leader. Responsibilities: Participate in foundational training at Mysore campus; design scalable software solutions. Requirements: Bachelor of Engineering or Technology in CS/IT/ECE. CTC: 3.6 LPA to 4.0 LPA.",
+    "expected": "Low"
+  },
+  {
+    "id": "genuine-03",
+    "url": "https://amazon.jobs/en/jobs/2541890/software-development-engineer-i",
+    "description": "About Us: Amazon strives to be Earth's most customer-centric company. Responsibilities: Collaborate with senior engineers to deliver scalable distributed microservices. Requirements: Programming proficiency in Java, C++, or Python with strong understanding of data structures. Full-time position in Bangalore.",
+    "expected": "Low"
+  },
+  {
+    "id": "genuine-04",
+    "url": "https://deloitte.wd1.myworkdayjobs.com/en-US/deloitte_careers/job/Analyst-Technology",
+    "description": "About Deloitte: Join a global leader in audit, consulting, and advisory services. Responsibilities: Analyze business data, develop test scripts, and support enterprise deployments. Qualifications: Bachelor's degree in Engineering, Computer Science, or related quantitative discipline. Equal opportunity employer.",
+    "expected": "Low"
+  },
+  {
+    "id": "genuine-05",
+    "url": "https://jobs.lever.co/swiggy/associate-product-analyst",
+    "description": "About the Team: Swiggy's analytics team powers food and grocery logistics. What you'll do: Build dashboards, write SQL queries, and evaluate experiment metrics. Who you are: Strong problem-solving aptitude, SQL knowledge, and analytical rigor. Compensation: 6 - 9 LPA depending on interview performance.",
+    "expected": "Low"
+  },
+  {
+    "id": "genuine-06",
+    "url": "https://careers.google.com/jobs/results/142981014197478086-software-engineer-early-career",
+    "description": "About the job: Google software engineers develop next-generation technologies. Responsibilities: Write clean, well-tested code in C++, Java, or Go. Qualifications: BS degree in Computer Science or equivalent practical experience with software engineering fundamentals. Hyderabad/Bangalore.",
+    "expected": "Low"
+  },
+  {
+    "id": "genuine-07",
+    "url": "https://boards.greenhouse.io/zomato/jobs/5214890",
+    "description": "About Zomato: We are transforming food tech and rapid commerce. Key Deliverables: Design and maintain responsive frontend web components using TypeScript and React. Qualifications: Strong fundamentals in web standards, HTML/CSS, and modern JavaScript. Office location: Gurgaon.",
+    "expected": "Low"
+  },
+  {
+    "id": "genuine-08",
+    "url": "https://careers.wipro.com/careers-home/jobs/298412",
+    "description": "About the Company: Wipro Limited is a leading technology services and consulting company. Responsibilities: Work within agile project teams delivering enterprise cloud applications. Eligibility: Full-time graduation in B.Tech/BE with 60% or 6.0 CGPA throughout 10th, 12th, and UG. Package: 3.5 LPA.",
+    "expected": "Low"
+  },
+  {
+    "id": "genuine-09",
+    "url": "https://www.naukri.com/job-listings-graduate-engineer-trainee-larsen-toubro",
+    "description": "About Company: L&T Technology Services provides engineering R&D solutions. Responsibilities: Perform design calculations, 3D modeling, and testing verification. Requirements: BE Mechanical or Electrical with good academic standing. Selection involves written test followed by technical interview.",
+    "expected": "Low"
+  },
+  {
+    "id": "genuine-10",
+    "url": "https://internshala.com/internship/detail/full-stack-web-development-internship",
+    "description": "About the Organization: An early-stage fintech startup funded by top institutional VCs. Selected intern's day-to-day responsibilities: Developing backend REST APIs using Node.js and PostgreSQL. Skill(s) required: Node.js, Git, SQL. Fixed stipend: ₹20,000 - ₹30,000 /month.",
+    "expected": "Low"
+  },
+  {
+    "id": "genuine-11",
+    "url": "https://jobs.smartrecruiters.com/Thoughtworks/7439999-graduate-consultant-developer",
+    "description": "About Us: Thoughtworks is a global software consultancy. What you will do: Practice test-driven development, pair programming, and continuous delivery. Requirements: Passion for coding, problem solving, and learning modern languages. No registration or interview fees are ever charged.",
+    "expected": "Low"
+  },
+  {
+    "id": "genuine-12",
+    "url": "https://careers.flipkart.com/jobs/associate-software-development-engineer",
+    "description": "About Flipkart: India's homegrown e-commerce marketplace. Key Responsibilities: Design and develop core fulfillment and payment service modules. Qualifications: B.Tech/M.Tech in Computer Science; strong foundation in algorithms and system design. Bangalore.",
+    "expected": "Low"
+  },
+  {
+    "id": "genuine-13",
+    "url": "https://www.linkedin.com/jobs/view/3847291048",
+    "description": "Company Profile: Microsoft IDC. Role: Software Engineer - University Graduate. Responsibilities: Build cloud native services on Microsoft Azure. Qualifications: Bachelor's degree in CS or related field graduating in 2025/2026. Standard interview process with online assessment and technical interviews.",
+    "expected": "Low"
+  },
+  {
+    "id": "genuine-14",
+    "url": "https://careers.zoho.com/jobs/software-developer-trainee",
+    "description": "About Zoho: A bootstrapped software company making enterprise web applications. What we look for: Passion for programming, problem-solving skills, and fundamental understanding of computers. We do not look for degrees or marks; our recruitment process involves written aptitude and hands-on coding rounds.",
+    "expected": "Low"
+  },
+  {
+    "id": "genuine-15",
+    "url": "https://techmahindra.com/en-in/careers/openings/associate-software-engineer",
+    "description": "Company Overview: Tech Mahindra represents the connected world. Job Responsibilities: Software development, debugging, and client technical support under senior lead guidance. Eligibility Criteria: 2025/2026 passed out BE/B.Tech/MCA candidates with minimum 60% aggregate. Salary: 3.25 LPA - 3.75 LPA.",
+    "expected": "Low"
+  }
+]

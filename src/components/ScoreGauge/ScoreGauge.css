@@ -1,0 +1,192 @@
+/* ==========================================================================
+   ScoreGauge Molecule Styles
+   A single SVG arc. The level colour comes from the same three tokens the
+   rest of the app uses, so the gauge can never disagree with the badge beside
+   it.
+   ========================================================================== */
+
+.c-score-gauge {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+@media (min-width: 640px) {
+  .c-score-gauge {
+    width: 160px;
+    height: 160px;
+  }
+}
+
+/* Only on a device with a real pointer — a hover scale on a touch screen
+   either does nothing or sticks after the tap. */
+@media (pointer: fine) {
+  .c-score-gauge:hover {
+    transform: scale(1.03);
+  }
+}
+
+.c-score-gauge__svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg); /* Start the arc at the top. */
+  overflow: visible;
+}
+
+.c-score-gauge__track {
+  fill: none;
+  stroke: var(--color-bg-muted);
+  stroke-width: 10;
+}
+
+.c-score-gauge__meter {
+  fill: none;
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dashoffset var(--duration-slow) var(--ease-out),
+    stroke var(--duration-base) var(--ease-in-out);
+}
+
+/* Glow, applied only once the arc has finished drawing.
+   The glow is a filter, and a filter is repainted from scratch on every frame
+   the stroke changes — so it is held back until the arc is static. The
+   `.c-score-gauge--settled` class is added by ScoreGauge.ts when the drawing
+   transition ends, with a timer as a backstop in case the transitionend event
+   never arrives (which happens when the element is not in the document, or
+   when the animation is skipped entirely). */
+.c-score-gauge--low .c-score-gauge__meter {
+  stroke: var(--color-risk-low);
+}
+
+.c-score-gauge--medium .c-score-gauge__meter {
+  stroke: var(--color-risk-medium);
+}
+
+.c-score-gauge--high .c-score-gauge__meter {
+  stroke: var(--color-risk-high);
+}
+
+.c-score-gauge--settled.c-score-gauge--low .c-score-gauge__meter {
+  filter: drop-shadow(0 0 6px var(--color-risk-low));
+}
+
+.c-score-gauge--settled.c-score-gauge--medium .c-score-gauge__meter {
+  filter: drop-shadow(0 0 6px var(--color-risk-medium));
+}
+
+.c-score-gauge--settled.c-score-gauge--high .c-score-gauge__meter {
+  filter: drop-shadow(0 0 7px var(--color-risk-high));
+}
+
+.c-score-gauge__center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* The number is the largest text in the app, so it gets the display face. It
+   is also the one number that must not reflow while it counts up, hence the
+   tabular figures. */
+.c-score-gauge__number {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 8vw, 3rem);
+  font-weight: 700;
+  line-height: var(--line-height-none);
+  color: var(--color-text-primary);
+  letter-spacing: var(--tracking-display-sm);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  animation: c-gauge-num-pop var(--duration-base) var(--ease-spring) both;
+}
+
+@keyframes c-gauge-num-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.c-score-gauge__scale {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .c-score-gauge__meter,
+  .c-score-gauge__number {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   ScoreGauge Responsive Media Queries
+   ========================================================================== */
+
+/* 1. Compact Mobile (300px - 450px) */
+@media (min-width: 300px) and (max-width: 450px) {
+  .c-score-gauge,
+  .c-result-panel__score-stack {
+    width: 130px;
+    height: 130px;
+  }
+
+  .c-score-gauge__number {
+    font-size: 2.25rem;
+  }
+
+  .c-score-gauge__scale {
+    font-size: 0.75rem;
+  }
+}
+
+/* 2. Standard Mobile (451px - 720px) */
+@media (min-width: 451px) and (max-width: 720px) {
+  .c-score-gauge,
+  .c-result-panel__score-stack {
+    width: 145px;
+    height: 145px;
+  }
+
+  .c-score-gauge__number {
+    font-size: 2.5rem;
+  }
+}
+
+/* 3. Tablets & Narrow Laptops (max-width: 1040px) */
+@media (max-width: 1040px) {
+  .c-score-gauge,
+  .c-result-panel__score-stack {
+    width: 155px;
+    height: 155px;
+  }
+}
+
+/* 4. Desktop & Wide Screens (max-width: 1500px) */
+@media (max-width: 1500px) {
+  .c-score-gauge,
+  .c-result-panel__score-stack {
+    width: 160px;
+    height: 160px;
+  }
+}
+

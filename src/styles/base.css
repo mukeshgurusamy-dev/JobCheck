@@ -1,0 +1,801 @@
+/* ==========================================================================
+   Base Styles & Layout Utility Scaffolding
+   ========================================================================== */
+
+/* Structure / Layout Utilities.
+   Padding is fluid so a 320px viewport keeps a usable measure without a
+   breakpoint, and the measure widens once there is room rather than scaling
+   the type up. */
+.l-container {
+  width: 100%;
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(var(--space-4), 4vw, var(--space-8));
+  padding-right: clamp(var(--space-4), 4vw, var(--space-8));
+  opacity: 1;
+  transition: opacity 0.8s ease-in;
+}
+
+/* Fade in animation after hero video completes */
+.l-container--fade-in {
+  animation: fadeInContent 0.8s ease-in forwards;
+}
+
+@keyframes fadeInContent {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 1280px) {
+  .l-container {
+    max-width: 1200px;
+  }
+}
+
+.l-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.l-stack--gap-xs { gap: var(--space-2); }
+.l-stack--gap-sm { gap: var(--space-3); }
+.l-stack--gap-md { gap: var(--space-4); }
+.l-stack--gap-lg { gap: var(--space-6); }
+.l-stack--gap-xl { gap: var(--space-8); }
+
+.l-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.l-cluster--gap-xs { gap: var(--space-1-5); }
+.l-cluster--gap-sm { gap: var(--space-2); }
+.l-cluster--gap-md { gap: var(--space-4); }
+.l-cluster--gap-lg { gap: var(--space-6); }
+.l-cluster--between { justify-content: space-between; }
+.l-cluster--center { justify-content: center; }
+
+/* Skip Link for Keyboard Accessibility.
+   Hidden with a transform rather than an off-screen `top`, so revealing it
+   animates a compositor property and it can never be clipped by an ancestor
+   that establishes a containing block. */
+.c-skip-link {
+  position: fixed;
+  top: var(--space-3);
+  left: var(--space-4);
+  padding: var(--space-3) var(--space-5);
+  background-color: var(--color-primary);
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-3);
+  z-index: var(--z-skip-link);
+  text-decoration: none;
+  transform: translateY(calc(-100% - var(--space-6)));
+  transition: transform var(--transition-fast);
+}
+
+.c-skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 3px solid var(--color-bg-surface);
+  outline-offset: 2px;
+}
+
+/* Touch and pointer-coarse users cannot summon a skip link, so do not hide
+   it from them behind a focus state they cannot reach. */
+@media (pointer: coarse) {
+  .c-skip-link {
+    display: none;
+  }
+}
+
+/* Screen reader only utility */
+.u-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Typography styles.
+   Unbounded (the display face) is for page title & hero score.
+   Headings are bold, crisp, and beautifully balanced. */
+.text-heading-xl {
+  font-family: var(--font-display);
+  font-size: var(--text-display-lg);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--leading-display-lg);
+  letter-spacing: var(--tracking-display-lg);
+  color: var(--color-text-primary);
+  text-wrap: balance;
+}
+
+.text-heading-lg {
+  font-family: var(--font-sans);
+  font-size: var(--text-h2);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--leading-h2);
+  letter-spacing: var(--tracking-h2);
+  color: var(--color-text-primary);
+  text-wrap: balance;
+}
+
+.text-heading-md {
+  font-family: var(--font-sans);
+  font-size: var(--text-h3);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--leading-h3);
+  letter-spacing: var(--tracking-h3);
+  color: var(--color-text-primary);
+}
+
+.text-heading-sm {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--leading-h3);
+  color: var(--color-text-primary);
+}
+
+.text-body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  color: var(--color-text-secondary);
+  max-width: var(--measure);
+}
+
+.text-body-sm {
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  line-height: var(--leading-small);
+  color: var(--color-text-secondary);
+}
+
+.text-body-xs {
+  font-family: var(--font-sans);
+  font-size: var(--text-caption);
+  line-height: var(--leading-small);
+  color: var(--color-text-muted);
+}
+
+/* ===== Global Glow Background ===== */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 600px;
+  background: var(--gradient-glow);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ===== Settings Modal =====
+   The third and last glass surface. It is fixed, never scrolled, and only
+   painted while the drawer is open, so the blur is paid for on demand. */
+.c-settings-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-drawer);
+  background: rgba(2, 6, 23, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--duration-base) var(--ease-in-out),
+    visibility var(--duration-base) var(--ease-in-out);
+}
+
+.c-settings-overlay--open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.c-settings-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-modal);
+  width: 100%;
+  max-width: 480px;
+  background: var(--color-bg-surface);
+  border-left: 1px solid var(--color-border-subtle);
+  box-shadow: var(--shadow-xl);
+  transform: translateX(100%);
+  transition: transform var(--duration-base) var(--ease-out);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.c-settings-overlay--open .c-settings-drawer {
+  transform: translateX(0);
+}
+
+.c-settings-drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--color-border-subtle);
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  background: var(--color-bg-surface);
+  z-index: 1;
+}
+
+.c-settings-drawer__title {
+  font-family: var(--font-sans);
+  font-size: var(--text-h3);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--leading-h3);
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.c-settings-drawer__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border-subtle);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-in-out),
+    color var(--duration-fast) var(--ease-in-out);
+}
+
+.c-settings-drawer__close:hover {
+  background: var(--color-bg-muted);
+  color: var(--color-text-primary);
+}
+
+.c-settings-drawer__body {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  flex: 1;
+}
+
+.c-settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.c-settings-section__title {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caption);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.c-settings-section__content {
+  font-size: var(--text-small);
+  line-height: var(--leading-body);
+  color: var(--color-text-secondary);
+}
+
+.c-settings-section__content p {
+  margin-bottom: var(--space-3);
+}
+
+.c-settings-section__content p:last-child {
+  margin-bottom: 0;
+}
+
+.c-settings-section__content strong {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* FAQ Accordion */
+.c-faq-item {
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color var(--duration-fast) var(--ease-in-out);
+}
+
+.c-faq-item:hover {
+  border-color: var(--color-border-base);
+}
+
+.c-faq-item__question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--leading-small);
+  color: var(--color-text-primary);
+  background: var(--color-bg-subtle);
+  cursor: pointer;
+  text-align: left;
+  border: none;
+  transition: background-color var(--duration-fast) var(--ease-in-out);
+}
+
+.c-faq-item__question:hover {
+  background: var(--color-bg-muted);
+}
+
+.c-faq-item__question .c-icon {
+  transition: transform var(--duration-fast) var(--ease-out);
+  flex-shrink: 0;
+  color: var(--color-text-muted);
+}
+
+.c-faq-item--open .c-faq-item__question .c-icon {
+  transform: rotate(180deg);
+}
+
+.c-faq-item__answer {
+  display: none;
+  padding: var(--space-4);
+  font-size: var(--text-small);
+  line-height: var(--leading-body);
+  color: var(--color-text-secondary);
+  background: var(--color-bg-surface);
+}
+
+.c-faq-item--open .c-faq-item__answer {
+  display: block;
+  animation: c-faq-reveal var(--duration-fast) var(--ease-out);
+}
+
+@keyframes c-faq-reveal {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Header ===== */
+.c-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+}
+
+.c-header__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2-5);
+}
+
+.c-header__logo-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--gradient-primary);
+  box-shadow: var(--gradient-card-glow);
+  flex-shrink: 0;
+}
+
+.c-header__logo-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.c-header__logo-wrapper .c-icon {
+  color: #ffffff;
+}
+
+/* Footer brand mark: slightly smaller than the header's, and it does not need
+   the glow twice on one page. */
+.c-header__logo-wrapper--sm {
+  width: 38px;
+  height: 38px;
+  box-shadow: none;
+}
+
+.c-header__title {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  letter-spacing: var(--tracking-display-sm);
+  line-height: var(--leading-h3);
+}
+
+.c-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1-5);
+}
+
+/* 40px square. Every other control in the header is at least this size, which
+   keeps the tap targets consistent across the bar. */
+.c-header__icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border-subtle);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color var(--duration-fast) var(--ease-in-out),
+    color var(--duration-fast) var(--ease-in-out),
+    border-color var(--duration-fast) var(--ease-in-out);
+}
+
+.c-header__icon-btn:hover {
+  background: var(--color-bg-muted);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-base);
+}
+
+/* The theme toggle reports its state; when the app is dark, the pressed state
+   is shown by the accent tint so it is visible without relying on the glyph. */
+.c-header__icon-btn--theme[aria-pressed="true"] {
+  background: var(--color-primary-subtle);
+  border-color: var(--color-primary);
+  color: var(--color-primary-text);
+}
+
+/* ===== Footer ===== */
+.c-footer {
+  margin-top: var(--space-16);
+  padding: var(--space-6) 0;
+  border-top: 1px solid var(--color-border-subtle);
+  text-align: center;
+}
+
+.c-footer__text {
+  font-size: var(--text-caption);
+  color: var(--color-text-muted);
+  line-height: var(--leading-body);
+  max-width: var(--measure);
+  margin: 0 auto;
+}
+
+/* ===== Loading State ===== */
+.c-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-10) var(--space-4);
+  text-align: center;
+  animation: c-loading-in var(--duration-base) var(--ease-out) both;
+}
+
+@keyframes c-loading-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.c-loading__orb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.c-loading__title {
+  font-family: var(--font-sans);
+  font-size: var(--text-h3);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--leading-h3);
+  color: var(--color-text-primary);
+}
+
+.c-loading__desc {
+  font-size: var(--text-small);
+  color: var(--color-text-secondary);
+  max-width: var(--measure);
+}
+
+.c-loading__steps-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caption);
+  color: var(--color-text-muted);
+  width: 100%;
+  max-width: 420px;
+  text-align: left;
+}
+
+.c-loading__steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+  max-width: 420px;
+  text-align: left;
+}
+
+/* Static list item: this describes what is being checked, it does not
+   represent a stage that has finished. */
+.c-loading__step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2-5);
+  font-size: var(--text-small);
+  line-height: var(--leading-small);
+  color: var(--color-text-secondary);
+}
+
+.c-loading__step-dot {
+  width: 6px;
+  height: 6px;
+  margin-top: 0.45em;
+  border-radius: 50%;
+  background: var(--color-primary);
+  flex-shrink: 0;
+}
+
+/* Indeterminate sweep bar — deliberately has no percentage. */
+.c-loading__bar {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: var(--color-border-subtle);
+  overflow: hidden;
+}
+
+.c-loading__bar-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 40%;
+  border-radius: inherit;
+  background: var(--color-primary);
+  animation: c-loading-sweep 1.4s var(--ease-in-out) infinite;
+}
+
+@keyframes c-loading-sweep {
+  0%   { transform: translateX(-110%); }
+  100% { transform: translateX(260%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .c-loading__bar-fill {
+    animation: none;
+    width: 100%;
+    opacity: 0.35;
+  }
+}
+
+/* ===== Error State ===== */
+.c-error {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  background: var(--color-risk-high-bg);
+  border: 1px solid var(--color-risk-high-border);
+  border-left: 5px solid var(--color-risk-high);
+  animation: c-error-in var(--duration-base) var(--ease-out) both;
+}
+
+@keyframes c-error-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.c-error__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.c-error__title {
+  font-family: var(--font-sans);
+  font-size: var(--text-h3);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--leading-h3);
+  color: var(--color-risk-high-text);
+}
+
+.c-error__message {
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+  max-width: var(--measure);
+}
+
+/* ==========================================================================
+   Responsive Breakpoints & Layout Adaptations
+   Strictly adheres to specified screen boundaries:
+   - (min-width: 300px) and (max-width: 450px) : Compact Mobile
+   - (min-width: 451px) and (max-width: 720px) : Standard Mobile / Large Phone
+   - (max-width: 1040px)                      : Tablets & Narrow Laptops
+   - (max-width: 1500px)                      : Standard Laptops & Wide Desktops
+   ========================================================================== */
+
+/* 1. Compact Mobile (300px - 450px) */
+@media (min-width: 300px) and (max-width: 450px) {
+  body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  .l-container {
+    padding-left: var(--space-3);
+    padding-right: var(--space-3);
+    max-width: none;
+    width: 100%;
+  }
+
+  .c-header {
+    padding: var(--space-3) 0;
+  }
+
+  .c-header__brand {
+    gap: var(--space-2);
+  }
+
+  .c-header__logo-wrapper {
+    width: 34px;
+    height: 34px;
+  }
+
+  .c-header__title {
+    font-size: 1.15rem;
+  }
+
+  .c-header__icon-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .c-settings-drawer {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .c-settings-drawer__header {
+    padding: var(--space-4);
+  }
+
+  .c-settings-drawer__body {
+    padding: var(--space-4);
+    gap: var(--space-4);
+  }
+
+  .text-heading-xl {
+    font-size: clamp(1.85rem, 1.5rem + 2vw, 2.35rem);
+    letter-spacing: -0.02em;
+  }
+
+  .text-heading-lg {
+    font-size: clamp(1.4rem, 1.2rem + 1vw, 1.75rem);
+  }
+
+  .text-heading-md {
+    font-size: 1.2rem;
+  }
+
+  .text-body {
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+
+  /* Fix for narrow screens */
+  img, video, iframe {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .c-loading {
+    padding: var(--space-4) !important;
+    gap: var(--space-3) !important;
+    width: 100%;
+  }
+
+  .c-loading__step-label,
+  .c-loading__step-desc {
+    word-break: break-word;
+  }
+}
+
+/* 2. Standard Mobile / Large Phone (451px - 720px) */
+@media (min-width: 451px) and (max-width: 720px) {
+  body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  .l-container {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+    max-width: none;
+    width: 100%;
+  }
+
+  .c-header__title {
+    font-size: 1.3rem;
+  }
+
+  .text-heading-xl {
+    font-size: clamp(2.1rem, 1.75rem + 1.8vw, 2.75rem);
+  }
+
+  .text-heading-lg {
+    font-size: clamp(1.5rem, 1.35rem + 1vw, 1.95rem);
+  }
+
+  /* Fix for small screens */
+  img, video, iframe {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .c-loading {
+    padding: var(--space-5) !important;
+    gap: var(--space-3) !important;
+    width: 100%;
+  }
+}
+
+/* 3. Tablets & Narrow Laptops (max-width: 1040px) */
+@media (max-width: 1040px) {
+  .l-container {
+    max-width: 960px;
+  }
+
+  .c-settings-drawer {
+    max-width: 420px;
+  }
+
+  .text-heading-xl {
+    font-size: clamp(2.25rem, 1.8rem + 2vw, 3.25rem);
+  }
+}
+
+/* 4. Standard Laptops & Wide Desktops (max-width: 1500px) */
+@media (max-width: 1500px) {
+  .l-container {
+    max-width: 1160px;
+  }
+}
+

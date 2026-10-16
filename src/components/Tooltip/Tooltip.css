@@ -1,0 +1,147 @@
+/* ==========================================================================
+   Tooltip Component Styles
+   ========================================================================== */
+
+.c-tooltip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.c-tooltip__trigger {
+  display: inline-flex;
+  align-items: center;
+  cursor: help;
+  border-radius: var(--radius-xs);
+  color: var(--color-text-muted);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.c-tooltip__trigger:hover,
+.c-tooltip__trigger:focus-visible {
+  color: var(--color-text-primary);
+}
+
+/* The bubble is a dark inversion in both themes on purpose: it reads as an
+   overlay rather than as part of the page, and one bubble style means one
+   contrast pairing to keep above AA (white on #1e293b is ~13:1). */
+.c-tooltip__bubble {
+  position: absolute;
+  bottom: calc(100% + var(--space-2));
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  z-index: var(--z-sticky);
+  width: max-content;
+  max-width: 260px;
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--text-caption);
+  line-height: var(--leading-small);
+  color: #ffffff;
+  background-color: #1e293b;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-3);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out),
+    visibility var(--duration-fast) var(--ease-out);
+  text-align: center;
+}
+
+/* Arrow */
+.c-tooltip__bubble::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 4px;
+  border-style: solid;
+  border-color: #1e293b transparent transparent transparent;
+}
+
+/* Visible state */
+.c-tooltip:hover .c-tooltip__bubble,
+.c-tooltip:focus-within .c-tooltip__bubble,
+.c-tooltip--active .c-tooltip__bubble {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Position modifiers */
+.c-tooltip--top .c-tooltip__bubble {
+  bottom: calc(100% + var(--space-2));
+  top: auto;
+}
+
+.c-tooltip--bottom .c-tooltip__bubble {
+  top: calc(100% + var(--space-2));
+  bottom: auto;
+  transform: translateX(-50%) translateY(-4px);
+}
+
+.c-tooltip--bottom:hover .c-tooltip__bubble,
+.c-tooltip--bottom:focus-within .c-tooltip__bubble {
+  transform: translateX(-50%) translateY(0);
+}
+
+.c-tooltip--bottom .c-tooltip__bubble::after {
+  bottom: 100%;
+  top: auto;
+  border-color: transparent transparent #1e293b transparent;
+}
+
+/* A tooltip triggered by hover is unreachable by touch, so on a coarse pointer
+   it opens on tap instead — the trigger gets a real tap target and the bubble
+   is shown by the component's own `--active` class. */
+@media (pointer: coarse) {
+  .c-tooltip__trigger {
+    min-width: 32px;
+    min-height: 32px;
+    justify-content: center;
+  }
+
+  .c-tooltip__bubble {
+    max-width: min(260px, 80vw);
+  }
+}
+
+/* ==========================================================================
+   Tooltip Responsive Media Queries
+   ========================================================================== */
+
+/* 1. Compact Mobile (300px - 450px) */
+@media (min-width: 300px) and (max-width: 450px) {
+  .c-tooltip__bubble {
+    max-width: min(230px, 86vw);
+    font-size: 0.8125rem;
+    padding: var(--space-1-5) var(--space-2-5);
+  }
+}
+
+/* 2. Standard Mobile (451px - 720px) */
+@media (min-width: 451px) and (max-width: 720px) {
+  .c-tooltip__bubble {
+    max-width: min(260px, 80vw);
+    font-size: 0.875rem;
+  }
+}
+
+/* 3. Tablets & Narrow Laptops (max-width: 1040px) */
+@media (max-width: 1040px) {
+  .c-tooltip__bubble {
+    max-width: 280px;
+  }
+}
+
+/* 4. Desktop & Wide Screens (max-width: 1500px) */
+@media (max-width: 1500px) {
+  .c-tooltip__bubble {
+    max-width: 300px;
+  }
+}
+

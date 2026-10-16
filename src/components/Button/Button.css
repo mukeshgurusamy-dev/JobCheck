@@ -1,0 +1,201 @@
+/* ==========================================================================
+   Button Component Styles
+   BEM naming, structure/skin separation
+   ========================================================================== */
+
+.c-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border-radius: var(--radius-md);
+  /* The interface face, not the display face. Unbounded is confined to the
+     hero number and the level word; at button sizes it is wide enough to wrap
+     short labels. */
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  user-select: none;
+  /* Named properties, never `all`: `all` would also transition the focus
+     outline and the background of a disabled button, and it forces the
+     renderer to watch every animatable property on the element. */
+  transition: transform var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-in-out),
+    border-color var(--duration-fast) var(--ease-in-out),
+    color var(--duration-fast) var(--ease-in-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.c-button:disabled,
+.c-button--disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Sizing. Every size is at least 36px tall; the default is 44px, which is the
+   smallest comfortable touch target. */
+.c-button--sm {
+  padding: var(--space-1-5) var(--space-3);
+  font-size: var(--text-small);
+  height: 2.25rem; /* 36px */
+}
+
+.c-button--md {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-body);
+  height: 2.75rem; /* 44px */
+}
+
+.c-button--lg {
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-body-lg);
+  font-weight: var(--font-weight-semibold);
+  height: 3.25rem; /* 52px */
+}
+
+/* Full Width */
+.c-button--full-width {
+  width: 100%;
+}
+
+/* Skin Variants */
+.c-button--primary {
+  background: var(--gradient-primary);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: var(--shadow-1);
+}
+
+.c-button--primary:hover:not(:disabled) {
+  background: var(--gradient-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-2);
+}
+
+.c-button--primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.c-button--secondary {
+  background-color: var(--color-bg-subtle);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-subtle);
+}
+
+.c-button--secondary:hover:not(:disabled) {
+  background-color: var(--color-bg-muted);
+  border-color: var(--color-border-base);
+  transform: translateY(-1px);
+}
+
+.c-button--outline {
+  background-color: transparent;
+  color: var(--color-text-primary);
+  border-color: var(--color-border-base);
+}
+
+.c-button--outline:hover:not(:disabled) {
+  background-color: var(--color-bg-subtle);
+  border-color: var(--color-border-strong);
+  transform: translateY(-1px);
+}
+
+.c-button--ghost {
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  border-color: transparent;
+}
+
+.c-button--ghost:hover:not(:disabled) {
+  background-color: var(--color-bg-subtle);
+  color: var(--color-text-primary);
+}
+
+.c-button--danger {
+  background-color: var(--color-risk-high);
+  color: #ffffff;
+  border-color: var(--color-risk-high);
+}
+
+.c-button--danger:hover:not(:disabled) {
+  background-color: var(--color-risk-high-hover);
+  border-color: var(--color-risk-high-hover);
+  transform: translateY(-1px);
+}
+
+/* Loading state */
+.c-button--loading {
+  cursor: wait;
+}
+
+.c-button__spinner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The hover lift is a pointer affordance, so it is declared only for devices
+   that have one. On touch, `:hover` sticks after a tap. */
+@media (pointer: coarse) {
+  .c-button:hover:not(:disabled) {
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   Button Responsive Media Queries
+   ========================================================================== */
+
+/* 1. Compact Mobile (300px - 450px) */
+@media (min-width: 300px) and (max-width: 450px) {
+  .c-button {
+    font-size: 0.9375rem;
+    gap: var(--space-1-5);
+  }
+
+  .c-button--lg {
+    height: 3rem;
+    padding: var(--space-2-5) var(--space-4);
+    font-size: 1rem;
+  }
+
+  .c-button--md {
+    height: 2.5rem;
+    padding: var(--space-1-5) var(--space-3);
+    font-size: 0.875rem;
+  }
+
+  .c-button--sm {
+    height: 2.125rem;
+    padding: var(--space-1) var(--space-2-5);
+    font-size: 0.8125rem;
+  }
+}
+
+/* 2. Standard Mobile (451px - 720px) */
+@media (min-width: 451px) and (max-width: 720px) {
+  .c-button--lg {
+    height: 3.125rem;
+    padding: var(--space-2-5) var(--space-5);
+  }
+}
+
+/* 3. Tablets & Narrow Laptops (max-width: 1040px) */
+@media (max-width: 1040px) {
+  .c-button {
+    letter-spacing: normal;
+  }
+}
+
+/* 4. Desktop & Wide Screens (max-width: 1500px) */
+@media (max-width: 1500px) {
+  .c-button {
+    max-width: 100%;
+  }
+}
+

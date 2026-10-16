@@ -1,0 +1,29 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+Allow: /assets/
+Allow: /fonts/
+Disallow: /dist/
+Disallow: /.netlify/
+Disallow: /api/
+Disallow: /*?*utm_*
+Disallow: /*?*gclid=*
+
+# Specific crawlers
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: AhrefsBot
+Allow: /
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+# Sitemap
+Sitemap: https://jobcheck.in/sitemap.xml

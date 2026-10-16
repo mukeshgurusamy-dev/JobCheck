@@ -1,0 +1,199 @@
+/* ==========================================================================
+   FindingItem Molecule Styles
+   One finding, with its evidence. The left bar and the badge both carry the
+   level, so the card still reads correctly in greyscale.
+   ========================================================================== */
+
+.c-finding-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2-5);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-subtle);
+  background-color: var(--color-bg-surface);
+  transition: transform var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
+  box-shadow: var(--shadow-1);
+}
+
+.c-finding-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-2);
+}
+
+/* Skin variants */
+.c-finding-item--risk-high {
+  border-left: 5px solid var(--color-risk-high);
+  background-color: var(--color-risk-high-bg);
+  border-color: var(--color-risk-high-border);
+}
+
+.c-finding-item--risk-medium {
+  border-left: 5px solid var(--color-risk-medium);
+  background-color: var(--color-risk-medium-bg);
+  border-color: var(--color-risk-medium-border);
+}
+
+.c-finding-item--risk-low {
+  border-left: 5px solid var(--color-border-strong);
+  background-color: var(--color-bg-surface);
+  border-color: var(--color-border-subtle);
+}
+
+.c-finding-item--trust {
+  border-left: 5px solid var(--color-trust);
+  background-color: var(--color-trust-bg);
+  border-color: var(--color-trust-border);
+}
+
+.c-finding-item__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.c-finding-item__title-group {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2-5);
+  min-width: 0;
+}
+
+.c-finding-item__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+.c-finding-item__reason {
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--leading-small);
+  color: var(--color-text-primary);
+}
+
+.c-finding-item__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-2-5);
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-none);
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.c-finding-item__badge--risk-high {
+  background-color: var(--color-risk-high);
+  color: #ffffff;
+}
+
+.c-finding-item__badge--risk-medium {
+  background-color: var(--color-risk-medium);
+  color: #ffffff;
+}
+
+.c-finding-item__badge--risk-low {
+  background-color: var(--color-bg-muted);
+  color: var(--color-text-secondary);
+}
+
+.c-finding-item__badge--trust {
+  background-color: var(--color-trust);
+  color: #ffffff;
+}
+
+/* Evidence snippet */
+.c-finding-item__evidence {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  /* Themed by token rather than by a [data-theme="dark"] override, which only
+     matched an explicit toggle and left OS-dark users on the light value. */
+  background-color: var(--color-bg-subtle);
+  border: 1px solid var(--color-border-subtle);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  line-height: var(--leading-body);
+  word-break: break-word;
+  margin-left: 2rem;
+}
+
+.c-finding-item__evidence-label {
+  font-family: var(--font-sans);
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caption);
+}
+
+/* ==========================================================================
+   FindingItem Responsive Media Queries
+   ========================================================================== */
+
+/* 1. Compact Mobile (300px - 450px) */
+@media (min-width: 300px) and (max-width: 450px) {
+  .c-finding-item {
+    padding: var(--space-3) var(--space-3-5);
+    gap: var(--space-2);
+  }
+
+  .c-finding-item__header {
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .c-finding-item__reason {
+    font-size: 0.9375rem;
+    line-height: var(--leading-normal);
+  }
+
+  .c-finding-item__evidence {
+    margin-left: 0;
+    padding: var(--space-2);
+    font-size: 0.8125rem;
+  }
+}
+
+/* 2. Standard Mobile (451px - 720px) */
+@media (min-width: 451px) and (max-width: 720px) {
+  .c-finding-item {
+    padding: var(--space-3-5) var(--space-4);
+  }
+
+  .c-finding-item__evidence {
+    margin-left: 0;
+  }
+}
+
+/* 3. Tablets & Narrow Laptops (max-width: 1040px) */
+@media (max-width: 1040px) {
+  .c-finding-item__evidence {
+    margin-left: 1rem;
+  }
+}
+
+/* 4. Desktop & Wide Screens (max-width: 1500px) */
+@media (max-width: 1500px) {
+  .c-finding-item {
+    max-width: 100%;
+  }
+}
+

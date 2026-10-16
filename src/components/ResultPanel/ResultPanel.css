@@ -1,0 +1,1799 @@
+/* ==========================================================================
+   ResultPanel Organism Styles
+   ========================================================================== */
+
+.c-result-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-5);
+  background: var(--glass-surface-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-3);
+  animation: c-result-fade-in var(--duration-slow) var(--ease-out) both;
+  width: 100%;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  .c-result-panel {
+    padding: clamp(var(--space-6), 4vw, var(--space-10));
+    gap: var(--space-8);
+  }
+}
+
+@keyframes c-result-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== Header Summary Section ===== */
+.c-result-panel__summary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  text-align: center;
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--color-border-subtle);
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+  .c-result-panel__summary {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--space-8);
+    text-align: left;
+  }
+}
+
+.c-result-panel__summary-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex: 1;
+  min-width: 0;
+}
+
+/* Holds the orb and the gauge in the same box, so the orb can be centred on
+   the gauge without either becoming a flex item of the summary — which would
+   have pushed the text along by the orb's width. The stack shrink-wraps to the
+   gauge, so the row layout is unchanged. */
+.c-result-panel__score-stack {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 140px;
+  height: 140px;
+}
+
+@media (min-width: 640px) {
+  .c-result-panel__score-stack {
+    width: 160px;
+    height: 160px;
+  }
+}
+
+.c-result-panel__orb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+/* The gauge paints above the orb. `position: relative` alone is enough: both
+   are in the same stacking context and the gauge comes later in the DOM. */
+.c-result-panel__score-stack .c-score-gauge {
+  position: relative;
+  z-index: 1;
+}
+
+.c-result-panel__confidence-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+.c-result-panel__search-time {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Notice banner (when the page could not be fetched) */
+.c-result-panel__notice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg-subtle);
+  border: 1px solid var(--color-border-base);
+  animation: c-fade-in var(--duration-base) var(--ease-out) both;
+}
+
+.c-result-panel__notice--success {
+  background-color: var(--color-risk-low-bg);
+  border-color: var(--color-risk-low-border);
+}
+
+.c-result-panel__notice--success .c-result-panel__notice-text {
+  color: var(--color-risk-low-text);
+  font-weight: var(--font-weight-medium);
+}
+
+.c-result-panel__notice-icon {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.c-result-panel__notice-text {
+  font-size: var(--text-small);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-body);
+}
+
+/* Section headings */
+.c-result-panel__section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2-5);
+  font-family: var(--font-sans);
+  font-size: var(--text-h3);
+  font-weight: var(--font-weight-extrabold);
+  letter-spacing: -0.02em;
+  line-height: var(--leading-h3);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-3);
+  text-wrap: balance;
+}
+
+.c-result-panel__subheading {
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1-5);
+  letter-spacing: -0.01em;
+}
+
+.c-result-panel__subheading--danger {
+  color: var(--color-risk-high-text);
+}
+
+.c-result-panel__subheading--trust {
+  color: var(--color-risk-low-text);
+}
+
+/* Findings list.
+   content-visibility lets the browser skip layout and paint for the part of a
+   long findings list that is off screen; contain-intrinsic-size reserves the
+   space so nothing below it jumps when a skipped section is first rendered. */
+.c-result-panel__findings-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 320px;
+}
+
+/* Staggered entrance, first twelve items only.
+   A 40-item list must not take 40 steps to reveal itself: past the twelfth
+   item the delay stops growing, so the whole list settles well inside the
+   600ms motion budget however long it gets. */
+.c-result-panel__findings-list > .c-finding-item {
+  animation: c-finding-reveal var(--duration-base) var(--ease-out) both;
+}
+
+.c-result-panel__findings-list > .c-finding-item:nth-child(1) { animation-delay: 0ms; }
+.c-result-panel__findings-list > .c-finding-item:nth-child(2) { animation-delay: 40ms; }
+.c-result-panel__findings-list > .c-finding-item:nth-child(3) { animation-delay: 80ms; }
+.c-result-panel__findings-list > .c-finding-item:nth-child(4) { animation-delay: 120ms; }
+.c-result-panel__findings-list > .c-finding-item:nth-child(5) { animation-delay: 160ms; }
+.c-result-panel__findings-list > .c-finding-item:nth-child(6) { animation-delay: 200ms; }
+.c-result-panel__findings-list > .c-finding-item:nth-child(7) { animation-delay: 240ms; }
+.c-result-panel__findings-list > .c-finding-item:nth-child(8) { animation-delay: 280ms; }
+.c-result-panel__findings-list > .c-finding-item:nth-child(9) { animation-delay: 320ms; }
+.c-result-panel__findings-list > .c-finding-item:nth-child(10) { animation-delay: 360ms; }
+.c-result-panel__findings-list > .c-finding-item:nth-child(11) { animation-delay: 400ms; }
+.c-result-panel__findings-list > .c-finding-item:nth-child(n + 12) { animation-delay: 440ms; }
+
+@keyframes c-finding-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Empty findings box */
+.c-result-panel__empty-findings {
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg-subtle);
+  border: 1px dashed var(--color-border-base);
+  text-align: center;
+  font-size: var(--text-small);
+  color: var(--color-text-muted);
+}
+
+/* Next Steps Checklist */
+.c-result-panel__checklist {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  background-color: var(--color-bg-subtle);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+.c-result-panel__checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--text-small);
+  line-height: var(--leading-body);
+  color: var(--color-text-secondary);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.c-result-panel__checklist-item:hover {
+  transform: translateX(3px);
+  color: var(--color-text-primary);
+}
+
+.c-result-panel__checklist-item a {
+  color: var(--color-primary-text);
+  font-weight: var(--font-weight-medium);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.c-result-panel__checklist-item a:hover {
+  color: var(--color-primary-hover);
+}
+
+.c-result-panel__checklist-bullet {
+  display: inline-flex;
+  margin-top: 3px;
+  flex-shrink: 0;
+  color: var(--color-primary);
+}
+
+/* Links Found in Description Section */
+.c-result-panel__links-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.c-result-panel__link-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-base);
+  border-radius: var(--radius-lg);
+  transition: box-shadow var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.c-result-panel__link-card:hover {
+  box-shadow: var(--shadow-2);
+  transform: translateY(-1px);
+}
+
+.c-result-panel__link-card--risk-high {
+  border-color: var(--color-risk-high-border);
+  background-color: var(--color-risk-high-bg);
+  border-left: 5px solid var(--color-risk-high);
+}
+
+.c-result-panel__link-card--risk-medium {
+  border-color: var(--color-risk-medium-border);
+  background-color: var(--color-risk-medium-bg);
+  border-left: 5px solid var(--color-risk-medium);
+}
+
+.c-result-panel__link-card--risk-low {
+  border-color: var(--color-risk-low-border);
+  background-color: var(--color-risk-low-bg);
+  border-left: 5px solid var(--color-risk-low);
+}
+
+.c-result-panel__link-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.c-result-panel__link-url-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  max-width: 100%;
+}
+
+.c-result-panel__link-url {
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
+  word-break: break-all;
+}
+
+.c-result-panel__link-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-2-5) var(--space-3);
+  background-color: var(--color-risk-high-bg);
+  border-left: 3px solid var(--color-risk-high);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-caption);
+  color: var(--color-risk-high-text);
+  line-height: var(--leading-small);
+}
+
+.c-result-panel__link-findings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.c-result-panel__link-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--color-bg-subtle);
+  border-radius: var(--radius-md);
+  font-size: var(--text-caption);
+  color: var(--color-text-muted);
+  line-height: var(--leading-small);
+}
+
+.c-result-panel__link-notice .c-icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ==========================================================================
+   Google AI Search Intelligence Card
+   ========================================================================== */
+.c-result-panel__ai-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  border-radius: var(--radius-xl);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: var(--shadow-2);
+  line-height: var(--leading-body);
+  animation: c-fade-in var(--duration-base) var(--ease-out) both;
+  transition: border-color var(--duration-base) var(--ease-in-out),
+    box-shadow var(--duration-base) var(--ease-in-out);
+}
+
+.c-result-panel__ai-card--risk {
+  border-left: 5px solid var(--color-risk-high);
+}
+
+.c-result-panel__ai-card--trust {
+  border-left: 5px solid var(--color-risk-low);
+}
+
+/* Signals Grid */
+.c-result-panel__signals-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2-5);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.c-result-panel__signal-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-bg-subtle);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.c-result-panel__signal-card:hover {
+  transform: translateX(3px);
+}
+
+.c-result-panel__signal-card--scam {
+  border-left: 4px solid var(--color-risk-high);
+  background: var(--color-risk-high-bg);
+  border-color: var(--color-risk-high-border);
+}
+
+.c-result-panel__signal-card--trust {
+  border-left: 4px solid var(--color-risk-low);
+  background: var(--color-risk-low-bg);
+  border-color: var(--color-risk-low-border);
+}
+
+.c-result-panel__signal-icon {
+  font-size: var(--text-body-lg);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.c-result-panel__signal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.c-result-panel__signal-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.c-result-panel__signal-card--scam .c-result-panel__signal-tag {
+  color: var(--color-risk-high-text);
+}
+
+.c-result-panel__signal-card--trust .c-result-panel__signal-tag {
+  color: var(--color-risk-low-text);
+}
+
+.c-result-panel__signal-text {
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  line-height: var(--leading-small);
+}
+
+/* Fact-Check Telemetry Cards */
+.c-result-panel__claims-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .c-result-panel__claims-list {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+.c-result-panel__claim-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-bg-subtle);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.c-result-panel__claim-card:hover {
+  transform: translateY(-2px);
+}
+
+.c-result-panel__claim-card--verified {
+  border-left: 4px solid var(--color-risk-low);
+  background: var(--color-risk-low-bg);
+  border-color: var(--color-risk-low-border);
+}
+
+.c-result-panel__claim-card--contradicted {
+  border-left: 4px solid var(--color-risk-high);
+  background: var(--color-risk-high-bg);
+  border-color: var(--color-risk-high-border);
+}
+
+.c-result-panel__claim-card--unverified {
+  border-left: 4px solid var(--color-risk-medium);
+  background: var(--color-risk-medium-bg);
+  border-color: var(--color-risk-medium-border);
+}
+
+.c-result-panel__claim-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.c-result-panel__claim-type {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+  letter-spacing: var(--tracking-caption);
+  text-transform: uppercase;
+}
+
+/* Status is carried by the word inside the badge, not by its colour alone, so
+   the distinction survives a colour-blind reader and a greyscale print. */
+.c-result-panel__claim-badge {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: var(--font-weight-semibold);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.c-result-panel__claim-badge--verified {
+  background: var(--color-risk-low-bg);
+  border: 1px solid var(--color-risk-low-border);
+  color: var(--color-risk-low-text);
+}
+
+.c-result-panel__claim-badge--contradicted {
+  background: var(--color-risk-high-bg);
+  border: 1px solid var(--color-risk-high-border);
+  color: var(--color-risk-high-text);
+}
+
+.c-result-panel__claim-badge--unverified {
+  background: var(--color-risk-medium-bg);
+  border: 1px solid var(--color-risk-medium-border);
+  color: var(--color-risk-medium-text);
+}
+
+.c-result-panel__claim-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--text-small);
+  line-height: var(--leading-small);
+}
+
+.c-result-panel__claim-lbl {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+}
+
+.c-result-panel__claim-val {
+  color: var(--color-text-primary);
+}
+
+/* Source Chips */
+.c-result-panel__ai-sources {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  padding-top: var(--space-3);
+  border-top: 1px dashed var(--color-border-subtle);
+}
+
+.c-result-panel__source-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.c-result-panel__ai-source-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--color-primary-text);
+  text-decoration: none;
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.c-result-panel__ai-source-chip:hover {
+  background: var(--color-bg-muted);
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   Background Verification Matrix
+   ========================================================================== */
+.c-result-panel__audit-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin-top: var(--space-4);
+  padding: var(--space-5);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-1);
+}
+
+@media (min-width: 768px) {
+  .c-result-panel__audit-container {
+    padding: var(--space-6);
+  }
+}
+
+.c-result-panel__audit-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.c-result-panel__audit-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.c-result-panel__audit-brand-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.c-result-panel__audit-icon-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-subtle);
+  border: 1px solid var(--color-border-subtle);
+  flex-shrink: 0;
+}
+
+.c-result-panel__audit-title {
+  font-family: var(--font-sans);
+  font-size: var(--text-h3);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  letter-spacing: var(--tracking-h3);
+  line-height: var(--leading-h3);
+  margin: 0;
+}
+
+/* Aligned to the icon box rather than a magic 56px, so it stays aligned when
+   the icon size changes. */
+.c-result-panel__audit-subtitle {
+  font-size: var(--text-caption);
+  color: var(--color-text-muted);
+  line-height: var(--leading-small);
+  padding-left: calc(40px + var(--space-3));
+}
+
+.c-result-panel__audit-score-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+  font-weight: var(--font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.c-result-panel__audit-pill-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.c-result-panel__audit-score-pill--pass {
+  background-color: var(--color-risk-low-bg);
+  color: var(--color-risk-low-text);
+  border: 1px solid var(--color-risk-low-border);
+}
+
+.c-result-panel__audit-score-pill--pass .c-result-panel__audit-pill-dot {
+  background-color: var(--color-risk-low);
+}
+
+.c-result-panel__audit-score-pill--warn {
+  background-color: var(--color-risk-medium-bg);
+  color: var(--color-risk-medium-text);
+  border: 1px solid var(--color-risk-medium-border);
+}
+
+.c-result-panel__audit-score-pill--warn .c-result-panel__audit-pill-dot {
+  background-color: var(--color-risk-medium);
+}
+
+.c-result-panel__audit-score-pill--fail {
+  background-color: var(--color-risk-high-bg);
+  color: var(--color-risk-high-text);
+  border: 1px solid var(--color-risk-high-border);
+}
+
+.c-result-panel__audit-score-pill--fail .c-result-panel__audit-pill-dot {
+  background-color: var(--color-risk-high);
+}
+
+.c-result-panel__audit-score-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.c-result-panel__audit-progress {
+  flex: 1;
+  height: 10px;
+  background-color: var(--color-bg-muted);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  border: 1px solid var(--color-border-subtle);
+  position: relative;
+}
+
+/* The fill is scaled, not resized.
+   A width transition lays out and repaints on every frame; `transform:
+   scaleX()` runs on the compositor instead, and with tabular figures the
+   number beside it does not reflow as it counts. ResultPanel.ts sets
+   `--progress` (0..1) on this element, and falls back to 0 so the bar starts
+   empty rather than snapping to full. */
+.c-result-panel__audit-progress-fill {
+  height: 100%;
+  width: 100%;
+  border-radius: var(--radius-full);
+  transform: scaleX(var(--progress, 0));
+  transform-origin: left center;
+  transition: transform var(--duration-slow) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.c-result-panel__audit-progress-fill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: translateX(-100%);
+  animation: c-progress-shimmer 2.2s var(--ease-in-out) infinite;
+}
+
+/* Defined here because the previous rule referenced this animation by name and
+   no @keyframes block existed anywhere in the tree — the sweep was a no-op. */
+@keyframes c-progress-shimmer {
+  0% { transform: translateX(-100%); }
+  60%, 100% { transform: translateX(100%); }
+}
+
+.c-result-panel__audit-progress-fill--pass {
+  background: linear-gradient(90deg, var(--color-risk-low), var(--color-risk-low-hover));
+}
+
+.c-result-panel__audit-progress-fill--warn {
+  background: linear-gradient(90deg, var(--color-risk-medium), var(--color-risk-medium-hover));
+}
+
+.c-result-panel__audit-progress-fill--fail {
+  background: linear-gradient(90deg, var(--color-risk-high), var(--color-risk-high-hover));
+}
+
+/* Pillars grid */
+.c-result-panel__audit-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  margin-top: var(--space-2);
+}
+
+@media (min-width: 640px) {
+  .c-result-panel__audit-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .c-result-panel__audit-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.c-result-panel__audit-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-subtle);
+  background-color: var(--color-bg-canvas);
+  transition: transform var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
+  box-shadow: var(--shadow-1);
+  position: relative;
+}
+
+.c-result-panel__audit-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-2);
+}
+
+.c-result-panel__audit-card--pass {
+  border-left: 4px solid var(--color-risk-low);
+}
+
+.c-result-panel__audit-card--warn {
+  border-left: 4px solid var(--color-risk-medium);
+}
+
+.c-result-panel__audit-card--fail {
+  border-left: 4px solid var(--color-risk-high);
+}
+
+.c-result-panel__audit-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.c-result-panel__audit-card-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.c-result-panel__audit-pillar-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-subtle);
+  flex-shrink: 0;
+}
+
+.c-result-panel__audit-pillar-name {
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  line-height: var(--leading-small);
+  letter-spacing: -0.01em;
+}
+
+.c-result-panel__audit-card-desc {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+  line-height: var(--leading-body);
+  background: var(--color-bg-subtle);
+  padding: var(--space-3-5);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-subtle);
+  margin-top: auto;
+}
+
+.c-result-panel__audit-card-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.c-result-panel__audit-card-dot--pass {
+  background-color: var(--color-risk-low);
+}
+
+.c-result-panel__audit-card-dot--warn {
+  background-color: var(--color-risk-medium);
+}
+
+.c-result-panel__audit-card-dot--fail {
+  background-color: var(--color-risk-high);
+}
+
+.c-result-panel__audit-card-text {
+  flex: 1;
+}
+
+/* Action Toolbar */
+.c-result-panel__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.c-result-panel__action-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* Feedback toast */
+.c-result-panel__copy-feedback {
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-risk-low-text);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.c-result-panel__copy-feedback--visible {
+  opacity: 1;
+}
+
+@keyframes c-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .c-result-panel,
+  .c-result-panel__findings-list > .c-finding-item,
+  .c-result-panel__audit-progress-fill,
+  .c-result-panel__audit-progress-fill::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* The panel is a scroll target after a scan completes, not a control. Its own
+   focus ring would wrap the entire card, so suppress the outline and let the
+   heading inside announce the move. */
+.c-result-panel:focus {
+  outline: none;
+}
+
+/* ==========================================================================
+   Enhanced Employee Reviews Section
+   ========================================================================== */
+
+.c-result-panel__reviews-container {
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border-base);
+  border-radius: var(--radius-lg);
+}
+
+.c-result-panel__reviews-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.c-result-panel__review-banner {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-4);
+}
+
+/* Static, not pulsing.
+   The previous version ran an infinite @keyframes that animated border-color
+   and box-shadow — two properties the renderer cannot composite — forever, on
+   a card that is already the most alarming thing on the page. A solid left
+   bar carries the same weight at no ongoing cost. */
+.c-result-panel__review-banner--alert {
+  background: var(--color-risk-high-bg);
+  border: 1px solid var(--color-risk-high-border);
+  border-left: 5px solid var(--color-risk-high);
+}
+
+.c-result-panel__review-banner--clear {
+  background: var(--color-risk-low-bg);
+  border: 1px solid var(--color-risk-low-border);
+  border-left: 5px solid var(--color-risk-low);
+}
+
+.c-result-panel__review-banner-icon {
+  flex-shrink: 0;
+  line-height: var(--leading-h3);
+}
+
+.c-result-panel__review-banner--clear .c-result-panel__review-banner-icon {
+  color: var(--color-risk-low);
+}
+
+.c-result-panel__review-banner-body strong {
+  display: block;
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-risk-high-text);
+  margin-bottom: var(--space-1);
+}
+
+.c-result-panel__review-banner--clear .c-result-panel__review-banner-body strong {
+  color: var(--color-risk-low-text);
+}
+
+.c-result-panel__review-banner-body p {
+  font-size: var(--text-small);
+  color: var(--color-text-primary);
+  margin: 0;
+  line-height: var(--leading-small);
+}
+
+.c-result-panel__review-source {
+  padding: var(--space-3);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-3);
+}
+
+.c-result-panel__review-source:last-child {
+  margin-bottom: 0;
+}
+
+.c-result-panel__review-source-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.c-result-panel__review-scam {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-risk-high-bg);
+  border-left: 3px solid var(--color-risk-high);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-2);
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-risk-high-text);
+}
+
+.c-result-panel__review-scam-icon {
+  flex-shrink: 0;
+}
+
+.c-result-panel__review-highlights {
+  margin-top: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-small);
+}
+
+.c-result-panel__review-highlights--positive {
+  background: var(--color-risk-low-bg);
+  border-left: 3px solid var(--color-risk-low-border);
+}
+
+.c-result-panel__review-highlights--negative {
+  background: var(--color-risk-medium-bg);
+  border-left: 3px solid var(--color-risk-medium-border);
+}
+
+.c-result-panel__review-highlights-title {
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--space-1);
+  color: var(--color-text-primary);
+}
+
+.c-result-panel__review-highlights ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.c-result-panel__review-highlights ul li {
+  padding-left: var(--space-4);
+  position: relative;
+  line-height: var(--leading-body);
+  margin-bottom: var(--space-1);
+}
+
+.c-result-panel__review-highlights ul li:last-child {
+  margin-bottom: 0;
+}
+
+.c-result-panel__review-highlights ul li::before {
+  content: "•";
+  position: absolute;
+  left: var(--space-1);
+  color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   Enhanced Location Verification Section
+   ========================================================================== */
+
+.c-result-panel__location-verification {
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border-base);
+  border-radius: var(--radius-lg);
+}
+
+.c-result-panel__location-verification h4 {
+  margin-bottom: var(--space-3);
+}
+
+.c-result-panel__location-card {
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  border: 2px solid;
+}
+
+.c-result-panel__location-card--risk-low {
+  background: var(--color-risk-low-bg);
+  border-color: var(--color-risk-low-border);
+}
+
+.c-result-panel__location-card--warning {
+  background: var(--color-risk-medium-bg);
+  border-color: var(--color-risk-medium-border);
+}
+
+.c-result-panel__location-card--risk-high {
+  background: var(--color-risk-high-bg);
+  border-color: var(--color-risk-high-border);
+}
+
+.c-result-panel__location-row {
+  margin-bottom: var(--space-2);
+  font-size: var(--text-small);
+  line-height: var(--leading-body);
+}
+
+.c-result-panel__location-row:last-child {
+  margin-bottom: 0;
+}
+
+.c-result-panel__location-row strong {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.c-result-panel__location-details {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border-subtle);
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+/* ==========================================================================
+   Employment Integrity Checklist (100 criteria, computed locally)
+   ========================================================================== */
+
+.c-criteria__summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-3) 0;
+}
+
+.c-criteria__chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 4.5rem;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-bg-subtle);
+}
+
+.c-criteria__chip-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-body-lg);
+  font-weight: var(--font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+  line-height: var(--leading-h3);
+  color: var(--color-text-primary);
+}
+
+.c-criteria__chip-label {
+  font-size: var(--text-caption);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.c-criteria__chip--pass {
+  background: var(--color-risk-low-bg);
+  border-color: var(--color-risk-low-border);
+}
+
+.c-criteria__chip--pass .c-criteria__chip-value {
+  color: var(--color-risk-low-text);
+}
+
+.c-criteria__chip--warn {
+  background: var(--color-risk-medium-bg);
+  border-color: var(--color-risk-medium-border);
+}
+
+.c-criteria__chip--warn .c-criteria__chip-value {
+  color: var(--color-risk-medium-text);
+}
+
+.c-criteria__chip--fail {
+  background: var(--color-risk-high-bg);
+  border-color: var(--color-risk-high-border);
+}
+
+.c-criteria__chip--fail .c-criteria__chip-value {
+  color: var(--color-risk-high-text);
+}
+
+.c-criteria__chip--na .c-criteria__chip-value {
+  color: var(--color-text-muted);
+}
+
+.c-criteria__group {
+  margin-top: var(--space-2);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-surface);
+  overflow: hidden;
+}
+
+.c-criteria__group-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  cursor: pointer;
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  list-style-position: inside;
+}
+
+.c-criteria__group-summary:hover {
+  background: var(--color-bg-subtle);
+}
+
+.c-criteria__group-summary:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: calc(-1 * var(--focus-ring-width));
+}
+
+.c-criteria__group-tally {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 100 criteria can be a very long list, so the browser is allowed to skip the
+   off-screen part of it. */
+.c-criteria__list {
+  list-style: none;
+  margin: 0;
+  padding: 0 var(--space-3) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+
+.c-criteria__item {
+  display: flex;
+  gap: var(--space-2);
+  font-size: var(--text-small);
+  line-height: var(--leading-small);
+}
+
+.c-criteria__item-icon {
+  flex: 0 0 auto;
+  width: 1rem;
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+}
+
+.c-criteria__item--pass .c-criteria__item-icon {
+  color: var(--color-risk-low);
+}
+
+.c-criteria__item--fail .c-criteria__item-icon {
+  color: var(--color-risk-high);
+}
+
+.c-criteria__item--warn .c-criteria__item-icon {
+  color: var(--color-risk-medium);
+}
+
+/* Not-assessed must read as visibly different from a pass — it is the absence
+   of a check, not a clean result. */
+.c-criteria__item--na .c-criteria__item-icon,
+.c-criteria__item--na .c-criteria__item-title {
+  color: var(--color-text-muted);
+}
+
+.c-criteria__item-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-5);
+  min-width: 0;
+}
+
+.c-criteria__item-title {
+  color: var(--color-text-primary);
+}
+
+.c-criteria__item-detail {
+  color: var(--color-text-secondary);
+}
+
+/* ==========================================================================
+   Final Recommendation
+   ========================================================================== */
+
+.c-final-verdict {
+  margin-top: var(--space-6);
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-base);
+  border-left-width: 5px;
+  background: var(--color-bg-surface);
+}
+
+.c-final-verdict--safe {
+  border-color: var(--color-risk-low-border);
+  border-left-color: var(--color-risk-low);
+  background: var(--color-risk-low-bg);
+}
+
+.c-final-verdict--verify {
+  border-color: var(--color-risk-medium-border);
+  border-left-color: var(--color-risk-medium);
+  background: var(--color-risk-medium-bg);
+}
+
+.c-final-verdict--avoid {
+  border-color: var(--color-risk-high-border);
+  border-left-color: var(--color-risk-high);
+  background: var(--color-risk-high-bg);
+}
+
+.c-final-verdict__head {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.c-final-verdict__icon {
+  flex-shrink: 0;
+  line-height: var(--line-height-none);
+}
+
+.c-final-verdict--safe .c-final-verdict__icon {
+  color: var(--color-risk-low);
+}
+
+.c-final-verdict--verify .c-final-verdict__icon {
+  color: var(--color-risk-medium);
+}
+
+.c-final-verdict--avoid .c-final-verdict__icon {
+  color: var(--color-risk-high);
+}
+
+.c-final-verdict__label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caption);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-1);
+}
+
+.c-final-verdict__title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-h3);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--leading-h3);
+  letter-spacing: var(--tracking-h3);
+  color: var(--color-text-primary);
+  text-wrap: balance;
+}
+
+.c-final-verdict--safe .c-final-verdict__title {
+  color: var(--color-risk-low-text);
+}
+
+.c-final-verdict--verify .c-final-verdict__title {
+  color: var(--color-risk-medium-text);
+}
+
+.c-final-verdict--avoid .c-final-verdict__title {
+  color: var(--color-risk-high-text);
+}
+
+.c-final-verdict__body {
+  margin: 0 0 var(--space-4);
+  font-size: var(--text-small);
+  line-height: var(--leading-body);
+  color: var(--color-text-primary);
+}
+
+.c-final-verdict__steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.c-final-verdict__step {
+  position: relative;
+  padding-left: var(--space-5);
+  font-size: var(--text-small);
+  line-height: var(--leading-small);
+  color: var(--color-text-primary);
+}
+
+.c-final-verdict__step::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--color-text-muted);
+}
+
+/* ===== Scam Report Cards ===== */
+.c-result-panel__scam-reports-container {
+  margin-top: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.c-result-panel__scam-reports-title {
+  font-size: 1rem;
+  font-weight: var(--font-weight-extrabold);
+  color: var(--color-risk-high-text, #dc2626);
+  margin-bottom: var(--space-1-5);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  letter-spacing: -0.01em;
+}
+
+.c-result-panel__scam-report-card {
+  background: var(--color-risk-high-bg, rgba(239, 68, 68, 0.06));
+  border: 1px solid var(--color-risk-high-border, rgba(239, 68, 68, 0.25));
+  border-left: 4px solid var(--color-risk-high, #dc2626);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2-5);
+}
+
+.c-result-panel__scam-report-identity {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.c-result-panel__scam-reporter-name {
+  font-size: 0.9375rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.c-result-panel__scam-reporter-role {
+  font-size: 0.8125rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  background: var(--color-bg-subtle);
+  padding: 2px 8px;
+  border-radius: var(--radius-full, 9999px);
+  border: 1px solid var(--color-border-subtle);
+}
+
+.c-result-panel__scam-report-date {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  margin-left: auto;
+}
+
+.c-result-panel__scam-platform-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-extrabold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-risk-high-text, #dc2626);
+  background: var(--color-risk-high-bg, rgba(239, 68, 68, 0.1));
+  border: 1px solid var(--color-risk-high-border, rgba(239, 68, 68, 0.3));
+  border-radius: var(--radius-full, 9999px);
+  padding: 3px 10px;
+  width: fit-content;
+}
+
+.c-result-panel__scam-complaint {
+  margin: 0;
+  padding: var(--space-3) var(--space-3-5);
+  border-left: 3px solid var(--color-risk-high);
+  font-size: 0.9375rem;
+  color: var(--color-text-primary);
+  line-height: var(--leading-body);
+  background: var(--color-bg-base, var(--color-bg-subtle));
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.c-result-panel__scam-source-link-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.c-result-panel__scam-source-link {
+  font-size: 0.875rem;
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: var(--font-weight-semibold);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.c-result-panel__scam-source-link:hover {
+  text-decoration: underline;
+}
+
+/* ===== Review source header link ===== */
+.c-result-panel__review-source-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.c-result-panel__review-source-link {
+  font-size: 0.875rem;
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: var(--font-weight-semibold);
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.c-result-panel__review-source-link:hover {
+  text-decoration: underline;
+}
+
+/* ===== Location source link ===== */
+.c-result-panel__location-source-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  flex-wrap: wrap;
+}
+
+.c-result-panel__location-source-link {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: var(--font-weight-semibold);
+}
+
+.c-result-panel__location-source-link:hover {
+  text-decoration: underline;
+}
+
+/* ===== Audit pillar source link ===== */
+.c-result-panel__audit-card-source-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.875rem;
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: var(--font-weight-semibold);
+  margin-top: var(--space-1-5);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border-subtle);
+  width: 100%;
+}
+
+.c-result-panel__audit-card-source-link:hover {
+  text-decoration: underline;
+}
+
+/* ===== Entity links row (Official Website + LinkedIn) ===== */
+.c-result-panel__entity-links-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2-5);
+  margin-top: var(--space-3);
+}
+
+.c-result-panel__entity-link-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border-base);
+  border-radius: var(--radius-full, 9999px);
+  padding: 6px 14px;
+  text-decoration: none;
+  transition: all 0.2s var(--ease-out);
+  
+}
+
+.c-result-panel__entity-link-chip:hover {
+  background: var(--color-bg-hover, var(--color-bg-muted));
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+.c-result-panel__entity-link-chip--linkedin {
+  color: #0a66c2;
+  border-color: rgba(10, 102, 194, 0.3);
+  background: rgba(10, 102, 194, 0.05);
+}
+
+.c-result-panel__entity-link-chip--linkedin:hover {
+  background: rgba(10, 102, 194, 0.12);
+}
+
+/* ==========================================================================
+   ResultPanel Responsive Breakpoints & Device Optimization
+   - (min-width: 300px) and (max-width: 450px) : Compact Mobile
+   - (min-width: 451px) and (max-width: 720px) : Standard Mobile
+   - (max-width: 1040px)                      : Tablets & Laptops
+   - (max-width: 1500px)                      : Desktop / Wide Screens
+   ========================================================================== */
+
+/* 1. Compact Mobile (300px - 450px) */
+@media (min-width: 300px) and (max-width: 450px) {
+  .c-result-panel {
+    padding: var(--space-4);
+    gap: var(--space-5);
+    border-radius: var(--radius-xl);
+  }
+
+  .c-result-panel__summary {
+    gap: var(--space-4);
+    padding-bottom: var(--space-4);
+  }
+
+  .c-result-panel__audit-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  .c-result-panel__audit-card {
+    padding: var(--space-4);
+  }
+
+  .c-result-panel__section-title {
+    font-size: 1.15rem;
+  }
+
+  .c-result-panel__scam-report-card {
+    padding: var(--space-3);
+  }
+}
+
+/* 2. Standard Mobile (451px - 720px) */
+@media (min-width: 451px) and (max-width: 720px) {
+  .c-result-panel {
+    padding: var(--space-6);
+  }
+
+  .c-result-panel__audit-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+}
+
+/* 3. Tablets & Narrow Laptops (max-width: 1040px) */
+@media (max-width: 1040px) {
+  .c-result-panel__audit-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 4. Desktop & Wide Screens (max-width: 1500px) */
+@media (max-width: 1500px) {
+  .c-result-panel {
+    max-width: 100%;
+  }
+}
+
+

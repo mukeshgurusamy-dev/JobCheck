@@ -1,0 +1,149 @@
+/* ===================================================================
+   Hero Video Audio Prompt - Modal Dialog
+   =================================================================== */
+
+.c-hero-video-prompt__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.c-hero-video-prompt__box {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.c-hero-video-prompt__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 0.5rem 0;
+}
+
+.c-hero-video-prompt__description {
+  font-size: 0.95rem;
+  color: #475569;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.5;
+}
+
+.c-hero-video-prompt__buttons {
+  display: flex;
+  gap: 0.75rem;
+  flex-direction: column;
+}
+
+.c-hero-video-prompt__btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: inherit;
+}
+
+.c-hero-video-prompt__btn--enable {
+  background: #2563eb;
+  color: white;
+}
+
+.c-hero-video-prompt__btn--enable:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.c-hero-video-prompt__btn--disable {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+.c-hero-video-prompt__btn--disable:hover {
+  background: #cbd5e1;
+  transform: translateY(-2px);
+}
+
+.c-hero-video-prompt__btn:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Dark theme */
+[data-theme="dark"] .c-hero-video-prompt__box {
+  background: #1e293b;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .c-hero-video-prompt__title {
+  color: #f1f5f9;
+}
+
+[data-theme="dark"] .c-hero-video-prompt__description {
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .c-hero-video-prompt__btn--disable {
+  background: #334155;
+  color: #e2e8f0;
+}
+
+[data-theme="dark"] .c-hero-video-prompt__btn--disable:hover {
+  background: #475569;
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+  .c-hero-video-prompt__box {
+    padding: 1.5rem;
+    max-width: 95%;
+  }
+
+  .c-hero-video-prompt__title {
+    font-size: 1.25rem;
+  }
+
+  .c-hero-video-prompt__description {
+    font-size: 0.875rem;
+  }
+
+  .c-hero-video-prompt__btn {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.875rem;
+  }
+}
