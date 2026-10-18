@@ -429,18 +429,20 @@ function initApp(): void {
   skipLink.textContent = "Skip to main content";
   app.appendChild(skipLink);
 
-  // 1. Sticky Navigation Bar - Logo and Report Text
+  // 1. Sticky Navigation Bar
   const nav = document.createElement("nav");
   nav.className = "c-nav";
 
   const navInner = document.createElement("div");
   navInner.className = "c-nav__inner";
 
-  // Brand with Logo and "Report" Text
+  // Brand
   const brand = document.createElement("a");
   brand.href = "#";
   brand.className = "c-nav__brand";
 
+  // Size, radius, clipping and glow all come from .c-header__logo-wrapper in
+  // CSS now: a `style=""` attribute would be refused by `style-src 'self'`.
   const logoWrapper = document.createElement("div");
   logoWrapper.className = "c-header__logo-wrapper";
   const picElement = document.createElement("picture");
@@ -455,12 +457,35 @@ function initApp(): void {
   logoWrapper.appendChild(picElement);
   brand.appendChild(logoWrapper);
 
-  const brandText = document.createElement("span");
-  brandText.className = "c-nav__brand-text";
-  brandText.textContent = "Report";
-  brand.appendChild(brandText);
+  const brandTitle = document.createElement("span");
+  brandTitle.className = "c-header__title";
+  brandTitle.textContent = "JobCheck";
+  brand.appendChild(brandTitle);
 
   navInner.appendChild(brand);
+
+  // Nav Links
+  const navLinks = document.createElement("div");
+  navLinks.className = "c-nav__links";
+
+  const linksData = [
+    { text: "How It Works", href: "#how-it-works" },
+    { text: "Score Guide", href: "#score-guide" },
+    { text: "Common Scams", href: "#threat-intel" },
+    // Counted from the criteria the engine actually runs, so the label cannot
+    // outlive the checklist it names.
+    { text: `${CRITERIA.length}-Point Check`, href: "#inspection-engine" },
+    { text: "FAQ", href: "#faq" },
+  ];
+
+  for (const item of linksData) {
+    const a = document.createElement("a");
+    a.className = "c-nav__link";
+    a.href = item.href;
+    a.textContent = item.text;
+    navLinks.appendChild(a);
+  }
+  navInner.appendChild(navLinks);
 
   // Controls (Theme + Settings)
   const navControls = document.createElement("div");
