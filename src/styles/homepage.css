@@ -375,6 +375,13 @@
   }
 }
 
+/* Responsive animation speed for XS */
+@media (max-width: 450px) {
+  .c-platforms-ticker__track {
+    animation: platforms-scroll 24s linear infinite;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .c-platforms-ticker__track {
     animation: none;
@@ -609,15 +616,24 @@
   width: 100%;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 451px) and (max-width: 640px) {
+  .c-pipeline-grid {
+    grid-template-columns: 1fr;
+    gap: clamp(var(--space-3), 2vw, var(--space-5));
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1023px) {
   .c-pipeline-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: clamp(var(--space-4), 2vw, var(--space-6));
   }
 }
 
 @media (min-width: 1024px) {
   .c-pipeline-grid {
     grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-5);
   }
 }
 

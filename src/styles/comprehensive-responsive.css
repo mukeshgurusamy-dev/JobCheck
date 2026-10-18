@@ -563,7 +563,7 @@
 
   /* Result Panel */
   .c-result-panel {
-    padding: var(--space-5) var(--space-4);
+    padding: clamp(var(--space-5), 3vw, var(--space-8));
     gap: var(--space-5);
   }
 
@@ -642,9 +642,10 @@
     padding-top: var(--space-12);
   }
 
-  /* Stats Grid */
+  /* Stats Grid - 3 Column at 900px+ for better distribution */
   .c-stats-grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: clamp(var(--space-4), 2vw, var(--space-6));
   }
 
   /* Grid Layouts */
@@ -655,7 +656,7 @@
 
   .c-threat-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-5);
+    gap: clamp(var(--space-3), 2vw, var(--space-6));
   }
 
   .c-ai-grid {
@@ -670,6 +671,7 @@
   .c-pillars-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-5);
+    grid-auto-rows: max-content;
   }
 
   /* Result Panel */
