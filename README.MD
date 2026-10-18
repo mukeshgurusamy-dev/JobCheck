@@ -2,7 +2,7 @@
 
 Paste a job link (and optionally the job description) and get an immediate **Low / Medium / High risk** estimate with clear, actionable reasons. Built for job seekers in India, where fake offers asking for "registration fees", WhatsApp-only recruiters, and task scams are widespread.
 
-**Live demo:** Deployable directly to Netlify  
+**Live site:** [jobcheck.live](https://jobcheck.live)  
 **Accuracy:** 100% on 100-sample real-world benchmark suite (10 platforms × 10 companies)
 
 > JobCheck estimates risk from public signals and AI-assisted analysis. It **cannot prove** a company or job is real or fake. Always verify on the company's official careers portal.

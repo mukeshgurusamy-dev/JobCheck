@@ -26,4 +26,4 @@ User-agent: SemrushBot
 Crawl-delay: 10
 
 # Sitemap
-Sitemap: https://jobcheck.in/sitemap.xml
+Sitemap: https://jobcheck.live/sitemap.xml

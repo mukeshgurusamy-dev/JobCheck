@@ -20,7 +20,7 @@ export interface MetadataConfig {
 /**
  * Generate canonical URL with trailing slash consistency
  */
-export function getCanonicalUrl(pathname: string, baseUrl: string = "https://jobcheck.in"): string {
+export function getCanonicalUrl(pathname: string, baseUrl: string = "https://jobcheck.live"): string {
   const cleanPath = pathname.replace(/\/+$/, "") || "/";
   return `${baseUrl}${cleanPath}`;
 }
@@ -80,7 +80,7 @@ export function generateSchemaOrgJsonLd(config: MetadataConfig): string {
     description: config.description,
     url: config.url,
     applicationCategory: "UtilityApplication",
-    image: config.image || "https://jobcheck.in/logo.png",
+    image: config.image || "https://jobcheck.live/logo.png",
     ...(config.type === "article" && {
       author: {
         "@type": "Organization",
@@ -93,7 +93,7 @@ export function generateSchemaOrgJsonLd(config: MetadataConfig): string {
       organization: {
         "@type": "Organization",
         name: "JobCheck",
-        logo: "https://jobcheck.in/logo.png",
+        logo: "https://jobcheck.live/logo.png",
         sameAs: [
           "https://twitter.com/jobcheck_in",
           "https://linkedin.com/company/jobcheck",
@@ -213,8 +213,8 @@ export class SeoMetaBuilder {
       description:
         baseConfig.description ||
         "Scam vs. legit job-link checker for Indian freshers",
-      url: baseConfig.url || "https://jobcheck.in",
-      image: baseConfig.image || "https://jobcheck.in/og-image.png",
+      url: baseConfig.url || "https://jobcheck.live",
+      image: baseConfig.image || "https://jobcheck.live/og-image.png",
       imageAlt: baseConfig.imageAlt || "JobCheck - Scam vs. Legit Job Checker",
       type: baseConfig.type || "website",
       keywords: baseConfig.keywords,
@@ -311,8 +311,8 @@ export const HOMEPAGE_CONFIG: MetadataConfig = {
   title: "JobCheck — Scam vs. Legit Job Checker for Indian Freshers",
   description:
     "JobCheck analyzes job postings in real-time to identify scams. Detects fees, task scams, WhatsApp recruiters, lookalike domains, and 100+ risk signals with AI-powered verification.",
-  url: "https://jobcheck.in/",
-  image: "https://jobcheck.in/og-image.png",
+  url: "https://jobcheck.live/",
+  image: "https://jobcheck.live/og-image.png",
   imageAlt: "JobCheck - Detect job scams instantly",
   type: "website",
   keywords: [
