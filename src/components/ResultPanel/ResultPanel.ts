@@ -315,10 +315,10 @@ export function createResultPanel(options: ResultPanelOptions): HTMLElement {
     const failureDetail: Record<string, string> = {
       "no-api-key":
         "No Gemini API key is configured, so the web investigation could not run.",
-      timeout: "The Google search took longer than the time allowed for one request.",
-      "rate-limited": "Google's search API is rate-limiting requests right now.",
-      network: "The request to Google's search API did not go through.",
-      "bad-response": "Google returned a response that could not be read.",
+      timeout: "The AI investigation took too long to complete. This can happen with slow-loading job platforms (like Telegram channels). The automated rule-based scan is still reliable for this link.",
+      "rate-limited": "Google's API is currently rate-limited. Try checking this link again in a few moments.",
+      network: "Could not connect to Google's search service. Check your internet connection and try again.",
+      "bad-response": "Google returned unexpected data. Try checking this link again.",
     };
     const reason =
       assessment.aiIntel.status === "skipped"
@@ -660,6 +660,17 @@ export function createResultPanel(options: ResultPanelOptions): HTMLElement {
         const companyDiv = document.createElement("div");
         companyDiv.className = "c-result-panel__location-row";
         companyDiv.innerHTML = `<strong>Company Address:</strong> ${ai.companyLocation.fullAddress}`;
+        if (loc.verificationStatus === "verified") {
+          const mapLink = document.createElement("a");
+          mapLink.className = "c-result-panel__review-source-link";
+          const queryPart = ai.companyLocation.fullAddress.split(",").slice(0, 2).join(" ").trim().replace(/\s+/g, "+");
+          mapLink.href = `https://maps.google.com/?q=${queryPart}`;
+          mapLink.target = "_blank";
+          mapLink.rel = "noopener noreferrer";
+          mapLink.textContent = "📍 Google Maps Verified Business";
+          companyDiv.appendChild(document.createTextNode(" "));
+          companyDiv.appendChild(mapLink);
+        }
         locationCard.appendChild(companyDiv);
       }
 
@@ -1267,8 +1278,9 @@ export function createResultPanel(options: ResultPanelOptions): HTMLElement {
         "../../utils/pdfReport"
       );
       exportDirectPdfBlob(assessment, jobUrl, jobDescription)
-        .catch(() => {
+        .catch((err) => {
           // Fallback to print dialog if jsPDF fails
+          console.error("exportDirectPdfBlob error:", err);
           downloadPdfReport(assessment, jobUrl, jobDescription);
         });
     },

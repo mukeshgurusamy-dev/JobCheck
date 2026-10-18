@@ -88,7 +88,7 @@
 .c-nav__links {
   display: none;
   align-items: center;
-  gap: var(--space-4);
+  gap: clamp(var(--space-3), 2vw, var(--space-4));
   flex-wrap: nowrap;
   white-space: nowrap;
   flex: 1;
@@ -133,7 +133,7 @@
 .c-nav__controls {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: clamp(var(--space-2), 1.5vw, var(--space-3));
   flex-shrink: 0;
   white-space: nowrap;
   margin-left: auto;
