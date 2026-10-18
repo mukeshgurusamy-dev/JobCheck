@@ -160,12 +160,7 @@
   transition: border-color var(--duration-fast) var(--ease-in-out),
     transform var(--duration-fast) var(--ease-out),
     box-shadow var(--duration-fast) var(--ease-out);
-}
-
-@media (min-width: 640px) {
-  .c-nav__helpline {
-    display: inline-flex;
-  }
+  flex-shrink: 0;
 }
 
 @media (pointer: fine) {
@@ -1509,6 +1504,95 @@
 
   .c-pipeline-grid {
     gap: var(--space-4);
+  }
+}
+
+/* ==========================================================================
+   Navigation Helpline Responsive Breakpoints
+   Handles helpline display and sizing across all screen sizes (300px-1500px+)
+   ========================================================================== */
+
+/* 1. Compact Mobile (300px - 450px) */
+@media (min-width: 300px) and (max-width: 450px) {
+  .c-nav__helpline {
+    display: none;
+  }
+}
+
+/* 2. Standard Mobile (451px - 649px) */
+@media (min-width: 451px) and (max-width: 649px) {
+  .c-nav__helpline {
+    display: none;
+  }
+}
+
+/* 3. Tablet & Phablet (650px - 899px) - CRITICAL FIX */
+@media (min-width: 650px) and (max-width: 899px) {
+  .c-nav__helpline {
+    display: inline-flex;
+    padding: var(--space-1) var(--space-2-5);
+    font-size: 0.7rem;
+    gap: var(--space-1);
+  }
+
+  .c-nav__inner {
+    gap: var(--space-1);
+  }
+
+  .c-nav__controls {
+    gap: clamp(var(--space-1), 0.5vw, var(--space-2));
+  }
+}
+
+/* 4. Small Desktop (900px - 1040px) */
+@media (min-width: 900px) and (max-width: 1040px) {
+  .c-nav__helpline {
+    display: inline-flex;
+    padding: var(--space-1-5) var(--space-3);
+    font-size: var(--text-caption);
+  }
+
+  .c-nav__controls {
+    gap: clamp(var(--space-2), 1.2vw, var(--space-3));
+  }
+}
+
+/* 5. Medium Desktop (1041px - 1280px) */
+@media (min-width: 1041px) and (max-width: 1280px) {
+  .c-nav__helpline {
+    display: inline-flex;
+    padding: var(--space-1-5) var(--space-3-5);
+    font-size: var(--text-caption);
+  }
+
+  .c-nav__controls {
+    gap: clamp(var(--space-2), 1.5vw, var(--space-3));
+  }
+}
+
+/* 6. Large Desktop (1281px - 1500px) */
+@media (min-width: 1281px) and (max-width: 1500px) {
+  .c-nav__helpline {
+    display: inline-flex;
+    padding: var(--space-1-5) var(--space-3-5);
+    font-size: var(--text-caption);
+  }
+
+  .c-nav__controls {
+    gap: var(--space-3);
+  }
+}
+
+/* 7. Ultra-wide (1500px+) */
+@media (min-width: 1500px) {
+  .c-nav__helpline {
+    display: inline-flex;
+    padding: var(--space-1-5) var(--space-3-5);
+    font-size: var(--text-caption);
+  }
+
+  .c-nav__controls {
+    gap: var(--space-3);
   }
 }
 
