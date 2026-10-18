@@ -47,6 +47,11 @@
     Cross-Origin-Opener-Policy = "same-origin"
     Cross-Origin-Resource-Policy = "same-origin"
 
+    # Additional security headers
+    X-Permitted-Cross-Domain-Policies = "none"
+    X-Robots-Tag = "index, follow, max-snippet:-1, max-image-preview:large"
+    Expect-CT = "max-age=86400, enforce"
+
 # Service worker - no cache (always fetch fresh to check for updates)
 [[headers]]
   for = "/sw.js"
