@@ -10,8 +10,11 @@ export function getAllowedOrigins(
   const origins = [
     env["URL"], // primary site URL on Netlify
     env["DEPLOY_PRIME_URL"], // branch / preview deploy URL
+    "https://jobcheck.live",
+    "https://www.jobcheck.live",
     "http://localhost:8888", // netlify dev
     "http://localhost:3000", // vite dev server
+    "http://localhost:5173", // default vite port
   ];
   return origins
     .filter((o): o is string => typeof o === "string" && o.length > 0)

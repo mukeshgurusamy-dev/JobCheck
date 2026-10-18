@@ -32,8 +32,11 @@ describe("isAllowedOrigin", () => {
 
   it("ignores unset env values", () => {
     expect(getAllowedOrigins({})).toEqual([
+      "https://jobcheck.live",
+      "https://www.jobcheck.live",
       "http://localhost:8888",
       "http://localhost:3000",
+      "http://localhost:5173",
     ]);
   });
 });

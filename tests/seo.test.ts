@@ -14,9 +14,9 @@ import {
 describe("SEO Metadata Generation", () => {
   describe("getCanonicalUrl", () => {
     it("should generate canonical URL with trailing slash normalization", () => {
-      expect(getCanonicalUrl("/")).toBe("https://jobcheck.in/");
-      expect(getCanonicalUrl("/help/")).toBe("https://jobcheck.in/help");
-      expect(getCanonicalUrl("/about")).toBe("https://jobcheck.in/about");
+      expect(getCanonicalUrl("/")).toBe("https://jobcheck.live/");
+      expect(getCanonicalUrl("/help/")).toBe("https://jobcheck.live/help");
+      expect(getCanonicalUrl("/about")).toBe("https://jobcheck.live/about");
     });
 
     it("should support custom base URL", () => {
@@ -24,7 +24,7 @@ describe("SEO Metadata Generation", () => {
     });
 
     it("should handle empty pathname", () => {
-      expect(getCanonicalUrl("")).toBe("https://jobcheck.in/");
+      expect(getCanonicalUrl("")).toBe("https://jobcheck.live/");
     });
   });
 
@@ -125,8 +125,8 @@ describe("SEO Metadata Generation", () => {
   describe("generateBreadcrumbSchema", () => {
     it("should generate valid breadcrumb schema", () => {
       const items = [
-        { name: "Home", url: "https://jobcheck.in/" },
-        { name: "Checker", url: "https://jobcheck.in/#checker" },
+        { name: "Home", url: "https://jobcheck.live/" },
+        { name: "Checker", url: "https://jobcheck.live/#checker" },
       ];
 
       const jsonLd = generateBreadcrumbSchema(items);
@@ -140,7 +140,7 @@ describe("SEO Metadata Generation", () => {
     });
 
     it("should be valid JSON", () => {
-      const items = [{ name: "Home", url: "https://jobcheck.in/" }];
+      const items = [{ name: "Home", url: "https://jobcheck.live/" }];
       const jsonLd = generateBreadcrumbSchema(items);
       expect(() => JSON.parse(jsonLd)).not.toThrow();
     });
@@ -183,7 +183,7 @@ describe("SEO Metadata Generation", () => {
 
       expect(config.title).toBe("JobCheck");
       expect(config.description).toContain("Scam vs. legit");
-      expect(config.url).toBe("https://jobcheck.in");
+      expect(config.url).toBe("https://jobcheck.live");
     });
 
     it("should chain setters", () => {
