@@ -151,11 +151,16 @@
   }
 
   .c-score-gauge__number {
-    font-size: 2.25rem;
+    font-size: clamp(2rem, 6vw, 2.25rem);
   }
 
   .c-score-gauge__scale {
     font-size: 0.75rem;
+  }
+
+  .c-score-gauge__track,
+  .c-score-gauge__meter {
+    stroke-width: 8;
   }
 }
 
@@ -170,23 +175,38 @@
   .c-score-gauge__number {
     font-size: 2.5rem;
   }
+
+  .c-score-gauge__track,
+  .c-score-gauge__meter {
+    stroke-width: 9;
+  }
 }
 
-/* 3. Tablets & Narrow Laptops (max-width: 1040px) */
-@media (max-width: 1040px) {
+/* 3. Tablets & Narrow Laptops (721px - 1040px) */
+@media (min-width: 721px) and (max-width: 1040px) {
   .c-score-gauge,
   .c-result-panel__score-stack {
     width: 155px;
     height: 155px;
   }
+
+  .c-score-gauge__track,
+  .c-score-gauge__meter {
+    stroke-width: 9;
+  }
 }
 
-/* 4. Desktop & Wide Screens (max-width: 1500px) */
-@media (max-width: 1500px) {
+/* 4. Desktop (1041px - 1500px) */
+@media (min-width: 1041px) and (max-width: 1500px) {
   .c-score-gauge,
   .c-result-panel__score-stack {
     width: 160px;
     height: 160px;
+  }
+
+  .c-score-gauge__track,
+  .c-score-gauge__meter {
+    stroke-width: 10;
   }
 }
 

@@ -100,8 +100,9 @@
    is shown by the component's own `--active` class. */
 @media (pointer: coarse) {
   .c-tooltip__trigger {
-    min-width: 32px;
-    min-height: 32px;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0.5rem;
     justify-content: center;
   }
 
@@ -138,10 +139,21 @@
   }
 }
 
-/* 4. Desktop & Wide Screens (max-width: 1500px) */
-@media (max-width: 1500px) {
+/* 3b. Tablet & Narrow Laptop responsive arrow (721px - 1040px) */
+@media (min-width: 721px) and (max-width: 1040px) {
+  .c-tooltip__bubble::after {
+    border-width: 4px;
+  }
+}
+
+/* 4. Desktop (1041px - 1500px) */
+@media (min-width: 1041px) and (max-width: 1500px) {
   .c-tooltip__bubble {
-    max-width: 300px;
+    max-width: 320px;
+  }
+
+  .c-tooltip__bubble::after {
+    border-width: 5px;
   }
 }
 
