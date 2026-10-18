@@ -487,18 +487,9 @@ function initApp(): void {
   }
   navInner.appendChild(navLinks);
 
-  // Controls (Helpline + FBI + Theme + Settings)
+  // Controls (Theme + Settings)
   const navControls = document.createElement("div");
   navControls.className = "c-nav__controls";
-
-  const helplineLink = document.createElement("a");
-  helplineLink.className = "c-nav__helpline";
-  helplineLink.href = "https://cybercrime.gov.in";
-  helplineLink.target = "_blank";
-  helplineLink.rel = "noopener noreferrer";
-  helplineLink.title = "Report job scams to Indian Cybercrime Portal";
-  helplineLink.textContent = "🚨 Helpline: 1930";
-  navControls.appendChild(helplineLink);
 
   navControls.appendChild(createThemeToggle());
 
