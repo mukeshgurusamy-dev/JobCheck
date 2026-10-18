@@ -9,6 +9,7 @@ import "./styles/typography-responsive.css";
 import "./styles/typography-extensions.css";
 import "./styles/mobile-responsive.css";
 import "./styles/result-responsive.css";
+import "./styles/comprehensive-responsive.css";
 import "./styles/hero-video.css";
 import "./styles/hero-video-prompt.css";
 
@@ -25,6 +26,7 @@ import { inspectUrl } from "./services/api";
 import { analyzeJob } from "./engine/engine";
 import { JobInput } from "./types/types";
 import { createHeroVideo } from "./components/HeroVideo/HeroVideo";
+import { createLoadingView, LoadingController } from "./components/Loading/Loading";
 
 // Disable browser scroll restoration and force scroll to top
 if (window.history && window.history.scrollRestoration) {
@@ -613,7 +615,6 @@ function initApp(): void {
       resultRegion.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "start" });
 
       const startTime = Date.now();
-      const MINIMUM_LOADING_TIME = 2000; // Minimum 2 seconds to show at least some animation
 
       let fetchedData = undefined;
       let couldNotReadNotice: string | null = null;
@@ -665,13 +666,8 @@ function initApp(): void {
 
         const assessment = analyzeJob(jobInput);
 
-        // Wait for the minimum loading time to show at least some animation
-        const elapsedTime = Date.now() - startTime;
-        const remainingWaitTime = Math.max(0, MINIMUM_LOADING_TIME - elapsedTime);
-
-        if (remainingWaitTime > 0) {
-          await new Promise((resolve) => setTimeout(resolve, remainingWaitTime));
-        }
+        // If result arrives on an intermediate step, fast-forward remaining steps quickly and cleanly
+        await completeLoadingState(resultRegion);
 
         // Use actual search time (API response time)
         const searchTimeSeconds = Math.ceil(actualSearchTime / 1000);
@@ -1380,147 +1376,49 @@ function initApp(): void {
   preloadNonCriticalBundles();
 }
 
-/**
- * Renders modern loading state with elapsed time, progress steps, and real-time updates.
- */
-function renderLoadingState(target: HTMLElement): void {
-  target.innerHTML = "";
-
-  const container = document.createElement("div");
-  container.className = "c-loading";
-
-  // Header with elapsed time
-  const header = document.createElement("div");
-  header.className = "c-loading__header";
-
-  const title = document.createElement("h3");
-  title.className = "c-loading__title";
-  title.textContent = "Scanning Job Link & Description…";
-  header.appendChild(title);
-
-  const elapsedTime = document.createElement("span");
-  elapsedTime.className = "c-loading__elapsed";
-  elapsedTime.textContent = "0s";
-  header.appendChild(elapsedTime);
-
-  container.appendChild(header);
-
-  // Status message showing what's being searched
-  const statusMsg = document.createElement("p");
-  statusMsg.className = "c-loading__status";
-  statusMsg.textContent = "Initializing scan…";
-  container.appendChild(statusMsg);
-
-  // Modern progress bar
-  const progressBar = document.createElement("div");
-  progressBar.className = "c-loading__progress-bar";
-
-  const progressFill = document.createElement("div");
-  progressFill.className = "c-loading__progress-fill";
-  progressBar.appendChild(progressFill);
-
-  container.appendChild(progressBar);
-
-  // Steps with animated dots
-  const stepsLabel = document.createElement("p");
-  stepsLabel.className = "c-loading__steps-label";
-  stepsLabel.textContent = "What we're checking:";
-  container.appendChild(stepsLabel);
-
-  const steps = document.createElement("div");
-  steps.className = "c-loading__steps";
-
-  const stepTexts = [
-    { label: "Domain Analysis", desc: "Checking domain age, HTTPS, and lookalike patterns" },
-    { label: "Text Inspection", desc: "Scanning for fee demands and messaging-app traps" },
-    { label: "Company Footprint", desc: "Searching public web results and company reviews" },
-    { label: "Risk Calculation", desc: "Combining all signals into a final safety score" },
-  ];
-
-  for (const stepData of stepTexts) {
-    const step = document.createElement("div");
-    step.className = "c-loading__step";
-
-    const dot = document.createElement("span");
-    dot.className = "c-loading__step-dot";
-    step.appendChild(dot);
-
-    const stepContent = document.createElement("div");
-    stepContent.className = "c-loading__step-content";
-
-    const stepLabel = document.createElement("span");
-    stepLabel.className = "c-loading__step-label";
-    stepLabel.textContent = stepData.label;
-    stepContent.appendChild(stepLabel);
-
-    const stepDesc = document.createElement("span");
-    stepDesc.className = "c-loading__step-desc";
-    stepDesc.textContent = stepData.desc;
-    stepContent.appendChild(stepDesc);
-
-    step.appendChild(stepContent);
-    steps.appendChild(step);
-  }
-
-  container.appendChild(steps);
-  target.appendChild(container);
-
-  // Start time tracking
-  const startTime = Date.now();
-  let currentStep = 0;
-  const stepDurations = [3000, 4000, 5000, 2000]; // Approximate timings for each step
-
-  // Update elapsed time every 100ms
-  const timerInterval = setInterval(() => {
-    const elapsed = Math.floor((Date.now() - startTime) / 1000);
-    elapsedTime.textContent = `${elapsed}s`;
-  }, 100);
-
-  // Animate through steps
-  const stepIntervals: (NodeJS.Timeout | number)[] = [];
-  let accumulatedTime = 0;
-
-  for (let i = 0; i < stepTexts.length; i++) {
-    const stepDuration = stepDurations[i];
-    if (stepDuration === undefined) continue;
-
-    accumulatedTime += stepDuration;
-    const currentStepData = stepTexts[i]!;
-    const stepInterval = setTimeout(() => {
-      currentStep = i;
-      const stepElements = steps.querySelectorAll(".c-loading__step");
-      stepElements.forEach((el, idx) => {
-        if (idx < currentStep) {
-          el.classList.add("c-loading__step--done");
-        } else if (idx === currentStep) {
-          el.classList.add("c-loading__step--active");
-        }
-      });
-
-      // Update status message and progress
-      statusMsg.textContent = `${currentStepData.label}: ${currentStepData.desc}`;
-      const progress = ((i + 1) / stepTexts.length) * 100;
-      progressFill.style.width = `${progress}%`;
-    }, accumulatedTime - stepDuration);
-    stepIntervals.push(stepInterval);
-  }
-
-  // Store intervals for cleanup
-  (target as any).__loadingIntervals = {
-    timer: timerInterval,
-    steps: stepIntervals,
+interface LoadingTargetElement extends HTMLElement {
+  __loadingController?: LoadingController;
+  __loadingIntervals?: {
+    timer: ReturnType<typeof setInterval>;
+    steps: (ReturnType<typeof setTimeout> | number)[];
   };
 }
 
 /**
- * Cleanup loading state intervals
+ * Renders modern circular loading state with elapsed time, progress steps, and real-time updates.
+ */
+function renderLoadingState(target: HTMLElement): void {
+  cleanupLoadingState(target);
+  target.innerHTML = "";
+
+  const controller = createLoadingView();
+  (target as LoadingTargetElement).__loadingController = controller;
+  target.appendChild(controller.element);
+}
+
+/**
+ * Fast-forwards the loading animation through remaining steps when scan finishes
+ */
+async function completeLoadingState(target: HTMLElement): Promise<void> {
+  const el = target as LoadingTargetElement;
+  if (el.__loadingController && typeof el.__loadingController.fastForwardToEnd === "function") {
+    await el.__loadingController.fastForwardToEnd();
+  }
+}
+
+/**
+ * Cleanup loading state intervals and timers
  */
 function cleanupLoadingState(target: HTMLElement): void {
-  const intervals = (target as any).__loadingIntervals as { timer: NodeJS.Timeout; steps: (NodeJS.Timeout | number)[] } | undefined;
-  if (intervals) {
-    clearInterval(intervals.timer);
-    intervals.steps.forEach((id) => clearTimeout(id as any));
-    delete (target as any).__loadingIntervals;
+  const el = target as LoadingTargetElement;
+  if (el.__loadingController) {
+    el.__loadingController.cleanup();
+    delete el.__loadingController;
+  }
+  if (el.__loadingIntervals) {
+    clearInterval(el.__loadingIntervals.timer);
+    el.__loadingIntervals.steps.forEach((id) => clearTimeout(id as any));
+    delete el.__loadingIntervals;
   }
 }
 

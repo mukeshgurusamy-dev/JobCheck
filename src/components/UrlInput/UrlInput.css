@@ -119,10 +119,8 @@
   display: none;
   align-items: center;
   justify-content: center;
-  /* 32px hit area: below the 44px ideal, but it is a secondary control with a
-     whole empty field next to it, and it clears a field with no side effect. */
-  width: 2rem;
-  height: 2rem;
+  width: 2.75rem;
+  height: 2.75rem;
   border-radius: var(--radius-full);
   color: var(--color-text-secondary);
   background: var(--color-bg-muted);
@@ -191,13 +189,13 @@
 
   .c-url-input__field {
     height: 3.25rem;
-    padding-left: 2.75rem;
-    padding-right: 2.75rem;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
     font-size: 0.95rem;
   }
 
   .c-url-input__icon-prefix {
-    left: var(--space-3);
+    left: var(--space-2-5);
   }
 
   .c-url-input__clear-btn {
@@ -219,10 +217,10 @@
   }
 }
 
-/* 4. Desktop & Wide Screens (max-width: 1500px) */
-@media (max-width: 1500px) {
+/* 4. Desktop (1041px - 1500px) */
+@media (min-width: 1041px) and (max-width: 1500px) {
   .c-url-input {
-    max-width: 100%;
+    max-width: 600px;
   }
 }
 
