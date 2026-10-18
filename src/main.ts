@@ -202,7 +202,8 @@ function createSettingsDrawer(): {
       `<p>By using JobCheck, you agree to the following:</p>
        <p>• <strong>Guidance Only:</strong> JobCheck calculates risk scores based on automated safety signals. It provides safety guidance and does not replace your own due diligence. Always confirm open positions directly on official company career portals.</p>
        <p>• <strong>Strict Privacy:</strong> Your submitted job links and text are processed in temporary memory and are never stored or sold.</p>
-       <p>• <strong>Immediate Reporting:</strong> If you have already transferred money to a scammer, report immediately to the National Cybercrime Portal at <strong>cybercrime.gov.in</strong> or call the <strong>1930</strong> helpline.</p>`,
+       <p>• <strong>Immediate Reporting (India):</strong> If you have already transferred money to a scammer, report immediately to the National Cybercrime Portal at <strong>cybercrime.gov.in</strong> or call the <strong>1930</strong> helpline.</p>
+       <p>• <strong>Immediate Reporting (Worldwide):</strong> International users can report job scams to the <strong><a href="https://www.fbi.gov/investigate/cyber" target="_blank" rel="noopener noreferrer">FBI's Internet Crime Complaint Center (IC3)</a></strong> or local law enforcement in your country.</p>`,
     ),
   );
 
@@ -486,7 +487,7 @@ function initApp(): void {
   }
   navInner.appendChild(navLinks);
 
-  // Controls (Helpline + Theme + Settings)
+  // Controls (Helpline + FBI + Theme + Settings)
   const navControls = document.createElement("div");
   navControls.className = "c-nav__controls";
 
@@ -495,6 +496,7 @@ function initApp(): void {
   helplineLink.href = "https://cybercrime.gov.in";
   helplineLink.target = "_blank";
   helplineLink.rel = "noopener noreferrer";
+  helplineLink.title = "Report job scams to Indian Cybercrime Portal";
   helplineLink.textContent = "🚨 Helpline: 1930";
   navControls.appendChild(helplineLink);
 
@@ -1260,11 +1262,14 @@ function initApp(): void {
     <h4 class="c-ent-footer__heading">If You've Already Paid</h4>
     <ol class="c-ent-footer__steps">
       <li class="c-ent-footer__step">
-        <span>Report it now — call <a class="c-ent-footer__step-link" href="tel:1930">1930</a> or file at
-        <a class="c-ent-footer__step-link" href="https://cybercrime.gov.in" target="_blank" rel="noopener noreferrer">cybercrime.gov.in</a>.</span>
+        <span><strong>India:</strong> Call <a class="c-ent-footer__step-link" href="tel:1930">1930</a> or report at
+        <a class="c-ent-footer__step-link" href="https://cybercrime.gov.in" target="_blank" rel="noopener noreferrer">cybercrime.gov.in</a></span>
       </li>
       <li class="c-ent-footer__step">
-        <span>Tell your bank to freeze the transfer, and quote the UTR reference from the payment.</span>
+        <span><strong>Worldwide:</strong> Report to <a class="c-ent-footer__step-link" href="https://www.fbi.gov/investigate/cyber" target="_blank" rel="noopener noreferrer">FBI IC3</a> or local law enforcement</span>
+      </li>
+      <li class="c-ent-footer__step">
+        <span>Tell your bank to freeze the transfer, and quote the UTR/reference from the payment.</span>
       </li>
       <li class="c-ent-footer__step">
         <span>Keep the evidence — chats, the job link, the account you paid into.</span>
