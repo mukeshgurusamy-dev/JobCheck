@@ -40,27 +40,33 @@ export function evaluatePhoneNumbers(ctx: PhoneValidationContext): Finding[] {
   }
 
   // Check for country code mismatch
-  // ONLY flag when Indian phone numbers (+91) don't match expected location
-  // This is a strong scam indicator: scammers use Indian numbers from call centers
-  // but claim to be international companies (USA, UK, etc.)
-  //
-  // SKIP this check for:
-  // 1. Trusted platforms (LinkedIn, company career sites) - employer identity is verified
-  // 2. When expected location is India - Indian companies naturally have +91 numbers
-  // 3. When phones ARE Indian - mixing country codes is expected for global companies
-  if (expectedLocation && !ctx.isTrustedPlatform && expectedLocation.toLowerCase() !== "india") {
-    // Only check if we have Indian phone numbers but company claims non-Indian location
-    const indianPhones = phones.filter(p => p.countryCode === "+91");
-
-    if (indianPhones.length > 0 && indianPhones[0]) {
-      findings.push({
-        id: "phone-location-mismatch",
-        kind: "risk",
-        severity: "high",
-        points: 30,
-        reason: `Indian phone numbers (+91) but company location is ${expectedLocation.toUpperCase()} - common scam tactic (call center spoofing)`,
-        evidence: `Phone: ${indianPhones[0].normalized}, Expected location: ${expectedLocation}`
-      });
+  // 1. Foreign phone numbers (e.g. +971) when company location is India
+  // 2. Indian phone numbers (+91) when company location is foreign (call center spoofing)
+  if (expectedLocation && !ctx.isTrustedPlatform) {
+    if (expectedLocation.toLowerCase() === "india") {
+      const foreignPhones = phones.filter(p => p.countryCode && p.countryCode !== "+91");
+      if (foreignPhones.length > 0 && foreignPhones[0]) {
+        findings.push({
+          id: "phone-location-mismatch",
+          kind: "risk",
+          severity: "high",
+          points: 30,
+          reason: `Foreign phone number (${foreignPhones[0].countryCode}) for company in INDIA - common scam tactic`,
+          evidence: `Phone: ${foreignPhones[0].normalized}, Expected location: ${expectedLocation}`
+        });
+      }
+    } else {
+      const indianPhones = phones.filter(p => p.countryCode === "+91");
+      if (indianPhones.length > 0 && indianPhones[0]) {
+        findings.push({
+          id: "phone-location-mismatch",
+          kind: "risk",
+          severity: "high",
+          points: 30,
+          reason: `Indian phone numbers (+91) but company location is ${expectedLocation.toUpperCase()} - common scam tactic (call center spoofing)`,
+          evidence: `Phone: ${indianPhones[0].normalized}, Expected location: ${expectedLocation}`
+        });
+      }
     }
   }
 

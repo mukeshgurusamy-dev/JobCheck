@@ -219,8 +219,6 @@
 
 /* 4. Desktop (1041px - 1500px) */
 @media (min-width: 1041px) and (max-width: 1500px) {
-  .c-url-input {
-    max-width: 600px;
-  }
+  /* Keep full width - no max-width constraint */
 }
 
