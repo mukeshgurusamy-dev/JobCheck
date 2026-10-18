@@ -668,12 +668,7 @@ function initApp(): void {
         cleanupLoadingState(resultRegion);
         resultRegion.innerHTML = "";
 
-        // Add Report Header
-        const reportHeader = document.createElement("div");
-        reportHeader.className = "c-result-panel__header";
-        reportHeader.innerHTML = `<h2 class="c-result-panel__header-title">📋 Report</h2>`;
-        resultRegion.appendChild(reportHeader);
-
+        // Add result panel directly
         const resultPanel = createResultPanel({
           assessment,
           jobUrl: data.url,
