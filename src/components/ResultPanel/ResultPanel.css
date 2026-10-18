@@ -28,21 +28,11 @@
 
 .c-result-panel__header-title {
   font-family: var(--font-sans);
-  font-size: var(--text-h3);
-  font-weight: var(--font-weight-semibold);
-  line-height: var(--leading-h3);
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
   letter-spacing: -0.015em;
   color: var(--color-text-primary);
-  margin: 0;
-  padding: 0;
-}
-
-.c-result-panel__header-desc {
-  font-family: var(--font-sans);
-  font-size: var(--text-small);
-  font-weight: var(--font-weight-regular);
-  line-height: var(--leading-small);
-  color: var(--color-text-secondary);
   margin: 0;
   padding: 0;
 }
@@ -54,11 +44,7 @@
   }
 
   .c-result-panel__header-title {
-    font-size: var(--text-h4);
-  }
-
-  .c-result-panel__header-desc {
-    font-size: 0.8125rem;
+    font-size: clamp(1.25rem, 3.5vw, 2rem);
   }
 }
 

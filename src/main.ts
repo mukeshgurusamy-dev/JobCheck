@@ -671,10 +671,7 @@ function initApp(): void {
         // Add Report Header
         const reportHeader = document.createElement("div");
         reportHeader.className = "c-result-panel__header";
-        reportHeader.innerHTML = `
-          <h2 class="c-result-panel__header-title">📋 Report</h2>
-          <p class="c-result-panel__header-desc">Your job posting security assessment</p>
-        `;
+        reportHeader.innerHTML = `<h2 class="c-result-panel__header-title">📋 Report</h2>`;
         resultRegion.appendChild(reportHeader);
 
         const resultPanel = createResultPanel({
