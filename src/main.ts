@@ -27,6 +27,7 @@ import { analyzeJob } from "./engine/engine";
 import { JobInput } from "./types/types";
 import { createHeroVideo } from "./components/HeroVideo/HeroVideo";
 import { createLoadingView, LoadingController } from "./components/Loading/Loading";
+import { initAnalytics, trackJobSearch } from "./utils/analytics";
 
 // Disable browser scroll restoration and force scroll to top
 if (window.history && window.history.scrollRestoration) {
@@ -417,6 +418,9 @@ function initApp(): void {
   // quality level is "off", which is what the test suite sees.
   initQuality();
 
+  // Start visitor analytics tracking (non-blocking, fire-and-forget)
+  initAnalytics();
+
   app.innerHTML = "";
 
   // Skip link. First focusable element in the document, so one Tab press
@@ -658,6 +662,19 @@ function initApp(): void {
         };
 
         const assessment = analyzeJob(jobInput);
+
+        // Track search analytics in Supabase (fire-and-forget, non-blocking)
+        try {
+          trackJobSearch({
+            jobUrl: data.url,
+            companyName: assessment.aiIntel?.companyName,
+            riskLevel: assessment.level,
+            score: assessment.score,
+            scamTypes: assessment.findings.map((f) => f.reason).slice(0, 10),
+          });
+        } catch {
+          // Non-critical, ignore
+        }
 
         // If result arrives on an intermediate step, fast-forward remaining steps quickly and cleanly
         await completeLoadingState(resultRegion);

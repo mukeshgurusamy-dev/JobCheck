@@ -1,4 +1,5 @@
 import { Assessment, RiskLevel } from "../types/types";
+import { trackCopyReport } from "./analytics";
 
 /**
  * Formats a plain-text assessment summary for clipboard or messaging apps.
@@ -38,6 +39,7 @@ export async function copyToClipboard(text: string): Promise<boolean> {
   ) {
     try {
       await navigator.clipboard.writeText(text);
+      try { trackCopyReport(); } catch { /* ok */ }
       return true;
     } catch {
       // Fallback below
