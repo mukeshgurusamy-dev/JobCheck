@@ -11,6 +11,7 @@ import { createFindingItem } from "../FindingItem/FindingItem";
 import { ensureLegalEntitySuffix } from "../../engine/normalize";
 import { buildFinalVerdict } from "./finalVerdict";
 import type { VerdictVariant } from "./finalVerdict";
+import { trackPdfDownload } from "../../utils/analytics";
 
 export interface ResultPanelOptions {
   assessment: Assessment;
@@ -1268,6 +1269,11 @@ export function createResultPanel(options: ResultPanelOptions): HTMLElement {
     variant: "outline",
     iconBefore: "download",
     onClick: async () => {
+      try {
+        trackPdfDownload();
+      } catch {
+        // non-blocking
+      }
       if (onDownloadCard) {
         onDownloadCard();
         return;

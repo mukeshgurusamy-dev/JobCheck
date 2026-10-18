@@ -7,21 +7,15 @@ import {
   stripCompanySuffix,
 } from "../../src/engine/normalize";
 import { SecureLogger } from "./securityUtils";
+import { apiKeyPool } from "./apiKeyPool";
 
 const logger = new SecureLogger("aiSearch");
 
 /**
- * Retrieves API key from environment variables only.
- * SECURITY: Never read from .env file in production - use Netlify Environment Variables.
- * Local .env reading is removed to prevent accidental key exposure.
+ * Retrieves the optimal API key from the multi-key pool with cooldown.
  */
 function getApiKey(): string | undefined {
-  // Read from Netlify environment variables (secure)
-  if (process.env.GEMINI_API_KEY) return process.env.GEMINI_API_KEY;
-  if (process.env.GOOGLE_API_KEY) return process.env.GOOGLE_API_KEY;
-
-  // No fallback to .env file - keys must be in Netlify Environment Variables
-  return undefined;
+  return apiKeyPool.acquireKey();
 }
 
 /**
@@ -452,8 +446,10 @@ Return ONLY a valid JSON object (no markdown, no explanation outside JSON):
 }
 `.trim();
 
-  const endpointFor = (model: string) =>
-    `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+  let activeApiKey = apiKey;
+
+  const endpointFor = (model: string, key: string) =>
+    `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
 
   /**
    * Which search tool to attach, if any.
@@ -501,7 +497,7 @@ Return ONLY a valid JSON object (no markdown, no explanation outside JSON):
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), ms);
     try {
-      const res = await fetch(endpointFor(model), {
+      const res = await fetch(endpointFor(model, activeApiKey), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestBody(tool, prompt)),
@@ -545,6 +541,7 @@ Return ONLY a valid JSON object (no markdown, no explanation outside JSON):
       if (outcome.res.ok) {
         res = outcome.res;
         grounded = step.tool !== "off";
+        apiKeyPool.reportSuccess(activeApiKey);
         break;
       }
       failureReason =
@@ -559,6 +556,16 @@ Return ONLY a valid JSON object (no markdown, no explanation outside JSON):
       logger.error(
         `${step.model} (tool=${step.tool}) failed with HTTP ${outcome.res.status}`,
       );
+
+      // If key hit rate limit / quota, report to pool and switch to next key
+      if (outcome.res.status === 429 || outcome.res.status === 403) {
+        apiKeyPool.reportRateLimited(activeApiKey);
+        const nextKey = apiKeyPool.getNextAvailableKey(activeApiKey);
+        if (nextKey) {
+          activeApiKey = nextKey;
+          logger.warn(`API key rate-limited (${outcome.res.status}). Switched to next key in pool.`);
+        }
+      }
 
       // If search-grounded attempt failed with 429 (quota) or 503 (demand spike),
       // skip any other grounded attempts and go immediately to the ungrounded model fallback

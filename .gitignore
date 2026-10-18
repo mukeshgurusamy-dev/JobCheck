@@ -13,3 +13,4 @@ tests/failures.json
 
 # Stray directory created by a mis-escaped shell command; contains credentials
 $HOME/
+.claude/
