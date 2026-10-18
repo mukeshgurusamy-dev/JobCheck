@@ -1,0 +1,44 @@
+UI RESPONSIVE AUDIT FINDINGS (300px - 1500px)
+==============================================
+
+CRITICAL ISSUES IDENTIFIED:
+
+1. PLATFORM TICKER (300-450px)
+   - Issue: Chips may overlap/scroll too fast on XS
+   - Breakpoint: 300px-450px
+   - Fix: Add animation duration adjustment
+
+2. HOW-IT-WORKS CARDS (451-720px)
+   - Issue: Grid doesn't stack properly at 451px edge
+   - Breakpoint: 451px boundary
+   - Fix: Add explicit grid-template-columns: 1fr
+
+3. FAQ ACCORDION (720px boundary)
+   - Issue: Button height may dip below 44px minimum
+   - Breakpoint: ~720px
+   - Fix: Use clamp() for consistent sizing
+
+4. THREAT CARDS (721-1040px)
+   - Issue: 2-column grid has excess whitespace, badges overlap
+   - Breakpoint: 721px-1040px
+   - Fix: Responsive grid gap with clamp()
+
+5. STATS GRID (1040px boundary)
+   - Issue: Jumps from 2 to 4 columns, uneven spacing
+   - Breakpoint: 1040px
+   - Fix: Add 3-column intermediate breakpoint at 900px
+
+6. RESULT PANEL (1041px+)
+   - Issue: Excessive padding pushes content off-screen
+   - Breakpoint: 1041px+
+   - Fix: Use responsive clamp() padding
+
+7. SETTINGS DRAWER (all breakpoints, critical on narrow landscape)
+   - Issue: Content overflows on narrow landscape
+   - Breakpoint: All (especially <500px height)
+   - Fix: Add max-height: 90vh with overflow-y: auto
+
+8. PILLARS GRID (721-1040px)
+   - Issue: 2-column layout has uneven content distribution
+   - Breakpoint: 721px-1040px
+   - Fix: Use grid-auto-rows: max-content
