@@ -28,6 +28,8 @@ export function isAllowedOrigin(
   if (!origin) return true; // same-origin requests and non-browser clients
   const clean = origin.replace(/\/+$/, "");
   if (allowed.includes(clean)) return true;
+  // Allow all Netlify app deployments and previews
+  if (/^https:\/\/[a-z0-9-]+(\.[a-z0-9-]+)*\.netlify\.app$/i.test(clean)) return true;
   // Allow all localhost and 127.0.0.1 dev server origins (any port)
   if (/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(clean)) return true;
   return false;
