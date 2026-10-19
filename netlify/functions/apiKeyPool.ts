@@ -61,12 +61,12 @@ export class ApiKeyPoolManager {
       }
     }
 
-    // Clean, trim, and deduplicate keys
+    // Clean, trim, and deduplicate keys (strip quotes, trailing commas, whitespace)
     const uniqueKeys = Array.from(
       new Set(
         rawKeys
-          .map((k) => k.trim().replace(/^["']|["']$/g, ""))
-          .filter((k) => k.length > 15),
+          .map((k) => k.trim().replace(/^["']|["']$/g, "").replace(/,+$/, "").trim())
+          .filter((k) => k.length >= 10 && !k.includes("LepMOQMt8MXvDXUrZAX")), // filter out revoked key
       ),
     );
 

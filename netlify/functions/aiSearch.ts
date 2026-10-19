@@ -513,9 +513,9 @@ Return ONLY a valid JSON object (no markdown, no explanation outside JSON):
   };
 
   const schedule: Array<{ model: string; tool: SearchTool; ms: number }> = [
-    { model: "gemini-3.6-flash", tool: "camel", ms: 8000 },
-    { model: "gemini-3.1-flash-lite", tool: "off", ms: 10000 },
-    { model: "gemini-flash-lite-latest", tool: "off", ms: 6000 },
+    { model: "gemini-3.8-flash", tool: "camel", ms: 8000 },
+    { model: "gemini-3.8-flash", tool: "off", ms: 9000 },
+    { model: "gemini-flash-latest", tool: "off", ms: 6000 },
   ];
 
   let res: Response | undefined;
@@ -557,13 +557,13 @@ Return ONLY a valid JSON object (no markdown, no explanation outside JSON):
         `${step.model} (tool=${step.tool}) failed with HTTP ${outcome.res.status}`,
       );
 
-      // If key hit rate limit / quota, report to pool and switch to next key
-      if (outcome.res.status === 429 || outcome.res.status === 403) {
+      // If key hit rate limit, quota, or invalid credentials, report and switch to next key
+      if ([400, 401, 403, 429].includes(outcome.res.status)) {
         apiKeyPool.reportRateLimited(activeApiKey);
         const nextKey = apiKeyPool.getNextAvailableKey(activeApiKey);
         if (nextKey) {
           activeApiKey = nextKey;
-          logger.warn(`API key rate-limited (${outcome.res.status}). Switched to next key in pool.`);
+          logger.warn(`API key error (${outcome.res.status}). Switched to next key in pool.`);
         }
       }
 
