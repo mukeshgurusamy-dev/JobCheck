@@ -210,6 +210,52 @@
               0 0 0 4px rgba(220, 38, 38, 0.15);
 }
 
+.c-checker-form__warning-box {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2-5);
+  padding: var(--space-3-5) var(--space-4);
+  background-color: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-left: 4px solid #f59e0b;
+  border-radius: var(--radius-md);
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+  line-height: var(--leading-body);
+  margin-bottom: var(--space-2);
+}
+
+.c-checker-form__warning-icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: #f59e0b;
+}
+
+.c-checker-form__warning-text {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.c-checker-form__textarea--warning {
+  border-color: #f59e0b;
+  border-width: 2px;
+  background-color: rgba(245, 158, 11, 0.04);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.c-checker-form__textarea--warning:hover:not(:focus) {
+  border-color: #f59e0b;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05),
+              0 0 0 3px rgba(245, 158, 11, 0.15);
+}
+
+.c-checker-form__textarea--warning:focus {
+  outline: none;
+  border-color: #f59e0b;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05),
+              0 0 0 4px rgba(245, 158, 11, 0.15);
+}
+
 /* ==========================================================================
    Submit Action Bar & Button
    ========================================================================== */

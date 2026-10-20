@@ -5,7 +5,7 @@ import { createIcon } from "../Icon/Icon";
 import { isTrustedPlatformUrl, validateAndNormalizeUrl } from "../../utils/url";
 
 export interface CheckerFormOptions {
-  onSubmit: (data: { url: string; description: string }) => void;
+  onSubmit: (data: { url: string; description: string; isSecondAttempt?: boolean }) => Promise<void>;
   initialUrl?: string;
   initialDescription?: string;
   initiallyExpanded?: boolean;
@@ -25,6 +25,10 @@ export function createCheckerForm(options: CheckerFormOptions): CheckerFormEleme
   const form = document.createElement("form") as CheckerFormElement;
   form.className = "c-checker-form";
   form.noValidate = true;
+
+  // Track submission attempts per URL for two-stage flow
+  let lastUrlSubmitted = "";
+  let hasShownWarningForCurrentUrl = false;
 
   // 1. URL Input molecule
   const urlInput = createUrlInput({
@@ -134,7 +138,7 @@ export function createCheckerForm(options: CheckerFormOptions): CheckerFormEleme
   bannerIcon.appendChild(createIcon({ name: "shield-alert", size: "sm", colorClass: "c-icon--primary" }));
 
   const bannerText = document.createElement("div");
-  bannerText.innerHTML = "<strong>Why paste the job description?</strong> Portals like LinkedIn and Naukri require login, and scammers often hide shady payment links inside the job post. <strong>Please paste the job description below</strong> so we can scan every link and safety signal for you.";
+  bannerText.innerHTML = "<strong>Why paste the job description?</strong> Portals like LinkedIn and Naukri require login, and scammers often hide shady payment links inside the job post. Paste the description for instant analysis, or we'll extract it automatically on your second click.";
 
   platformBanner.appendChild(bannerIcon);
   platformBanner.appendChild(bannerText);
@@ -179,8 +183,8 @@ export function createCheckerForm(options: CheckerFormOptions): CheckerFormEleme
     const isTrusted = isTrustedPlatformUrl(urlStr);
     if (isTrusted) {
       platformBanner.style.display = "flex";
-      toggleLabel.textContent = "Paste full job description (Required for LinkedIn, Naukri, Indeed jobs)";
-      toggleLabel.style.fontWeight = "var(--font-weight-bold, 700)";
+      toggleLabel.textContent = "Job description (paste for faster analysis, or we'll extract it)";
+      toggleLabel.style.fontWeight = "";
       if (!disclosure.classList.contains("c-checker-form__disclosure--open")) {
         disclosure.classList.add("c-checker-form__disclosure--open");
         disclosureToggle.setAttribute("aria-expanded", "true");
@@ -210,6 +214,23 @@ export function createCheckerForm(options: CheckerFormOptions): CheckerFormEleme
 
   form.appendChild(disclosure);
 
+  // 3b. Warning message (shown on first submission without description)
+  const warningBox = document.createElement("div");
+  warningBox.className = "c-checker-form__warning-box";
+  warningBox.style.display = "none";
+
+  const warningIcon = document.createElement("span");
+  warningIcon.className = "c-checker-form__warning-icon";
+  warningIcon.appendChild(createIcon({ name: "info", size: "sm", colorClass: "c-icon--primary" }));
+
+  const warningText = document.createElement("span");
+  warningText.className = "c-checker-form__warning-text";
+  warningText.textContent = "Paste the job description for full analysis, or no worries — we'll extract it from the page";
+
+  warningBox.appendChild(warningIcon);
+  warningBox.appendChild(warningText);
+  disclosure.insertBefore(warningBox, disclosureContent);
+
   // 4. Submit Row with Button
   const submitRow = document.createElement("div");
   submitRow.className = "c-checker-form__submit-row";
@@ -225,7 +246,7 @@ export function createCheckerForm(options: CheckerFormOptions): CheckerFormEleme
   submitRow.appendChild(submitBtn);
   form.appendChild(submitRow);
 
-  // 5. Form submission handler
+  // 5. Form submission handler with two-stage logic
   form.addEventListener("submit", (e: Event) => {
     e.preventDefault();
 
@@ -235,15 +256,27 @@ export function createCheckerForm(options: CheckerFormOptions): CheckerFormEleme
     if (!validation.valid || !validation.normalizedUrl) {
       urlInput.setError(validation.error || "Please enter a valid HTTP or HTTPS job link.");
       urlInput.focusInput();
+      warningBox.style.display = "none";
+      textarea.classList.remove("c-checker-form__textarea--warning");
       return;
     }
 
     const desc = textarea.value.trim();
+    const normalizedUrl = validation.normalizedUrl;
 
-    // Enforce description for trusted platforms
-    if (isTrustedPlatformUrl(validation.normalizedUrl) && desc.length === 0) {
-      urlInput.setError("Please paste the job description below. Major job sites require login, so we need the job text to check for scams.");
-      textarea.classList.add("c-checker-form__textarea--error");
+    // Check if URL changed - reset warning state if it did
+    if (normalizedUrl !== lastUrlSubmitted) {
+      hasShownWarningForCurrentUrl = false;
+      lastUrlSubmitted = normalizedUrl;
+    }
+
+    // Two-stage flow: First submission without description shows warning
+    if (desc.length === 0 && !hasShownWarningForCurrentUrl) {
+      // Stage 1: Show warning, don't process
+      hasShownWarningForCurrentUrl = true;
+      urlInput.setError(null);
+      textarea.classList.add("c-checker-form__textarea--warning");
+      warningBox.style.display = "flex";
       if (!disclosure.classList.contains("c-checker-form__disclosure--open")) {
         disclosure.classList.add("c-checker-form__disclosure--open");
         disclosureToggle.setAttribute("aria-expanded", "true");
@@ -252,12 +285,18 @@ export function createCheckerForm(options: CheckerFormOptions): CheckerFormEleme
       return;
     }
 
+    // Stage 2 or beyond: Clear warning and proceed with processing
     urlInput.setError(null);
-    textarea.classList.remove("c-checker-form__textarea--error");
+    textarea.classList.remove("c-checker-form__textarea--warning");
+    warningBox.style.display = "none";
+    hasShownWarningForCurrentUrl = false;
+
+    // Pass flag to backend indicating this is a second+ attempt
     onSubmit({
-      url: validation.normalizedUrl,
-      description: desc
-    });
+      url: normalizedUrl,
+      description: desc,
+      isSecondAttempt: desc.length === 0 // true if no description but warning was shown
+    } as any);
   });
 
   // Attached methods
