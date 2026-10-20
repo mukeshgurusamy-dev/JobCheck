@@ -513,9 +513,9 @@ Return ONLY a valid JSON object (no markdown, no explanation outside JSON):
   };
 
   const schedule: Array<{ model: string; tool: SearchTool; ms: number }> = [
-    { model: "gemini-3.8-flash", tool: "camel", ms: 8000 },
-    { model: "gemini-3.8-flash", tool: "off", ms: 9000 },
-    { model: "gemini-flash-latest", tool: "off", ms: 6000 },
+    { model: "gemini-3.8-flash", tool: "camel", ms: 5000 },
+    { model: "gemini-3.8-flash", tool: "off", ms: 18000 },
+    { model: "gemini-flash-latest", tool: "off", ms: 12000 },
   ];
 
   let res: Response | undefined;

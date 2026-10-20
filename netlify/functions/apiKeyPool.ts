@@ -65,7 +65,7 @@ export class ApiKeyPoolManager {
     const uniqueKeys = Array.from(
       new Set(
         rawKeys
-          .map((k) => k.trim().replace(/^["']|["']$/g, "").replace(/,+$/, "").trim())
+          .map((k) => k.replace(/["'\r\n\s]/g, "").replace(/,+$/, "").trim())
           .filter((k) => k.length >= 10 && !k.includes("LepMOQMt8MXvDXUrZAX")), // filter out revoked key
       ),
     );
