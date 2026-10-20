@@ -501,11 +501,11 @@ export function createResultPanel(options: ResultPanelOptions): HTMLElement {
           sourceHeader.appendChild(srcLink);
         }
 
-        if (review.rating !== undefined) {
+        if (review.rating !== undefined && typeof review.rating === "number") {
           const ratingSpan = document.createElement("span");
           ratingSpan.className = "text-body-xs";
           ratingSpan.textContent = `${review.rating.toFixed(1)}/5.0`;
-          if (review.totalReviews) {
+          if (review.totalReviews && typeof review.totalReviews === "number") {
             ratingSpan.textContent += ` (${review.totalReviews.toLocaleString()} reviews)`;
           }
           sourceHeader.appendChild(ratingSpan);

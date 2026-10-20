@@ -6,6 +6,7 @@ import { InspectApiResponse } from "../types/types";
 export async function inspectUrl(
   url: string,
   description?: string,
+  isSecondAttempt?: boolean,
 ): Promise<InspectApiResponse> {
   try {
     const response = await fetch("/.netlify/functions/inspect", {
@@ -13,7 +14,7 @@ export async function inspectUrl(
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ url, description }),
+      body: JSON.stringify({ url, description, isSecondAttempt }),
     });
 
     if (!response.ok) {

@@ -244,6 +244,7 @@ export interface JobInput {
   extractedLinks?: ExtractedLinkResult[];
   aiIntel?: AiIntelligenceResult;
   isTrustedPlatform?: boolean;
+  isSecondAttempt?: boolean;
 }
 
 export interface Finding {

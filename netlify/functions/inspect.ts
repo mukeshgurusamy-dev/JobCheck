@@ -84,11 +84,13 @@ export const handler: Handler = async (
   // 5. Parse and validate input
   let targetUrl: string;
   let descriptionText: string = "";
+  let isSecondAttempt: boolean = false;
 
   try {
     const body = JSON.parse(event.body || "{}") as {
       url?: string;
       description?: string;
+      isSecondAttempt?: boolean;
     };
 
     if (!body.url || typeof body.url !== "string") {
@@ -104,12 +106,29 @@ export const handler: Handler = async (
     if (typeof body.description === "string") {
       descriptionText = body.description.trim();
     }
+    if (typeof body.isSecondAttempt === "boolean") {
+      isSecondAttempt = body.isSecondAttempt;
+    }
   } catch {
     return {
       statusCode: 400,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ error: "Invalid JSON in request body." }),
     };
+  }
+
+  // 5b. Two-stage logic: Extract via Jina on second attempt if no description
+  if (descriptionText.length === 0 && isSecondAttempt) {
+    try {
+      const extractionResult = await inspectSingleUrl(targetUrl);
+      if (extractionResult.fetched && extractionResult.data?.text) {
+        descriptionText = extractionResult.data.text.slice(0, 5000); // Use extracted text, cap at 5000 chars
+        logger.info(`Extracted ${descriptionText.length} chars via Jina for second-stage analysis`);
+      }
+    } catch (err: unknown) {
+      logger.warn(`Extraction via Jina failed: ${err instanceof Error ? err.message : "unknown error"}`);
+      // Graceful fallback: continue with empty description
+    }
   }
 
   const targetDomainParts = extractDomainParts(targetUrl);

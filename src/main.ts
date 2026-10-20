@@ -604,7 +604,7 @@ function initApp(): void {
   resultRegion.setAttribute("aria-live", "polite");
 
   const checkerForm = createCheckerForm({
-    onSubmit: async (data: { url: string; description: string }) => {
+    onSubmit: async (data: { url: string; description: string; isSecondAttempt?: boolean }) => {
       checkerForm.setLoading(true);
       renderLoadingState(resultRegion);
 
@@ -618,7 +618,7 @@ function initApp(): void {
       let actualSearchTime = 0; // Track actual API response time
 
       try {
-        const inspectRes = await inspectUrl(data.url, data.description);
+        const inspectRes = await inspectUrl(data.url, data.description, data.isSecondAttempt);
         actualSearchTime = Date.now() - startTime; // Capture actual API time
 
         if (inspectRes.fetched && inspectRes.data) {
