@@ -1,13 +1,17 @@
 import { defineConfig, Plugin } from "vite";
-import { handler } from "./netlify/functions/inspect";
+import { handler as inspectHandler } from "./netlify/functions/inspect";
+import { handler as trackHandler } from "./netlify/functions/track";
 
 function netlifyFunctionsDev(): Plugin {
   return {
     name: "netlify-functions-dev",
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
-        if (req.url && req.url.startsWith("/.netlify/functions/inspect")) {
-          if (req.method !== "POST") {
+        const isInspect = req.url && (req.url.startsWith("/.netlify/functions/inspect") || req.url.startsWith("/api/inspect"));
+        const isTrack = req.url && (req.url.startsWith("/.netlify/functions/track") || req.url.startsWith("/api/track"));
+
+        if (isInspect || isTrack) {
+          if (req.method !== "POST" && req.method !== "OPTIONS") {
             res.statusCode = 405;
             res.setHeader("Content-Type", "application/json");
             res.end(JSON.stringify({ error: "Method Not Allowed" }));
@@ -31,13 +35,14 @@ function netlifyFunctionsDev(): Plugin {
               }
 
               const event = {
-                httpMethod: "POST",
+                httpMethod: req.method || "POST",
                 headers: headersObj,
                 body,
                 rawUrl: req.url || "",
               };
 
-              const result = await handler(event as any, {} as any);
+              const targetHandler = isInspect ? inspectHandler : trackHandler;
+              const result = await targetHandler(event as any, {} as any);
               res.statusCode = result?.statusCode || 200;
               if (result?.headers) {
                 for (const [k, v] of Object.entries(result.headers)) {
