@@ -258,6 +258,89 @@ function sanitizeSourceUrl(url?: string | null): string | undefined {
 }
 
 /**
+ * Validates that a scam report sourceUrl actually points to the CORRECT company.
+ * CRITICAL: Better to return undefined (no link) than an incorrect company link.
+ *
+ * For Glassdoor/AmbitionBox: Verifies company name is in URL slug
+ * For Reddit/Twitter/LinkedIn: Verifies URL structure is correct
+ * Returns undefined if company name cannot be verified in URL
+ */
+function validateScamReportUrl(
+  url: string | undefined,
+  platform: string,
+  companyName: string | undefined,
+): string | undefined {
+  if (!url || !platform) return undefined;
+
+  const trimmed = url.trim();
+  if (!trimmed) return undefined;
+
+  // For Glassdoor: must contain company identifier and be a company reviews page
+  if (platform.toLowerCase().includes("glassdoor")) {
+    // Check it's actually a Glassdoor company page (not search, not generic)
+    if (!/glassdoor\.(co\.in|com)\/Reviews\/.*[A-Za-z0-9]/i.test(trimmed)) {
+      return undefined; // Not a proper company reviews URL
+    }
+
+    // If we have company name, verify it's likely in the URL
+    if (companyName) {
+      const nameParts = companyName.toLowerCase().split(" ");
+      const urlLower = trimmed.toLowerCase();
+      // At least one word from company name should be in URL or company ID pattern
+      const hasCompanySignal = nameParts.some(part => part.length > 2 && urlLower.includes(part)) ||
+                               /E\d{6,}/i.test(trimmed); // Glassdoor company ID format
+      if (!hasCompanySignal) {
+        return undefined; // Company name not found in URL, likely wrong company
+      }
+    }
+    return trimmed;
+  }
+
+  // For AmbitionBox: similar validation
+  if (platform.toLowerCase().includes("ambitionbox")) {
+    if (!/ambitionbox\.com.*company/i.test(trimmed)) {
+      return undefined; // Not a company page
+    }
+
+    if (companyName) {
+      const nameParts = companyName.toLowerCase().split(" ");
+      const urlLower = trimmed.toLowerCase();
+      const hasCompanySignal = nameParts.some(part => part.length > 2 && urlLower.includes(part));
+      if (!hasCompanySignal) {
+        return undefined; // Company name not found in URL
+      }
+    }
+    return trimmed;
+  }
+
+  // For Reddit: verify it's an actual post/thread, not search
+  if (platform.toLowerCase().includes("reddit")) {
+    if (/reddit\.com\/r\/[a-z]+\/comments\/[a-z0-9]+/i.test(trimmed)) {
+      return trimmed; // Valid Reddit thread
+    }
+    return undefined; // Not a proper Reddit post
+  }
+
+  // For Twitter/X: verify it's a direct tweet
+  if (platform.toLowerCase().includes("twitter") || platform.toLowerCase().includes("x")) {
+    if (/(twitter|x)\.com\/[a-z0-9_]+\/status\/\d+/i.test(trimmed)) {
+      return trimmed; // Valid tweet URL
+    }
+    return undefined; // Not a proper tweet
+  }
+
+  // For LinkedIn: verify it's a post
+  if (platform.toLowerCase().includes("linkedin")) {
+    if (/linkedin\.com\/.*\/posts?\//i.test(trimmed)) {
+      return trimmed; // Valid LinkedIn post
+    }
+    return undefined; // Not a proper LinkedIn post
+  }
+
+  return trimmed; // Default: return if it passed basic sanitization
+}
+
+/**
  * Queries Google Gemini with live Google Search Grounding to evaluate link
  * legitimacy, company digital footprint, Glassdoor/AmbitionBox employee reviews,
  * scam reports on Reddit/forums, and official domain matching.
@@ -361,14 +444,21 @@ Investigate this job listing and perform a thorough background audit of the empl
    - Twitter/X posts with direct accusations or warnings
 
    FOR EACH COMPLAINT FOUND, extract:
-   - platform: Where complaint was found (e.g., "Reddit r/developersIndia", "Glassdoor Reviews", "Twitter/X")
+   - platform: Where complaint was found (e.g., "Reddit r/developersIndia", "Glassdoor", "AmbitionBox", "Twitter/X", "LinkedIn")
    - reviewerName: Name/username of who complained (e.g., "u/username", "Ravi K.", "@handle")
    - reviewerRole: Their job title or status (e.g., "Fresher", "Software Engineer", "Former Employee")
    - complaintText: THE EXACT COMPLAINT — what did they say was wrong? (e.g., "They asked for ₹5000 registration fee and disappeared")
    - reportedAt: When was it posted? (e.g., "March 2024", "2 weeks ago", "6 months ago")
-   - sourceUrl: DIRECT link to the complaint (Reddit permalink, Glassdoor review URL, LinkedIn post URL, Twitter URL)
+   - sourceUrl: CRITICAL REQUIREMENT — VERIFIED URL pointing to EXACT company:
+     * For Glassdoor: Only include if URL contains the company name AND is from glassdoor.com/Reviews/... for "${companyCoreName || rootDomain}"
+     * For AmbitionBox: Only include if URL is from ambitionbox.com and explicitly mentions "${companyCoreName || rootDomain}"
+     * For Reddit: Reddit permalink (e.g., reddit.com/r/developersIndia/comments/...)
+     * For Twitter/LinkedIn: Direct post URLs from search results
+     * DO NOT guess URLs. Only use URLs found in actual search results.
+     * If unsure company name matches, OMIT sourceUrl rather than include wrong URL.
+     * Better to have complaint with no link than complaint pointing to wrong company.
 
-   RETURN UP TO 5 MOST CRITICAL COMPLAINTS. ONLY INCLUDE ACTUAL VERIFIED COMPLAINTS — NO SPECULATION.
+   RETURN UP TO 5 MOST CRITICAL COMPLAINTS. STRICT RULE: Verify all Glassdoor/AmbitionBox URLs point to correct company.
 
 5. QUICK SCAM SIGNAL CHECK (search for ACTUAL signals):
    Quick verification of scam patterns in complaint data:
@@ -931,8 +1021,13 @@ Return ONLY a valid JSON object (no markdown, no explanation outside JSON):
                   reviewerRole: sr.reviewerRole,
                   complaintText: sr.complaintText,
                   reportedAt: sr.reportedAt,
-                  // Only keep the complaint URL if it's a specific post/thread, not a search
-                  sourceUrl: sanitizeSourceUrl(sr.sourceUrl),
+                  // CRITICAL: Validate that sourceUrl points to CORRECT company (not similar company)
+                  // Better to have no link than wrong company link
+                  sourceUrl: validateScamReportUrl(
+                    sanitizeSourceUrl(sr.sourceUrl),
+                    sr.platform || r.source,
+                    companyCoreName || extractedCompany,
+                  ),
                 }))
               : undefined,
           }))
