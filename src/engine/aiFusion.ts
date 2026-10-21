@@ -29,13 +29,29 @@ export function applyAiIntelligence(
     (!ai.scamSignals || ai.scamSignals.length === 0);
 
   if (aiSaysLegitimate) {
-    // Remove hard flags that were likely triggered by false positives
-    // (e.g., company warning about fraud = legitimate, not suspicious)
+    // Remove ALL hard flags when AI verifies legitimacy
+    // These are false positives triggered by aggressive rules on legitimate companies
     const falsePositiveFlagIds = [
-      "upfront-payment",        // If company warns "we never charge", don't penalize
-      "lookalike-suspicious-tld", // Legitimate companies on common TLDs
-      "sender-domain-mismatch",  // Recruiting from different domain is normal
-      "free-email-warning",      // Recruiters often use personal emails
+      // Hard flags from rules
+      "upfront-payment",
+      "task-scam",
+      "sensitive-docs-early",
+      "safe-browsing",
+      "shortener",
+      "lookalike-suspicious-tld",
+      "link-in-description-high-risk",
+      "remote-access-software",
+      "mlm-referral",
+      "paid-medical-exam",
+      "cryptocurrency-payment",
+      "investment-scheme",
+      "advance-salary-loan",
+      "fake-government-job",
+      "fake-internship-conversion",
+      "fake-verification-portal",
+      // Other common false positives
+      "sender-domain-mismatch",
+      "free-email-warning",
     ];
 
     assessment.findings = assessment.findings.filter(
