@@ -18,6 +18,53 @@ export function applyAiIntelligence(
 ): void {
   assessment.aiIntel = ai;
 
+  // CRITICAL: AI TRUST OVERRIDE
+  // If AI says the company is legitimate (no scam signals, verified digital footprint),
+  // and there are no actual scam reviews from employees, override aggressive rule-based flags.
+  // This fixes false positives where legitimate companies warn about fraud.
+  const aiSaysLegitimate =
+    !ai.isScamLikely &&
+    !ai.hasScamReviews &&
+    (ai.digitalFootprint === "verified" || ai.digitalFootprint === "moderate") &&
+    (!ai.scamSignals || ai.scamSignals.length === 0);
+
+  if (aiSaysLegitimate) {
+    // Remove hard flags that were likely triggered by false positives
+    // (e.g., company warning about fraud = legitimate, not suspicious)
+    const falsePositiveFlagIds = [
+      "upfront-payment",        // If company warns "we never charge", don't penalize
+      "lookalike-suspicious-tld", // Legitimate companies on common TLDs
+    ];
+
+    assessment.findings = assessment.findings.filter(
+      (f) => !falsePositiveFlagIds.includes(f.id)
+    );
+
+    // Significantly reduce score when AI verifies legitimacy
+    // This ensures AI verdict overrides rule-based false positives
+    const scoreReduction = Math.min(assessment.score * 0.4, 40); // Reduce by 40% or 40 points, whichever is lower
+    assessment.score = Math.max(0, assessment.score - scoreReduction);
+
+    // Update level based on new score
+    if (assessment.score < 25) {
+      assessment.level = "Low";
+    } else if (assessment.score < 55) {
+      assessment.level = "Medium";
+    }
+
+    // Add positive AI finding
+    assessment.findings.unshift({
+      id: "ai-verified-legitimate",
+      kind: "trust",
+      severity: "low",
+      points: -20,
+      reason: `AI Verification: Company verified as legitimate employer with established digital footprint and no scam reports.`,
+      evidence: `${ai.companyName || "Company"} — Verified: ${ai.digitalFootprint}${ai.summary ? ` — ${ai.summary}` : ""}`,
+    });
+
+    assessment.confidence = "High";
+  }
+
   // If employer was evaluated by AI, remove the naive "Hosted on a recognized job platform" finding
   // so we don't give false confidence when the actual hiring company is suspicious or unverified!
   if (ai.isScamLikely || ai.digitalFootprint === "suspicious" || ai.digitalFootprint === "minimal") {

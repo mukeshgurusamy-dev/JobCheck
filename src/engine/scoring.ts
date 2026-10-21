@@ -61,6 +61,7 @@ export function computeAssessment(options: ScoringOptions): Assessment {
   // Hard flags: floor the level
   // Section 8 & Section 19 acceptance criteria:
   // upfront-payment, task-scam, sensitive-docs-early, safe-browsing, shortener, lookalike-suspicious-tld, remote-access-software -> at least High
+  // NOTE: These can be overridden by AI verification (see aiFusion.ts)
   const highRiskHardFlags = [
     "upfront-payment",
     "task-scam",
@@ -85,7 +86,13 @@ export function computeAssessment(options: ScoringOptions): Assessment {
     highRiskHardFlags.includes(f.id)
   );
 
-  if (hasHighHardFlag) {
+  // Only apply hard flag floor if there's no AI-verified legitimacy override
+  // (aiFusion.ts removes "upfront-payment" when AI verifies legitimacy)
+  const hasAiLegitimacyOverride = deduplicatedFindings.some(
+    (f) => f.id === "ai-verified-legitimate"
+  );
+
+  if (hasHighHardFlag && !hasAiLegitimacyOverride) {
     level = "High";
   }
 

@@ -34,6 +34,11 @@ export function evaluateTextRules(ctx: TextRuleContext): Finding[] {
     return findings;
   }
 
+  // CRITICAL: Detect anti-fraud warnings (company warning about fake jobs/fees)
+  // If present, this is a TRUST signal, not a risk signal
+  const antifraudWarnings = /(?:recruitment\s*fraud|fraudulent\s*recruitment|fake\s*(?:job|offer|recruitment)|be\s*cautious|beware\s*of|do\s*not\s*(?:share|pay|give)|will\s*never\s*charge|never\s*(?:charge|request|ask)\s*(?:fee|payment|money)|no\s*(?:registration|hiring|application|processing|joining)\s*fee)/i;
+  const hasAntifraudWarning = antifraudWarnings.test(normalizedText);
+
   // 1. Evaluate standard regex pattern groups
   for (const group of PATTERN_GROUPS) {
     // Skip sender-domain-mismatch here, evaluated separately below
@@ -55,6 +60,20 @@ export function evaluateTextRules(ctx: TextRuleContext): Finding[] {
     }
 
     if (matchedEvidence !== undefined) {
+      // CRITICAL: If this is upfront-payment rule AND we have anti-fraud warning,
+      // convert to trust finding instead
+      if (group.id === "upfront-payment" && hasAntifraudWarning) {
+        findings.push({
+          id: "anti-fraud-warning-legitimate",
+          kind: "trust",
+          severity: "low",
+          points: -25, // Trust signal: company warns about fees scams
+          reason: "Company explicitly warns against recruitment fraud and guarantees no fees — positive legitimacy signal.",
+          evidence: matchedEvidence
+        });
+        continue; // Skip the risk finding
+      }
+
       findings.push({
         id: group.id,
         kind: "risk",
