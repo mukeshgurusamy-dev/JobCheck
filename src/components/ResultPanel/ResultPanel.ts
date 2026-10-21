@@ -567,8 +567,15 @@ export function createResultPanel(options: ResultPanelOptions): HTMLElement {
         reviewsContainer.insertBefore(criticalWarningsSection, bannerNode);
       }
 
-      // Individual review sources
-      for (const review of ai.employeeReviews) {
+      // Individual review sources — PREFER AMBITIONBOX LINKS
+      // Sort to show AmbitionBox first, then others
+      const sortedReviews = [...ai.employeeReviews].sort((a, b) => {
+        const aIsAmbition = a.source?.toLowerCase().includes("ambitionbox") ? 0 : 1;
+        const bIsAmbition = b.source?.toLowerCase().includes("ambitionbox") ? 0 : 1;
+        return aIsAmbition - bIsAmbition;
+      });
+
+      for (const review of sortedReviews) {
         const reviewCard = document.createElement("div");
         reviewCard.className = "c-result-panel__review-source";
 
@@ -578,16 +585,27 @@ export function createResultPanel(options: ResultPanelOptions): HTMLElement {
         const sourceName = document.createElement("span");
         sourceName.className = "text-body-sm";
         sourceName.style.fontWeight = "var(--font-weight-medium, 500)";
-        sourceName.textContent = review.source;
+        sourceName.textContent = review.source || "Unknown Source";
         sourceHeader.appendChild(sourceName);
 
         // Source URL link — only shown when the AI actually found review data
         // for this platform (rating or review count). Without real data the URL
         // would just be a generic search/list page pointing to the wrong company.
-        if (review.sourceUrl && (review.rating !== undefined || (review.totalReviews && review.totalReviews > 0))) {
+        // PREFER AMBITIONBOX: Show link for AmbitionBox and other platforms, but skip Glassdoor if AmbitionBox exists
+        const hasAmbitionBoxReviews = sortedReviews.some(r =>
+          r.source?.toLowerCase().includes("ambitionbox") &&
+          r.sourceUrl &&
+          (r.rating !== undefined || (r.totalReviews && r.totalReviews > 0))
+        );
+
+        const isGlassdoor = review.source?.toLowerCase().includes("glassdoor");
+        const shouldShowLink = review.sourceUrl && (review.rating !== undefined || (review.totalReviews && review.totalReviews > 0)) &&
+          !(isGlassdoor && hasAmbitionBoxReviews); // Skip Glassdoor link if AmbitionBox exists
+
+        if (shouldShowLink) {
           const srcLink = document.createElement("a");
           srcLink.className = "c-result-panel__review-source-link";
-          srcLink.href = review.sourceUrl;
+          srcLink.href = review.sourceUrl || "#";
           srcLink.target = "_blank";
           srcLink.rel = "noopener noreferrer";
           srcLink.textContent = "🔗 View reviews";
