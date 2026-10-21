@@ -474,6 +474,99 @@ export function createResultPanel(options: ResultPanelOptions): HTMLElement {
       }
       reviewsContainer.appendChild(reviewBanner);
 
+      // CRITICAL: Extract and display ALL scam reports at top for maximum visibility
+      const allScamReports = ai.employeeReviews
+        .flatMap((review) =>
+          (review.scamReports ?? []).map((report) => ({
+            ...report,
+            sourceReviewPlatform: review.source,
+          })),
+        )
+        .slice(0, 10); // Show up to 10 most critical complaints
+
+      if (allScamReports.length > 0) {
+        const criticalWarningsSection = document.createElement("div");
+        criticalWarningsSection.className = "c-result-panel__critical-warnings-section";
+
+        const warningTitle = document.createElement("div");
+        warningTitle.className = "c-result-panel__critical-warnings-title";
+        warningTitle.innerHTML = `
+          <span style="font-size: 1.5rem; margin-right: 8px;">🚨</span>
+          <span><strong>CRITICAL: ${allScamReports.length} Individual Complaint${allScamReports.length > 1 ? "s" : ""} Found</strong></span>
+        `;
+        criticalWarningsSection.appendChild(warningTitle);
+
+        for (const report of allScamReports) {
+          const reportCard = document.createElement("div");
+          reportCard.className = "c-result-panel__critical-scam-card";
+
+          // Header with reporter info
+          const headerRow = document.createElement("div");
+          headerRow.className = "c-result-panel__critical-scam-header";
+
+          const reporterInfo = document.createElement("div");
+          reporterInfo.className = "c-result-panel__critical-reporter-info";
+
+          const reporterNameEl = document.createElement("span");
+          reporterNameEl.className = "c-result-panel__critical-reporter-name";
+          reporterNameEl.textContent = report.reviewerName || "Anonymous User";
+          reporterInfo.appendChild(reporterNameEl);
+
+          if (report.reviewerRole) {
+            const roleEl = document.createElement("span");
+            roleEl.className = "c-result-panel__critical-reporter-role";
+            roleEl.textContent = report.reviewerRole;
+            reporterInfo.appendChild(roleEl);
+          }
+
+          if (report.reportedAt) {
+            const dateEl = document.createElement("span");
+            dateEl.className = "c-result-panel__critical-report-date";
+            dateEl.textContent = `${report.reportedAt}`;
+            reporterInfo.appendChild(dateEl);
+          }
+
+          headerRow.appendChild(reporterInfo);
+
+          // Platform badge
+          const platformBadge = document.createElement("span");
+          platformBadge.className = "c-result-panel__critical-platform-badge";
+          platformBadge.textContent = report.platform;
+          headerRow.appendChild(platformBadge);
+
+          reportCard.appendChild(headerRow);
+
+          // Complaint text - highlighted for visibility
+          const complaintEl = document.createElement("div");
+          complaintEl.className = "c-result-panel__critical-complaint-text";
+          complaintEl.textContent = report.complaintText;
+          reportCard.appendChild(complaintEl);
+
+          // Direct link to source - prominently styled
+          if (report.sourceUrl) {
+            const linkContainer = document.createElement("div");
+            linkContainer.className = "c-result-panel__critical-link-container";
+            const sourceLink = document.createElement("a");
+            sourceLink.className = "c-result-panel__critical-source-link";
+            sourceLink.href = report.sourceUrl;
+            sourceLink.target = "_blank";
+            sourceLink.rel = "noopener noreferrer";
+            sourceLink.innerHTML = `
+              <span>🔗 View Full Complaint on ${report.sourceReviewPlatform}</span>
+              <span style="font-size: 0.85rem; opacity: 0.7;">→</span>
+            `;
+            linkContainer.appendChild(sourceLink);
+            reportCard.appendChild(linkContainer);
+          }
+
+          criticalWarningsSection.appendChild(reportCard);
+        }
+
+        // Insert critical warnings at the very top (after banner)
+        const bannerNode = reviewsContainer.children[1] || null;
+        reviewsContainer.insertBefore(criticalWarningsSection, bannerNode);
+      }
+
       // Individual review sources
       for (const review of ai.employeeReviews) {
         const reviewCard = document.createElement("div");

@@ -352,14 +352,32 @@ Investigate this job listing and perform a thorough background audit of the empl
    - Return positiveHighlights and negativeHighlights as separate arrays of strings
    - ONLY extract actual highlights from real reviews — do NOT invent or speculate
 
-4. QUICK SCAM SIGNAL CHECK (search for ACTUAL complaints):
-   Search for real scam complaints about "${companyCoreName || rootDomain}":
-   - Reddit threads reporting this specific company as fraudulent
-   - Glassdoor/AmbitionBox reviews mentioning registration fee fraud
-   - Consumer complaint websites with filed complaints
-   - Twitter/X posts warning about this company
-   - Google search results with "scam" or "fraud" in the same paragraph as company name
-   ONLY include actual complaints you find — do NOT speculate.
+4. INDIVIDUAL SCAM COMPLAINT EXTRACTION (CRITICAL — HIGH PRIORITY):
+   Search for DETAILED individual scam complaints about "${companyCoreName || rootDomain}":
+   - Reddit threads (r/jobs, r/developersIndia, r/IndianJobs, r/scams) with specific complaints
+   - Glassdoor/AmbitionBox individual reviews mentioning: registration fees, unpaid internships, fake offers, bait-and-switch tactics, money loot
+   - Consumer complaint sites (NCPCR, consumer forums, complaint portals)
+   - LinkedIn posts where employees warn others about this company
+   - Twitter/X posts with direct accusations or warnings
+
+   FOR EACH COMPLAINT FOUND, extract:
+   - platform: Where complaint was found (e.g., "Reddit r/developersIndia", "Glassdoor Reviews", "Twitter/X")
+   - reviewerName: Name/username of who complained (e.g., "u/username", "Ravi K.", "@handle")
+   - reviewerRole: Their job title or status (e.g., "Fresher", "Software Engineer", "Former Employee")
+   - complaintText: THE EXACT COMPLAINT — what did they say was wrong? (e.g., "They asked for ₹5000 registration fee and disappeared")
+   - reportedAt: When was it posted? (e.g., "March 2024", "2 weeks ago", "6 months ago")
+   - sourceUrl: DIRECT link to the complaint (Reddit permalink, Glassdoor review URL, LinkedIn post URL, Twitter URL)
+
+   RETURN UP TO 5 MOST CRITICAL COMPLAINTS. ONLY INCLUDE ACTUAL VERIFIED COMPLAINTS — NO SPECULATION.
+
+5. QUICK SCAM SIGNAL CHECK (search for ACTUAL signals):
+   Quick verification of scam patterns in complaint data:
+   - Count of similar complaints (multiple people reporting same issue = stronger signal)
+   - Fee demands pattern (registration, training, security deposit)
+   - Job bait-and-switch (promised position, different role offered)
+   - Unpaid work / internship exploitation
+   - Contact red flags (WhatsApp/Telegram only, no official email)
+   ONLY report patterns you found in Task 4 complaints — do NOT speculate.
 
 5. COMPANY VERIFICATION (if you find information):
    - Official website / LinkedIn company page
@@ -424,8 +442,27 @@ Return ONLY a valid JSON object (no markdown, no explanation outside JSON):
         "Slow promotion cycle",
         "Outdated tech stack in some teams"
       ],
-      "scamWarnings": [],
-      "scamReports": []
+      "scamWarnings": [
+        "Multiple users reported asking for registration fee upfront"
+      ],
+      "scamReports": [
+        {
+          "platform": "Reddit r/developersIndia",
+          "reviewerName": "u/cautious_fresher",
+          "reviewerRole": "Fresher",
+          "complaintText": "Applied for a Software Developer role. After initial screening, they asked me to pay ₹2500 as 'registration and background verification fee'. When I questioned, they said it's mandatory. Never replied after I refused to pay.",
+          "reportedAt": "March 2024",
+          "sourceUrl": "https://reddit.com/r/developersIndia/comments/..."
+        },
+        {
+          "platform": "Glassdoor Reviews",
+          "reviewerName": "Ravi K.",
+          "reviewerRole": "Former Employee",
+          "complaintText": "Got hired as 'Intern' with promise of ₹20k/month. First 3 months they said it's 'unpaid training'. Then extended it for 2 more months. When I asked for payment, they said 'check after next review cycle'. It never happened.",
+          "reportedAt": "2 months ago",
+          "sourceUrl": "https://www.glassdoor.com/Reviews/..."
+        }
+      ]
     }
   ],
   "companyAudit": {
