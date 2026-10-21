@@ -293,7 +293,8 @@ describe("Organism Component: ResultPanel", () => {
     // Verify source link for the scam complaint
     const complaintLink = panel.querySelector('a[href="https://glassdoor.co.in/Reviews/review-123.htm"]');
     expect(complaintLink).not.toBeNull();
-    expect(complaintLink?.textContent).toContain("View original complaint");
+    expect(complaintLink?.textContent).toContain("View");
+    expect(complaintLink?.textContent).toContain("Complaint");
 
     // 2. Verify platform review page source link
     const reviewPlatformLink = panel.querySelector('a[href="https://glassdoor.co.in/Reviews/scammy-corp-reviews.htm"]');

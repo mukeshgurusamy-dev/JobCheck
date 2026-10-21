@@ -44,7 +44,8 @@ describe("CheckerForm Organism Component", () => {
     expect(handleSubmit).toHaveBeenCalledTimes(1);
     expect(handleSubmit).toHaveBeenCalledWith({
       url: "https://careers.infosys.com/job/123",
-      description: "Software Engineer entry level opening."
+      description: "Software Engineer entry level opening.",
+      isSecondAttempt: false
     });
 
     document.body.removeChild(form);
@@ -100,8 +101,10 @@ describe("CheckerForm Organism Component", () => {
     form.dispatchEvent(new Event("submit", { cancelable: true }));
     expect(handleSubmit).not.toHaveBeenCalled();
 
-    const alertEl = form.querySelector('[role="alert"]');
-    expect(alertEl?.textContent).toContain("paste the job description");
+    // Warning message should be displayed
+    const warningBox = form.querySelector(".c-checker-form__warning-box");
+    expect(warningBox?.textContent).toContain("Paste the job description");
+    expect(warningBox?.style.display).not.toBe("none");
 
     // Submitting with description succeeds
     form.setDescription("Valid job description for TCS posting");

@@ -715,6 +715,20 @@ export function createResultPanel(options: ResultPanelOptions): HTMLElement {
           reviewCard.appendChild(negDiv);
         }
 
+        // Platform review page source link
+        if (review.sourceUrl) {
+          const sourceRow = document.createElement("div");
+          sourceRow.className = "c-result-panel__review-source-link-row";
+          const sourceLink = document.createElement("a");
+          sourceLink.className = "c-result-panel__review-source-link";
+          sourceLink.href = review.sourceUrl;
+          sourceLink.target = "_blank";
+          sourceLink.rel = "noopener noreferrer";
+          sourceLink.textContent = "🔗 View reviews";
+          sourceRow.appendChild(sourceLink);
+          reviewCard.appendChild(sourceRow);
+        }
+
         reviewsContainer.appendChild(reviewCard);
       }
 
