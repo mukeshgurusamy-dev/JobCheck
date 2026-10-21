@@ -648,7 +648,7 @@ export function generateAuditReportHtml(
       max-width: 794px;
       margin: 0 auto;
       background: #ffffff;
-      padding: 20px 24px;
+      padding: 12mm 14mm 15mm 14mm;
       box-sizing: border-box;
     }
     
@@ -1758,7 +1758,7 @@ export async function exportDirectPdfBlob(
   container.style.position = "fixed";
   container.style.left = "0";
   container.style.top = "0";
-  container.style.width = "850px"; // Increased from 794px to provide more horizontal space for content
+  container.style.width = "794px"; // Standard A4 at 96 DPI
   container.style.minHeight = "1123px"; // 297mm at 96 DPI
   container.style.zIndex = "-1"; // Below overlay but still in viewport for html2canvas to capture
   container.style.opacity = "1"; // Visible so html2canvas can render it
@@ -1766,7 +1766,7 @@ export async function exportDirectPdfBlob(
   container.style.backgroundColor = "#ffffff";
   container.style.color = "#0f172a";
   container.style.boxSizing = "border-box";
-  container.style.padding = "14mm 14mm 15mm 14mm"; // A4 margins: 14mm left/right, matches @page rule
+  container.style.padding = "12mm 14mm 15mm 14mm"; // Match @page rule: top, right, bottom, left (equal left/right: 14mm)
 
   const styleEl = document.createElement("style");
   styleEl.textContent = styles;
@@ -1821,7 +1821,7 @@ export async function exportDirectPdfBlob(
       allowTaint: true,
       backgroundColor: "#ffffff",
       logging: false,
-      windowWidth: 850, // Updated to match container width
+      windowWidth: 794, // Standard A4 at 96 DPI
     });
 
     const pdf = new jsPDF({
