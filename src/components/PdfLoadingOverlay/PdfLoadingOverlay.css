@@ -81,3 +81,75 @@
     gap: 1.25rem;
   }
 }
+
+/* 5. Large Screens / 1080p TV (1501px - 1920px) - 1.3x scaling */
+@media (min-width: 1501px) and (max-width: 1920px) {
+  .pdf-overlay__spinner-box {
+    gap: 1.3rem;
+  }
+
+  .pdf-overlay__spinner {
+    width: clamp(40px, 13vw, 104px);
+    height: clamp(40px, 13vw, 104px);
+    border: 5.2px solid rgba(255, 255, 255, 0.2);
+    border-top: 5.2px solid #ffffff;
+  }
+
+  .pdf-overlay__text {
+    font-size: clamp(14px, 5.2vw, 23.4px);
+  }
+}
+
+/* 6. Full HD TV / 1080p (1921px - 2560px) - 1.7x scaling */
+@media (min-width: 1921px) and (max-width: 2560px) {
+  .pdf-overlay__spinner-box {
+    gap: 1.7rem;
+  }
+
+  .pdf-overlay__spinner {
+    width: clamp(40px, 17vw, 136px);
+    height: clamp(40px, 17vw, 136px);
+    border: 6.8px solid rgba(255, 255, 255, 0.2);
+    border-top: 6.8px solid #ffffff;
+  }
+
+  .pdf-overlay__text {
+    font-size: clamp(14px, 6.8vw, 30.6px);
+  }
+}
+
+/* 7. 2K / QHD Display (2561px - 3840px) - 2x scaling */
+@media (min-width: 2561px) and (max-width: 3840px) {
+  .pdf-overlay__spinner-box {
+    gap: 2rem;
+  }
+
+  .pdf-overlay__spinner {
+    width: clamp(40px, 20vw, 160px);
+    height: clamp(40px, 20vw, 160px);
+    border: 8px solid rgba(255, 255, 255, 0.2);
+    border-top: 8px solid #ffffff;
+  }
+
+  .pdf-overlay__text {
+    font-size: clamp(14px, 8vw, 36px);
+  }
+}
+
+/* 8. 4K Display (3841px+) - 2.5x scaling */
+@media (min-width: 3841px) {
+  .pdf-overlay__spinner-box {
+    gap: 2.5rem;
+  }
+
+  .pdf-overlay__spinner {
+    width: clamp(40px, 25vw, 200px);
+    height: clamp(40px, 25vw, 200px);
+    border: 10px solid rgba(255, 255, 255, 0.2);
+    border-top: 10px solid #ffffff;
+  }
+
+  .pdf-overlay__text {
+    font-size: clamp(14px, 10vw, 45px);
+  }
+}

@@ -197,3 +197,163 @@
   }
 }
 
+/* 5. Large Screens / 1080p TV (1501px - 1920px) - 1.3x scaling */
+@media (min-width: 1501px) and (max-width: 1920px) {
+  .c-finding-item {
+    padding: clamp(0.52rem, 1.3 * var(--space-4), 1.04rem) clamp(0.65rem, 1.3 * var(--space-5), 1.3rem);
+    gap: clamp(0.325rem, 1.3 * var(--space-2-5), 0.65rem);
+  }
+
+  .c-finding-item__header {
+    gap: clamp(0.39rem, 1.3 * var(--space-3), 0.78rem);
+  }
+
+  .c-finding-item__title-group {
+    gap: clamp(0.325rem, 1.3 * var(--space-2-5), 0.65rem);
+  }
+
+  .c-finding-item__icon {
+    width: 31.2px;
+    height: 31.2px;
+  }
+
+  .c-finding-item__reason {
+    font-size: clamp(0.875rem, 1.3 * var(--text-small), 1.14rem);
+  }
+
+  .c-finding-item__badge {
+    padding: clamp(0.13rem, 1.3 * var(--space-1), 0.26rem) clamp(0.325rem, 1.3 * var(--space-2-5), 0.65rem);
+    font-size: clamp(0.75rem, 1.3 * var(--text-caption), 0.98rem);
+  }
+
+  .c-finding-item__evidence {
+    gap: clamp(0.13rem, 1.3 * var(--space-1), 0.26rem);
+    font-size: clamp(0.75rem, 1.3 * var(--text-caption), 0.98rem);
+    padding: clamp(0.26rem, 1.3 * var(--space-2), 0.52rem) clamp(0.39rem, 1.3 * var(--space-3), 0.78rem);
+  }
+
+  .c-finding-item__evidence-label {
+    font-size: clamp(0.75rem, 1.3 * var(--text-caption), 0.98rem);
+  }
+}
+
+/* 6. Full HD TV / 1080p (1921px - 2560px) - 1.7x scaling */
+@media (min-width: 1921px) and (max-width: 2560px) {
+  .c-finding-item {
+    padding: clamp(0.68rem, 1.7 * var(--space-4), 1.36rem) clamp(0.85rem, 1.7 * var(--space-5), 1.7rem);
+    gap: clamp(0.425rem, 1.7 * var(--space-2-5), 0.85rem);
+  }
+
+  .c-finding-item__header {
+    gap: clamp(0.51rem, 1.7 * var(--space-3), 1.02rem);
+  }
+
+  .c-finding-item__title-group {
+    gap: clamp(0.425rem, 1.7 * var(--space-2-5), 0.85rem);
+  }
+
+  .c-finding-item__icon {
+    width: 40.8px;
+    height: 40.8px;
+  }
+
+  .c-finding-item__reason {
+    font-size: clamp(0.875rem, 1.7 * var(--text-small), 1.49rem);
+  }
+
+  .c-finding-item__badge {
+    padding: clamp(0.17rem, 1.7 * var(--space-1), 0.34rem) clamp(0.425rem, 1.7 * var(--space-2-5), 0.85rem);
+    font-size: clamp(0.75rem, 1.7 * var(--text-caption), 1.28rem);
+  }
+
+  .c-finding-item__evidence {
+    gap: clamp(0.17rem, 1.7 * var(--space-1), 0.34rem);
+    font-size: clamp(0.75rem, 1.7 * var(--text-caption), 1.28rem);
+    padding: clamp(0.34rem, 1.7 * var(--space-2), 0.68rem) clamp(0.51rem, 1.7 * var(--space-3), 1.02rem);
+  }
+
+  .c-finding-item__evidence-label {
+    font-size: clamp(0.75rem, 1.7 * var(--text-caption), 1.28rem);
+  }
+}
+
+/* 7. 2K / QHD Display (2561px - 3840px) - 2x scaling */
+@media (min-width: 2561px) and (max-width: 3840px) {
+  .c-finding-item {
+    padding: clamp(0.8rem, 2 * var(--space-4), 1.6rem) clamp(1rem, 2 * var(--space-5), 2rem);
+    gap: clamp(0.5rem, 2 * var(--space-2-5), 1rem);
+  }
+
+  .c-finding-item__header {
+    gap: clamp(0.6rem, 2 * var(--space-3), 1.2rem);
+  }
+
+  .c-finding-item__title-group {
+    gap: clamp(0.5rem, 2 * var(--space-2-5), 1rem);
+  }
+
+  .c-finding-item__icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .c-finding-item__reason {
+    font-size: clamp(0.875rem, 2 * var(--text-small), 1.75rem);
+  }
+
+  .c-finding-item__badge {
+    padding: clamp(0.2rem, 2 * var(--space-1), 0.4rem) clamp(0.5rem, 2 * var(--space-2-5), 1rem);
+    font-size: clamp(0.75rem, 2 * var(--text-caption), 1.5rem);
+  }
+
+  .c-finding-item__evidence {
+    gap: clamp(0.2rem, 2 * var(--space-1), 0.4rem);
+    font-size: clamp(0.75rem, 2 * var(--text-caption), 1.5rem);
+    padding: clamp(0.4rem, 2 * var(--space-2), 0.8rem) clamp(0.6rem, 2 * var(--space-3), 1.2rem);
+  }
+
+  .c-finding-item__evidence-label {
+    font-size: clamp(0.75rem, 2 * var(--text-caption), 1.5rem);
+  }
+}
+
+/* 8. 4K Display (3841px+) - 2.5x scaling */
+@media (min-width: 3841px) {
+  .c-finding-item {
+    padding: clamp(1rem, 2.5 * var(--space-4), 2rem) clamp(1.25rem, 2.5 * var(--space-5), 2.5rem);
+    gap: clamp(0.625rem, 2.5 * var(--space-2-5), 1.25rem);
+  }
+
+  .c-finding-item__header {
+    gap: clamp(0.75rem, 2.5 * var(--space-3), 1.5rem);
+  }
+
+  .c-finding-item__title-group {
+    gap: clamp(0.625rem, 2.5 * var(--space-2-5), 1.25rem);
+  }
+
+  .c-finding-item__icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .c-finding-item__reason {
+    font-size: clamp(0.875rem, 2.5 * var(--text-small), 2.19rem);
+  }
+
+  .c-finding-item__badge {
+    padding: clamp(0.25rem, 2.5 * var(--space-1), 0.5rem) clamp(0.625rem, 2.5 * var(--space-2-5), 1.25rem);
+    font-size: clamp(0.75rem, 2.5 * var(--text-caption), 1.875rem);
+  }
+
+  .c-finding-item__evidence {
+    gap: clamp(0.25rem, 2.5 * var(--space-1), 0.5rem);
+    font-size: clamp(0.75rem, 2.5 * var(--text-caption), 1.875rem);
+    padding: clamp(0.5rem, 2.5 * var(--space-2), 1rem) clamp(0.75rem, 2.5 * var(--space-3), 1.5rem);
+  }
+
+  .c-finding-item__evidence-label {
+    font-size: clamp(0.75rem, 2.5 * var(--text-caption), 1.875rem);
+  }
+}
+

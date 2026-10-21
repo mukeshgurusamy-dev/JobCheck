@@ -222,3 +222,135 @@
   /* Keep full width - no max-width constraint */
 }
 
+/* 5. Large Screens / 1080p TV (1501px - 1920px) - 1.3x scaling */
+@media (min-width: 1501px) and (max-width: 1920px) {
+  .c-url-input__label {
+    font-size: clamp(1.0625rem, 1.3 * 1.0625rem, 1.38rem);
+  }
+
+  .c-url-input__field {
+    height: clamp(3.625rem, 1.25 * 3.625rem, 4.53rem);
+    padding-left: clamp(2.5rem, 1.3 * 3.25rem, 4.225rem);
+    padding-right: clamp(2.5rem, 1.3 * 3.25rem, 4.225rem);
+    font-size: clamp(1.0625rem, 1.3 * 1.0625rem, 1.38rem);
+  }
+
+  .c-url-input__icon-prefix {
+    left: clamp(0.52rem, 1.3 * var(--space-4), 1.04rem);
+  }
+
+  .c-url-input__clear-btn {
+    width: clamp(2.75rem, 1.3 * 2.75rem, 3.575rem);
+    height: clamp(2.75rem, 1.3 * 2.75rem, 3.575rem);
+    right: clamp(0.39rem, 1.3 * var(--space-3), 0.78rem);
+  }
+
+  .c-url-input__helper {
+    font-size: clamp(0.75rem, 1.3 * var(--text-caption), 0.98rem);
+  }
+
+  .c-url-input__error {
+    gap: clamp(0.195rem, 1.3 * var(--space-1-5), 0.39rem);
+    font-size: clamp(0.75rem, 1.3 * var(--text-caption), 0.98rem);
+  }
+}
+
+/* 6. Full HD TV / 1080p (1921px - 2560px) - 1.7x scaling */
+@media (min-width: 1921px) and (max-width: 2560px) {
+  .c-url-input__label {
+    font-size: clamp(1.0625rem, 1.7 * 1.0625rem, 1.8rem);
+  }
+
+  .c-url-input__field {
+    height: clamp(3.625rem, 1.5 * 3.625rem, 5.4375rem);
+    padding-left: clamp(2.5rem, 1.7 * 3.25rem, 5.525rem);
+    padding-right: clamp(2.5rem, 1.7 * 3.25rem, 5.525rem);
+    font-size: clamp(1.0625rem, 1.7 * 1.0625rem, 1.8rem);
+  }
+
+  .c-url-input__icon-prefix {
+    left: clamp(0.68rem, 1.7 * var(--space-4), 1.36rem);
+  }
+
+  .c-url-input__clear-btn {
+    width: clamp(2.75rem, 1.5 * 2.75rem, 4.125rem);
+    height: clamp(2.75rem, 1.5 * 2.75rem, 4.125rem);
+    right: clamp(0.51rem, 1.7 * var(--space-3), 1.02rem);
+  }
+
+  .c-url-input__helper {
+    font-size: clamp(0.75rem, 1.7 * var(--text-caption), 1.28rem);
+  }
+
+  .c-url-input__error {
+    gap: clamp(0.255rem, 1.7 * var(--space-1-5), 0.51rem);
+    font-size: clamp(0.75rem, 1.7 * var(--text-caption), 1.28rem);
+  }
+}
+
+/* 7. 2K / QHD Display (2561px - 3840px) - 2x scaling */
+@media (min-width: 2561px) and (max-width: 3840px) {
+  .c-url-input__label {
+    font-size: clamp(1.0625rem, 2 * 1.0625rem, 2.125rem);
+  }
+
+  .c-url-input__field {
+    height: clamp(3.625rem, 1.9 * 3.625rem, 6.8875rem);
+    padding-left: clamp(2.5rem, 2 * 3.25rem, 6.5rem);
+    padding-right: clamp(2.5rem, 2 * 3.25rem, 6.5rem);
+    font-size: clamp(1.0625rem, 2 * 1.0625rem, 2.125rem);
+  }
+
+  .c-url-input__icon-prefix {
+    left: clamp(0.8rem, 2 * var(--space-4), 1.6rem);
+  }
+
+  .c-url-input__clear-btn {
+    width: clamp(2.75rem, 1.9 * 2.75rem, 5.225rem);
+    height: clamp(2.75rem, 1.9 * 2.75rem, 5.225rem);
+    right: clamp(0.6rem, 2 * var(--space-3), 1.2rem);
+  }
+
+  .c-url-input__helper {
+    font-size: clamp(0.75rem, 2 * var(--text-caption), 1.5rem);
+  }
+
+  .c-url-input__error {
+    gap: clamp(0.3rem, 2 * var(--space-1-5), 0.6rem);
+    font-size: clamp(0.75rem, 2 * var(--text-caption), 1.5rem);
+  }
+}
+
+/* 8. 4K Display (3841px+) - 2.5x scaling */
+@media (min-width: 3841px) {
+  .c-url-input__label {
+    font-size: clamp(1.0625rem, 2.5 * 1.0625rem, 2.656rem);
+  }
+
+  .c-url-input__field {
+    height: clamp(3.625rem, 2.2 * 3.625rem, 7.975rem);
+    padding-left: clamp(2.5rem, 2.5 * 3.25rem, 8.125rem);
+    padding-right: clamp(2.5rem, 2.5 * 3.25rem, 8.125rem);
+    font-size: clamp(1.0625rem, 2.5 * 1.0625rem, 2.656rem);
+  }
+
+  .c-url-input__icon-prefix {
+    left: clamp(1rem, 2.5 * var(--space-4), 2rem);
+  }
+
+  .c-url-input__clear-btn {
+    width: clamp(2.75rem, 2.2 * 2.75rem, 6.05rem);
+    height: clamp(2.75rem, 2.2 * 2.75rem, 6.05rem);
+    right: clamp(0.75rem, 2.5 * var(--space-3), 1.5rem);
+  }
+
+  .c-url-input__helper {
+    font-size: clamp(0.75rem, 2.5 * var(--text-caption), 1.875rem);
+  }
+
+  .c-url-input__error {
+    gap: clamp(0.375rem, 2.5 * var(--space-1-5), 0.75rem);
+    font-size: clamp(0.75rem, 2.5 * var(--text-caption), 1.875rem);
+  }
+}
+

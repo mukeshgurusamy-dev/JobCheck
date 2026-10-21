@@ -157,3 +157,55 @@
   }
 }
 
+/* 5. Large Screens / 1080p TV (1501px - 1920px) - 1.3x scaling */
+@media (min-width: 1501px) and (max-width: 1920px) {
+  .c-tooltip__bubble {
+    max-width: 416px;
+    padding: clamp(0.26rem, 1.3 * var(--space-2), 0.52rem) clamp(0.39rem, 1.3 * var(--space-3), 0.78rem);
+    font-size: clamp(0.75rem, 1.3 * var(--text-caption), 0.98rem);
+  }
+
+  .c-tooltip__bubble::after {
+    border-width: 6.5px;
+  }
+}
+
+/* 6. Full HD TV / 1080p (1921px - 2560px) - 1.7x scaling */
+@media (min-width: 1921px) and (max-width: 2560px) {
+  .c-tooltip__bubble {
+    max-width: 544px;
+    padding: clamp(0.34rem, 1.7 * var(--space-2), 0.68rem) clamp(0.51rem, 1.7 * var(--space-3), 1.02rem);
+    font-size: clamp(0.75rem, 1.7 * var(--text-caption), 1.28rem);
+  }
+
+  .c-tooltip__bubble::after {
+    border-width: 8.5px;
+  }
+}
+
+/* 7. 2K / QHD Display (2561px - 3840px) - 2x scaling */
+@media (min-width: 2561px) and (max-width: 3840px) {
+  .c-tooltip__bubble {
+    max-width: 640px;
+    padding: clamp(0.4rem, 2 * var(--space-2), 0.8rem) clamp(0.6rem, 2 * var(--space-3), 1.2rem);
+    font-size: clamp(0.75rem, 2 * var(--text-caption), 1.5rem);
+  }
+
+  .c-tooltip__bubble::after {
+    border-width: 10px;
+  }
+}
+
+/* 8. 4K Display (3841px+) - 2.5x scaling */
+@media (min-width: 3841px) {
+  .c-tooltip__bubble {
+    max-width: 800px;
+    padding: clamp(0.5rem, 2.5 * var(--space-2), 1rem) clamp(0.75rem, 2.5 * var(--space-3), 1.5rem);
+    font-size: clamp(0.75rem, 2.5 * var(--text-caption), 1.875rem);
+  }
+
+  .c-tooltip__bubble::after {
+    border-width: 12.5px;
+  }
+}
+
