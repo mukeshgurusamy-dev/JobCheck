@@ -588,30 +588,6 @@ export function createResultPanel(options: ResultPanelOptions): HTMLElement {
         sourceName.textContent = review.source || "Unknown Source";
         sourceHeader.appendChild(sourceName);
 
-        // Source URL link — only shown when the AI actually found review data
-        // for this platform (rating or review count). Without real data the URL
-        // would just be a generic search/list page pointing to the wrong company.
-        // PREFER AMBITIONBOX: Show link for AmbitionBox and other platforms, but skip Glassdoor if AmbitionBox exists
-        const hasAmbitionBoxReviews = sortedReviews.some(r =>
-          r.source?.toLowerCase().includes("ambitionbox") &&
-          r.sourceUrl &&
-          (r.rating !== undefined || (r.totalReviews && r.totalReviews > 0))
-        );
-
-        const isGlassdoor = review.source?.toLowerCase().includes("glassdoor");
-        const shouldShowLink = review.sourceUrl && (review.rating !== undefined || (review.totalReviews && review.totalReviews > 0)) &&
-          !(isGlassdoor && hasAmbitionBoxReviews); // Skip Glassdoor link if AmbitionBox exists
-
-        if (shouldShowLink) {
-          const srcLink = document.createElement("a");
-          srcLink.className = "c-result-panel__review-source-link";
-          srcLink.href = review.sourceUrl || "#";
-          srcLink.target = "_blank";
-          srcLink.rel = "noopener noreferrer";
-          srcLink.textContent = "🔗 View reviews";
-          sourceHeader.appendChild(srcLink);
-        }
-
         if (review.rating !== undefined && typeof review.rating === "number") {
           const ratingSpan = document.createElement("span");
           ratingSpan.className = "text-body-xs";
