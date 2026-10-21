@@ -89,12 +89,12 @@ export function applyAiIntelligence(
         id: "employee-scam-reviews",
         kind: "risk",
         severity: "high",
-        points: 50,
+        points: 70, // Increase from 50 to 70 for equal AI power in both directions
         reason: `🚨 CRITICAL: Employee reviews contain scam warnings${companyTag} — ${scamReviewsList[0]}`,
         evidence: scamReviewsList.join(" | "),
       });
       assessment.level = "High";
-      assessment.score = Math.min(100, Math.max(assessment.score + 50, 80));
+      assessment.score = Math.min(100, Math.max(assessment.score + 70, 85)); // Increased from +50, 80 to +70, 85
       assessment.confidence = "High";
       assessment.nextSteps.unshift(
         `⛔ DANGER: Multiple employees have reported this company for job scams, fake offers, or fee fraud${companyTag}. DO NOT PROCEED with this application.`,
@@ -183,13 +183,14 @@ export function applyAiIntelligence(
       id: "ai-threat-intelligence",
       kind: "risk",
       severity: "high",
-      points: Math.max(ai.adjustmentPoints || 40, 35),
+      points: 65, // Increase from 40 to 65 for parity with legitimacy override
       reason: `Employer Investigation: Fraud risk / unverified footprint${companyTag} — ${topSignal}`,
       evidence: ai.summary,
     });
 
+    // Force to High Risk and boost score aggressively (same power as legitimacy override)
     assessment.level = "High";
-    assessment.score = Math.min(100, Math.max(assessment.score + 40, 75));
+    assessment.score = Math.min(100, Math.max(assessment.score + 65, 80)); // Increased from +40, 75 to +65, 80
     assessment.confidence = "High";
     assessment.nextSteps.unshift(
       `⚠️ Warning: Deep search identified suspicious signals or lack of verifiable digital footprint for this employer${companyTag}. Do not share documents or pay fees.`,
