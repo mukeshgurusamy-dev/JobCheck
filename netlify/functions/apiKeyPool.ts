@@ -3,14 +3,10 @@ import path from "path";
 
 export interface KeyState {
   key: string;
-  lastUsedAt: number;
+  usageCount: number;
+  isRateLimited: boolean;
   cooldownUntil: number;
-  failureCount: number;
-  successCount: number;
 }
-
-// 4 minutes cooldown preference
-const IDLE_COOLDOWN_MS = 4 * 60 * 1000;
 
 // Penalty cooldown if Google returns 429 (40 seconds)
 const PENALTY_COOLDOWN_MS = 40 * 1000;
@@ -97,10 +93,9 @@ export class ApiKeyPoolManager {
       return (
         existing || {
           key: k,
-          lastUsedAt: 0,
+          usageCount: 0,
+          isRateLimited: false,
           cooldownUntil: 0,
-          failureCount: 0,
-          successCount: 0,
         }
       );
     });
@@ -109,10 +104,9 @@ export class ApiKeyPoolManager {
   }
 
   /**
-   * Selects the optimal key from the pool:
-   * 1. Excludes any key currently in penalty cooldown (e.g. 429).
-   * 2. Prefers keys that have been idle for >= 4 minutes.
-   * 3. Among eligible keys, chooses the Least Recently Used (oldest lastUsedAt).
+   * Simple algorithm: Always use the key with the lowest usage count.
+   * If rate limited, skip it and try the next least-used key.
+   * This ensures even distribution across all 5 keys.
    */
   public acquireKey(): string | undefined {
     this.loadKeys();
@@ -120,39 +114,36 @@ export class ApiKeyPoolManager {
 
     const now = Date.now();
 
-    // Filter out keys in penalty cooldown
-    const activeKeys = this.keys.filter((k) => k.cooldownUntil <= now);
-    const candidatePool = activeKeys.length > 0 ? activeKeys : this.keys;
+    // Filter out keys still in penalty cooldown
+    const availableKeys = this.keys.filter((k) => k.cooldownUntil <= now);
 
-    // Check for keys that have been resting >= 4 minutes (or never used)
-    const restedKeys = candidatePool.filter(
-      (k) => k.lastUsedAt === 0 || now - k.lastUsedAt >= IDLE_COOLDOWN_MS,
-    );
-
-    let chosen: KeyState;
-    if (restedKeys.length > 0) {
-      // Pick the key that has been idle the longest
-      restedKeys.sort((a, b) => a.lastUsedAt - b.lastUsedAt);
-      chosen = restedKeys[0]!;
-    } else {
-      // All keys were used recently: pick the oldest one to maximize rest time
-      candidatePool.sort((a, b) => a.lastUsedAt - b.lastUsedAt);
-      chosen = candidatePool[0]!;
+    if (availableKeys.length === 0) {
+      // All keys are rate limited, return the one with lowest usage count anyway
+      this.keys.sort((a, b) => a.usageCount - b.usageCount);
+      this.keys[0]!.usageCount++;
+      console.log(`[API_KEY_POOL] All keys rate limited, using least-used: usage=${this.keys[0]!.usageCount}`);
+      return this.keys[0]!.key;
     }
 
-    chosen.lastUsedAt = now;
+    // Pick the available key with the lowest usage count
+    availableKeys.sort((a, b) => a.usageCount - b.usageCount);
+    const chosen = availableKeys[0]!;
+    chosen.usageCount++;
+
+    console.log(`[API_KEY_POOL] Selected key with usage count: ${chosen.usageCount} (${chosen.key.substring(0, 30)}...)`);
     return chosen.key;
   }
 
   /**
    * Called if a key hits an HTTP 429 (rate limit / quota exhaustion).
-   * Puts this key into a 15-minute penalty cooldown.
+   * Puts this key into a 40-second penalty cooldown.
    */
   public reportRateLimited(key: string): void {
     const entry = this.keys.find((k) => k.key === key);
     if (entry) {
       entry.cooldownUntil = Date.now() + PENALTY_COOLDOWN_MS;
-      entry.failureCount++;
+      entry.isRateLimited = true;
+      console.log(`[API_KEY_POOL] Key rate limited: ${key.substring(0, 30)}... (cooldown 40s)`);
     }
   }
 
@@ -162,14 +153,15 @@ export class ApiKeyPoolManager {
   public reportSuccess(key: string): void {
     const entry = this.keys.find((k) => k.key === key);
     if (entry) {
-      entry.successCount++;
-      entry.failureCount = 0;
+      entry.isRateLimited = false;
       entry.cooldownUntil = 0;
+      console.log(`[API_KEY_POOL] Key success: ${key.substring(0, 30)}... (cooldown cleared)`);
     }
   }
 
   /**
    * Provides the next best available key if the current key failed.
+   * Always picks the key with the lowest usage count.
    */
   public getNextAvailableKey(excludeKey?: string): string | undefined {
     this.loadKeys();
@@ -180,9 +172,11 @@ export class ApiKeyPoolManager {
     if (candidates.length === 0) {
       return this.keys.find((k) => k.key !== excludeKey)?.key;
     }
-    candidates.sort((a, b) => a.lastUsedAt - b.lastUsedAt);
+    // Pick the candidate with lowest usage count
+    candidates.sort((a, b) => a.usageCount - b.usageCount);
     const next = candidates[0]!;
-    next.lastUsedAt = now;
+    next.usageCount++;
+    console.log(`[API_KEY_POOL] Fallback to next key: usage=${next.usageCount}`);
     return next.key;
   }
 
@@ -193,9 +187,7 @@ export class ApiKeyPoolManager {
   } {
     this.loadKeys();
     const now = Date.now();
-    const ready = this.keys.filter(
-      (k) => k.cooldownUntil <= now && (k.lastUsedAt === 0 || now - k.lastUsedAt >= IDLE_COOLDOWN_MS),
-    ).length;
+    const ready = this.keys.filter((k) => k.cooldownUntil <= now).length;
     const cooling = this.keys.length - ready;
     return {
       total: this.keys.length,
