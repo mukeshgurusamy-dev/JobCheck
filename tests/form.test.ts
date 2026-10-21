@@ -102,7 +102,7 @@ describe("CheckerForm Organism Component", () => {
     expect(handleSubmit).not.toHaveBeenCalled();
 
     // Warning message should be displayed
-    const warningBox = form.querySelector(".c-checker-form__warning-box");
+    const warningBox = form.querySelector(".c-checker-form__warning-box") as HTMLElement | null;
     expect(warningBox?.textContent).toContain("Paste the job description");
     expect(warningBox?.style.display).not.toBe("none");
 
