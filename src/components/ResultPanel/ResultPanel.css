@@ -1178,26 +1178,29 @@
 }
 
 .c-result-panel__review-highlights {
-  margin-top: var(--space-2);
-  padding: var(--space-2);
+  margin-top: clamp(var(--space-2), 3vw, var(--space-4));
+  padding: clamp(var(--space-2), 2.5vw, var(--space-3));
   border-radius: var(--radius-sm);
-  font-size: var(--text-small);
+  font-size: clamp(var(--text-small), 2vw, var(--text-base));
+  border-left: clamp(2px, 0.5vw, 4px) solid;
+  transition: all 0.2s ease;
 }
 
 .c-result-panel__review-highlights--positive {
   background: var(--color-risk-low-bg);
-  border-left: 3px solid var(--color-risk-low-border);
+  border-left-color: var(--color-risk-low-border);
 }
 
 .c-result-panel__review-highlights--negative {
   background: var(--color-risk-medium-bg);
-  border-left: 3px solid var(--color-risk-medium-border);
+  border-left-color: var(--color-risk-medium-border);
 }
 
 .c-result-panel__review-highlights-title {
   font-weight: var(--font-weight-medium);
-  margin-bottom: var(--space-1);
+  margin-bottom: clamp(var(--space-1), 1.5vw, var(--space-2));
   color: var(--color-text-primary);
+  font-size: clamp(14px, 2.5vw, 16px);
 }
 
 .c-result-panel__review-highlights ul {
@@ -1207,10 +1210,13 @@
 }
 
 .c-result-panel__review-highlights ul li {
-  padding-left: var(--space-4);
+  padding-left: clamp(var(--space-3), 4vw, var(--space-4));
   position: relative;
   line-height: var(--leading-body);
-  margin-bottom: var(--space-1);
+  margin-bottom: clamp(var(--space-1), 1vw, var(--space-2));
+  font-size: clamp(13px, 2vw, 15px);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .c-result-panel__review-highlights ul li:last-child {
@@ -1220,8 +1226,49 @@
 .c-result-panel__review-highlights ul li::before {
   content: "•";
   position: absolute;
-  left: var(--space-1);
+  left: clamp(var(--space-1), 1vw, var(--space-1));
   color: var(--color-text-muted);
+  font-weight: bold;
+}
+
+/* Mobile optimization: stack highlights better on small screens */
+@media (max-width: 480px) {
+  .c-result-panel__review-highlights {
+    margin-top: var(--space-2);
+    padding: var(--space-2);
+  }
+
+  .c-result-panel__review-highlights-title {
+    font-size: 14px;
+  }
+
+  .c-result-panel__review-highlights ul li {
+    font-size: 13px;
+    padding-left: var(--space-3);
+  }
+}
+
+/* Tablet optimization: balance spacing */
+@media (min-width: 481px) and (max-width: 768px) {
+  .c-result-panel__review-highlights {
+    margin-top: var(--space-3);
+  }
+
+  .c-result-panel__review-highlights-title {
+    font-size: 15px;
+  }
+}
+
+/* Desktop: full spacing */
+@media (min-width: 769px) {
+  .c-result-panel__review-highlights {
+    margin-top: var(--space-3);
+    padding: var(--space-3);
+  }
+
+  .c-result-panel__review-highlights-title {
+    font-size: 16px;
+  }
 }
 
 /* ==========================================================================

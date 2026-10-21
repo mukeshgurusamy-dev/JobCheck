@@ -343,7 +343,16 @@ Investigate this job listing and perform a thorough background audit of the empl
      * "no_info" = No location found in job description
    - CRITICAL: Location mismatch is a MAJOR red flag for scams
 
-3. QUICK SCAM SIGNAL CHECK (search for ACTUAL complaints):
+3. EMPLOYEE REVIEWS & COMPANY SENTIMENT (search for detailed reviews):
+   Search Glassdoor, AmbitionBox, Indeed, LinkedIn reviews for "${companyCoreName || rootDomain}":
+   - Find overall rating and total review count
+   - Extract TOP 3 POSITIVE aspects employees mention (e.g., "Great work-life balance", "Good salary", "Learning opportunities")
+   - Extract TOP 3 NEGATIVE aspects employees mention (e.g., "Limited growth", "Slow promotions", "Outdated tech")
+   - Search for scam/fraud complaints (fee demands, unpaid work, fake offers, etc.)
+   - Return positiveHighlights and negativeHighlights as separate arrays of strings
+   - ONLY extract actual highlights from real reviews — do NOT invent or speculate
+
+4. QUICK SCAM SIGNAL CHECK (search for ACTUAL complaints):
    Search for real scam complaints about "${companyCoreName || rootDomain}":
    - Reddit threads reporting this specific company as fraudulent
    - Glassdoor/AmbitionBox reviews mentioning registration fee fraud
@@ -352,7 +361,7 @@ Investigate this job listing and perform a thorough background audit of the empl
    - Google search results with "scam" or "fraud" in the same paragraph as company name
    ONLY include actual complaints you find — do NOT speculate.
 
-4. COMPANY VERIFICATION (if you find information):
+5. COMPANY VERIFICATION (if you find information):
    - Official website / LinkedIn company page
    - MCA/ROC registration (for Indian companies)
    - Employee count and company size
@@ -399,7 +408,26 @@ Return ONLY a valid JSON object (no markdown, no explanation outside JSON):
   "hasScamReviews": false,
   "scamSignals": [],
   "trustSignals": ["Hosted on LinkedIn (employer verified)", "No scam complaints found in search results"],
-  "employeeReviews": [],
+  "employeeReviews": [
+    {
+      "source": "Glassdoor",
+      "sourceUrl": "https://www.glassdoor.com/Reviews/...",
+      "rating": 4.2,
+      "totalReviews": 1250,
+      "positiveHighlights": [
+        "Great work-life balance",
+        "Competitive salary and benefits",
+        "Strong learning opportunities"
+      ],
+      "negativeHighlights": [
+        "Limited career growth for juniors",
+        "Slow promotion cycle",
+        "Outdated tech stack in some teams"
+      ],
+      "scamWarnings": [],
+      "scamReports": []
+    }
+  ],
   "companyAudit": {
     "companyName": "Company name",
     "auditScore": 85,
