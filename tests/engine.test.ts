@@ -1,7 +1,43 @@
 import { describe, it, expect } from "vitest";
 import { analyzeJob } from "../src/engine/engine";
 
+describe("Anti-fraud warning detection", () => {
+  it("should detect HPE's recruitment fraud alert and convert upfront-payment to trust", () => {
+    const res = analyzeJob({
+      url: "https://careers.hpe.com/job/123",
+      description: `
+        Recruitment Fraud Alert
+
+        Hewlett Packard Enterprise (HPE) is aware of fraudulent recruitment activities.
+        We will never charge a candidate a registration fee, hiring fee, or any other fee in connection with its recruitment and hiring process.
+
+        This is a real job posting for a Senior Software Engineer. We are hiring!
+      `,
+      fetched: {
+        status: 200,
+        finalUrl: "https://careers.hpe.com/job/123",
+        redirectChain: [],
+        title: "Senior Software Engineer - HPE",
+        text: "Real job posting",
+        domainAgeDays: 5000,
+        safeBrowsingFlagged: false
+      }
+    });
+
+    console.log("=== HPE Test Results ===");
+    console.log("Score:", res.score);
+    console.log("Level:", res.level);
+    console.log("Findings:", res.findings.map(f => ({ id: f.id, kind: f.kind, points: f.points })));
+    console.log("Has anti-fraud-warning-legitimate:", res.findings.some(f => f.id === "anti-fraud-warning-legitimate"));
+    console.log("Has upfront-payment:", res.findings.some(f => f.id === "upfront-payment"));
+
+    expect(res.findings.some(f => f.id === "anti-fraud-warning-legitimate")).toBe(true);
+    expect(res.findings.some(f => f.id === "upfront-payment")).toBe(false);
+  });
+});
+
 describe("Engine Core: analyzeJob integration", () => {
+
   it("shortened link returns risk findings and medium/high score", () => {
     const res = analyzeJob({ url: "https://bit.ly/fresher-hiring" });
     const hasShortenerFinding = res.findings.some((f) => f.id === "shortener");
