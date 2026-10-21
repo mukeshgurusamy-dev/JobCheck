@@ -201,10 +201,14 @@ function createSettingsDrawer(): {
       "Terms & Conditions",
       "book-open",
       `<p>By using JobCheck, you agree to the following:</p>
-       <p>• <strong>Guidance Only:</strong> JobCheck calculates risk scores based on automated safety signals. It provides safety guidance and does not replace your own due diligence. Always confirm open positions directly on official company career portals.</p>
-       <p>• <strong>Strict Privacy:</strong> Your submitted job links and text are processed in temporary memory and are never stored or sold.</p>
-       <p>• <strong>Immediate Reporting (India):</strong> If you have already transferred money to a scammer, report immediately to the National Cybercrime Portal at <strong>cybercrime.gov.in</strong> or call the <strong>1930</strong> helpline.</p>
-       <p>• <strong>Immediate Reporting (Worldwide):</strong> International users can report job scams to the <strong><a href="https://www.fbi.gov/investigate/cyber" target="_blank" rel="noopener noreferrer">FBI's Internet Crime Complaint Center (IC3)</a></strong> or local law enforcement in your country.</p>`,
+       <p><strong>What We Do:</strong> JobCheck scans job links and descriptions for scam signals — domain age, HTTPS validity, fee demands, messaging-app redirects, lookalike companies, and public reports. We then search the web for the company's footprint and cross-check the findings. We report what we find — not guesses, not caution.</p>
+       <p><strong>What We Don't Guarantee:</strong> JobCheck identifies risk signals. It is not a guarantee of legitimacy. A low score means we found no red flags — it does not mean the company is perfect. Always verify open positions directly on the company's official careers portal before applying or sharing documents.</p>
+       <p><strong>Data We Keep:</strong> We store your submitted job URLs and descriptions to improve JobCheck's detection accuracy and to track which scam patterns are active. This log is encrypted, never sold, and never shared with the company you searched for. You can request deletion of your records at any time.</p>
+       <p><strong>If You've Already Paid:</strong> This is urgent.</p>
+       <p style="margin-left: 1rem;">• <strong>India:</strong> Call <strong>1930</strong> or report at <strong>cybercrime.gov.in</strong> immediately. Include the payment reference, the fraudster's account details, and your Aadhaar.</p>
+       <p style="margin-left: 1rem;">• <strong>Worldwide:</strong> Report to the <strong><a href="https://www.fbi.gov/investigate/cyber" target="_blank" rel="noopener noreferrer">FBI's Internet Crime Complaint Center (IC3)</a></strong> or your country's law enforcement cyber unit.</p>
+       <p style="margin-left: 1rem;">• Tell your bank to reverse or freeze the transfer. Give them the UTR or transaction ID.</p>
+       <p style="margin-left: 1rem;">• Keep all evidence — chats, the job link, the account you paid into, the job posting.</p>`,
     ),
   );
 
@@ -213,10 +217,25 @@ function createSettingsDrawer(): {
     createSettingsSection(
       "Privacy Policy",
       "shield-check",
-      `<p><strong>Zero Personal Data Retention:</strong></p>
-       <p>• Job descriptions and URLs submitted for inspection are never stored in any database.</p>
-       <p>• No user tracking cookies or profiling scripts are loaded on this website.</p>
-       <p>• Every check runs through secure, encrypted stateless pipelines.</p>`,
+      `<p><strong>What Data We Collect:</strong></p>
+       <p>• Job URLs and descriptions you submit for scanning</p>
+       <p>• Your scan history — timestamps, risk scores, and which scam patterns were found</p>
+       <p>• Browser and device information (for performance monitoring only)</p>
+       <p><strong>How We Use It:</strong></p>
+       <p>• To improve detection accuracy by analyzing patterns in real scam reports</p>
+       <p>• To track which fraud tactics are active and evolving</p>
+       <p>• To surface the most critical threats in our public threat intelligence</p>
+       <p>• To optimize our infrastructure for speed and reliability</p>
+       <p><strong>What We Don't Do:</strong></p>
+       <p>• We never sell your data to third parties, recruiters, or companies</p>
+       <p>• We never identify you personally to the companies you search for</p>
+       <p>• We do not load tracking cookies or analytics scripts that follow you across the web</p>
+       <p>• All data is encrypted at rest and in transit</p>
+       <p><strong>Your Rights:</strong></p>
+       <p>• Request all your stored data at any time</p>
+       <p>• Request deletion of your scan history (we will retain only anonymized fraud patterns)</p>
+       <p>• For India: Rights under DPDP Act 2023 and Digital Personal Data Protection guidelines</p>
+       <p>• For Worldwide: GDPR compliance for EU users; data deletion requests honored within 30 days</p>`,
     ),
   );
 
@@ -361,7 +380,7 @@ function createSupportedPlatformsTicker(): HTMLElement {
   label.className = "c-platforms-ticker__label";
   label.innerHTML = `
     <span class="c-platforms-ticker__label-dot"></span>
-    <span>Works with jobs from top job portals & company career sites</span>
+    <span>Works in India and worldwide — detects scams on every job portal, career site, and recruiter message</span>
   `;
   container.appendChild(label);
 
