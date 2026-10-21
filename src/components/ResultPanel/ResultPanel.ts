@@ -168,11 +168,41 @@ export function createResultPanel(options: ResultPanelOptions): HTMLElement {
     createIcon({ name: "search", size: "md", colorClass: "c-icon--primary" }),
   );
   const titleText = document.createElement("span");
-  titleText.textContent = `Why we think this (${assessment.findings.length} signals identified)`;
+
+  // Filter out false positive findings when AI verified legitimacy
+  const hasAiLegitimacyVerification = assessment.findings.some(
+    (f) => f.id === "ai-verified-legitimate"
+  );
+  const falsePositiveFlagIds = [
+    "upfront-payment",
+    "task-scam",
+    "sensitive-docs-early",
+    "safe-browsing",
+    "shortener",
+    "lookalike-suspicious-tld",
+    "link-in-description-high-risk",
+    "remote-access-software",
+    "mlm-referral",
+    "paid-medical-exam",
+    "cryptocurrency-payment",
+    "investment-scheme",
+    "advance-salary-loan",
+    "fake-government-job",
+    "fake-internship-conversion",
+    "fake-verification-portal",
+    "sender-domain-mismatch",
+    "free-email-warning",
+  ];
+
+  const displayFindings = hasAiLegitimacyVerification
+    ? assessment.findings.filter((f) => !falsePositiveFlagIds.includes(f.id))
+    : assessment.findings;
+
+  titleText.textContent = `Why we think this (${displayFindings.length} signals identified)`;
   findingsTitle.appendChild(titleText);
   findingsSection.appendChild(findingsTitle);
 
-  if (assessment.findings.length === 0) {
+  if (displayFindings.length === 0) {
     const emptyBox = document.createElement("div");
     emptyBox.className = "c-result-panel__empty-findings";
     emptyBox.textContent =
@@ -181,7 +211,7 @@ export function createResultPanel(options: ResultPanelOptions): HTMLElement {
   } else {
     const list = document.createElement("ul");
     list.className = "c-result-panel__findings-list";
-    for (const finding of assessment.findings) {
+    for (const finding of displayFindings) {
       list.appendChild(createFindingItem({ finding }));
     }
     findingsSection.appendChild(list);
