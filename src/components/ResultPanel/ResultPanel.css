@@ -2072,4 +2072,409 @@
   }
 }
 
+/* 5. Large Screens / 1080p TV (1501px - 1920px) */
+@media (min-width: 1501px) and (max-width: 1920px) {
+  .c-result-panel {
+    padding: clamp(var(--space-8), 4vw, var(--space-10));
+    gap: clamp(var(--space-6), 3vw, var(--space-8));
+    font-size: clamp(15px, 1.5vw, 17px);
+  }
+
+  .c-result-panel__summary {
+    gap: clamp(var(--space-4), 2vw, var(--space-6));
+    padding-bottom: clamp(var(--space-4), 2vw, var(--space-6));
+  }
+
+  .c-result-panel__summary-text {
+    gap: clamp(var(--space-3), 1.5vw, var(--space-4));
+  }
+
+  .c-result-panel__audit-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(var(--space-4), 2vw, var(--space-6));
+  }
+
+  .c-result-panel__audit-card {
+    padding: clamp(var(--space-4), 2.5vw, var(--space-6));
+  }
+
+  .c-result-panel__section-title {
+    font-size: clamp(1.5rem, 2.5vw, 1.8rem);
+  }
+
+  .text-body {
+    font-size: clamp(15px, 1.5vw, 17px);
+  }
+
+  .text-body-sm {
+    font-size: clamp(13px, 1.3vw, 15px);
+  }
+
+  .text-body-xs {
+    font-size: clamp(12px, 1.2vw, 14px);
+  }
+
+  .c-result-panel__review-source {
+    gap: clamp(var(--space-3), 2vw, var(--space-4));
+    padding: clamp(var(--space-3), 2vw, var(--space-5));
+  }
+
+  .c-result-panel__critical-warnings-section {
+    padding: clamp(var(--space-4), 2.5vw, var(--space-5));
+  }
+
+  .c-result-panel__critical-scam-card {
+    padding: clamp(var(--space-3), 2vw, var(--space-4));
+    gap: clamp(var(--space-2), 1.5vw, var(--space-3));
+  }
+
+  .c-result-panel__critical-complaint-text {
+    padding: clamp(var(--space-2), 1.5vw, var(--space-3));
+    font-size: clamp(14px, 1.4vw, 16px);
+  }
+
+  .c-result-panel__critical-source-link {
+    padding: clamp(10px, 1.5vw, 14px) clamp(14px, 2vw, 18px);
+    font-size: clamp(13px, 1.3vw, 15px);
+  }
+}
+
+/* 6. Full HD TV / 1080p (1921px - 2560px) */
+@media (min-width: 1921px) and (max-width: 2560px) {
+  .c-result-panel {
+    padding: clamp(var(--space-10), 5vw, var(--space-12));
+    gap: clamp(var(--space-8), 4vw, var(--space-10));
+    font-size: clamp(17px, 1.8vw, 20px);
+  }
+
+  .c-result-panel__summary {
+    gap: clamp(var(--space-5), 2.5vw, var(--space-8));
+    padding-bottom: clamp(var(--space-5), 2.5vw, var(--space-8));
+  }
+
+  .c-result-panel__summary-text {
+    gap: clamp(var(--space-4), 2vw, var(--space-6));
+  }
+
+  .c-result-panel__audit-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(var(--space-5), 2.5vw, var(--space-7));
+  }
+
+  .c-result-panel__audit-card {
+    padding: clamp(var(--space-5), 3vw, var(--space-8));
+  }
+
+  .c-result-panel__section-title {
+    font-size: clamp(1.8rem, 3vw, 2.2rem);
+  }
+
+  .text-body {
+    font-size: clamp(17px, 1.8vw, 20px);
+  }
+
+  .text-body-sm {
+    font-size: clamp(15px, 1.6vw, 18px);
+  }
+
+  .text-body-xs {
+    font-size: clamp(14px, 1.5vw, 16px);
+  }
+
+  .c-result-panel__review-source {
+    gap: clamp(var(--space-4), 2.5vw, var(--space-6));
+    padding: clamp(var(--space-4), 2.5vw, var(--space-6));
+  }
+
+  .c-result-panel__review-highlights {
+    padding: clamp(var(--space-3), 2vw, var(--space-4));
+  }
+
+  .c-result-panel__review-highlights-title {
+    font-size: clamp(16px, 1.8vw, 19px);
+  }
+
+  .c-result-panel__critical-warnings-section {
+    padding: clamp(var(--space-5), 3vw, var(--space-6));
+  }
+
+  .c-result-panel__critical-warnings-title {
+    font-size: clamp(18px, 2.2vw, 24px);
+  }
+
+  .c-result-panel__critical-scam-card {
+    padding: clamp(var(--space-4), 2.5vw, var(--space-5));
+    gap: clamp(var(--space-3), 1.8vw, var(--space-4));
+  }
+
+  .c-result-panel__critical-reporter-name {
+    font-size: clamp(15px, 1.7vw, 18px);
+  }
+
+  .c-result-panel__critical-complaint-text {
+    padding: clamp(var(--space-3), 1.8vw, var(--space-4));
+    font-size: clamp(15px, 1.6vw, 18px);
+  }
+
+  .c-result-panel__critical-source-link {
+    padding: clamp(11px, 1.7vw, 15px) clamp(15px, 2.2vw, 20px);
+    font-size: clamp(14px, 1.5vw, 17px);
+  }
+
+  .c-result-panel__scam-report-card {
+    padding: clamp(var(--space-4), 2.5vw, var(--space-5));
+  }
+
+  .c-result-panel__scam-reporter-name {
+    font-size: clamp(14px, 1.6vw, 17px);
+  }
+
+  .c-result-panel__scam-complaint {
+    font-size: clamp(14px, 1.5vw, 17px);
+  }
+
+  .c-result-panel__location-verification {
+    padding: clamp(var(--space-4), 2.5vw, var(--space-6));
+  }
+
+  .c-result-panel__location-row {
+    font-size: clamp(14px, 1.5vw, 17px);
+  }
+}
+
+/* 7. 2K / QHD Display (2561px - 3840px) */
+@media (min-width: 2561px) and (max-width: 3840px) {
+  .c-result-panel {
+    padding: clamp(var(--space-12), 6vw, var(--space-16));
+    gap: clamp(var(--space-10), 5vw, var(--space-12));
+    font-size: clamp(20px, 2vw, 24px);
+  }
+
+  .c-result-panel__summary {
+    gap: clamp(var(--space-6), 3vw, var(--space-10));
+    padding-bottom: clamp(var(--space-6), 3vw, var(--space-10));
+  }
+
+  .c-result-panel__summary-text {
+    gap: clamp(var(--space-5), 2.5vw, var(--space-8));
+  }
+
+  .c-result-panel__audit-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(var(--space-6), 3vw, var(--space-8));
+  }
+
+  .c-result-panel__audit-card {
+    padding: clamp(var(--space-6), 3.5vw, var(--space-10));
+  }
+
+  .c-result-panel__section-title {
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+  }
+
+  .text-body {
+    font-size: clamp(20px, 2vw, 24px);
+  }
+
+  .text-body-sm {
+    font-size: clamp(18px, 1.8vw, 22px);
+  }
+
+  .text-body-xs {
+    font-size: clamp(16px, 1.6vw, 20px);
+  }
+
+  .c-result-panel__review-source {
+    gap: clamp(var(--space-5), 3vw, var(--space-8));
+    padding: clamp(var(--space-5), 3vw, var(--space-8));
+  }
+
+  .c-result-panel__review-highlights {
+    padding: clamp(var(--space-4), 2.5vw, var(--space-6));
+  }
+
+  .c-result-panel__review-highlights-title {
+    font-size: clamp(18px, 2vw, 22px);
+  }
+
+  .c-result-panel__review-highlights ul li {
+    font-size: clamp(16px, 1.8vw, 20px);
+  }
+
+  .c-result-panel__critical-warnings-section {
+    padding: clamp(var(--space-6), 3.5vw, var(--space-8));
+  }
+
+  .c-result-panel__critical-warnings-title {
+    font-size: clamp(22px, 2.5vw, 28px);
+    gap: 16px;
+  }
+
+  .c-result-panel__critical-scam-card {
+    padding: clamp(var(--space-5), 3vw, var(--space-6));
+    gap: clamp(var(--space-4), 2vw, var(--space-5));
+  }
+
+  .c-result-panel__critical-reporter-name {
+    font-size: clamp(17px, 1.9vw, 21px);
+  }
+
+  .c-result-panel__critical-reporter-role {
+    font-size: clamp(14px, 1.6vw, 18px);
+    padding: 4px 12px;
+  }
+
+  .c-result-panel__critical-platform-badge {
+    font-size: clamp(14px, 1.6vw, 18px);
+  }
+
+  .c-result-panel__critical-complaint-text {
+    padding: clamp(var(--space-3), 2vw, var(--space-5));
+    font-size: clamp(17px, 1.8vw, 21px);
+  }
+
+  .c-result-panel__critical-source-link {
+    padding: clamp(12px, 2vw, 16px) clamp(16px, 2.5vw, 22px);
+    font-size: clamp(16px, 1.7vw, 20px);
+  }
+
+  .c-result-panel__scam-report-card {
+    padding: clamp(var(--space-5), 3vw, var(--space-6));
+  }
+
+  .c-result-panel__scam-reporter-name {
+    font-size: clamp(16px, 1.8vw, 20px);
+  }
+
+  .c-result-panel__scam-complaint {
+    font-size: clamp(16px, 1.8vw, 20px);
+    padding: clamp(var(--space-3), 2vw, var(--space-4));
+  }
+
+  .c-result-panel__location-verification {
+    padding: clamp(var(--space-5), 3vw, var(--space-8));
+  }
+
+  .c-result-panel__location-row {
+    font-size: clamp(16px, 1.8vw, 20px);
+  }
+}
+
+/* 8. 4K Display (3841px+) */
+@media (min-width: 3841px) {
+  .c-result-panel {
+    padding: clamp(var(--space-16), 7vw, var(--space-20));
+    gap: clamp(var(--space-12), 6vw, var(--space-16));
+    font-size: clamp(24px, 2.2vw, 30px);
+  }
+
+  .c-result-panel__summary {
+    gap: clamp(var(--space-8), 4vw, var(--space-12));
+    padding-bottom: clamp(var(--space-8), 4vw, var(--space-12));
+  }
+
+  .c-result-panel__summary-text {
+    gap: clamp(var(--space-6), 3vw, var(--space-10));
+  }
+
+  .c-result-panel__audit-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(var(--space-8), 4vw, var(--space-10));
+  }
+
+  .c-result-panel__audit-card {
+    padding: clamp(var(--space-8), 4vw, var(--space-12));
+  }
+
+  .c-result-panel__section-title {
+    font-size: clamp(2.5rem, 4vw, 3.2rem);
+  }
+
+  .text-body {
+    font-size: clamp(24px, 2.2vw, 30px);
+  }
+
+  .text-body-sm {
+    font-size: clamp(22px, 2vw, 28px);
+  }
+
+  .text-body-xs {
+    font-size: clamp(20px, 1.8vw, 24px);
+  }
+
+  .c-result-panel__review-source {
+    gap: clamp(var(--space-6), 4vw, var(--space-10));
+    padding: clamp(var(--space-6), 4vw, var(--space-10));
+  }
+
+  .c-result-panel__review-highlights {
+    padding: clamp(var(--space-5), 3vw, var(--space-8));
+  }
+
+  .c-result-panel__review-highlights-title {
+    font-size: clamp(22px, 2.2vw, 28px);
+  }
+
+  .c-result-panel__review-highlights ul li {
+    font-size: clamp(19px, 2vw, 24px);
+  }
+
+  .c-result-panel__critical-warnings-section {
+    padding: clamp(var(--space-8), 4vw, var(--space-10));
+  }
+
+  .c-result-panel__critical-warnings-title {
+    font-size: clamp(28px, 3vw, 36px);
+    gap: 20px;
+  }
+
+  .c-result-panel__critical-scam-card {
+    padding: clamp(var(--space-6), 3.5vw, var(--space-8));
+    gap: clamp(var(--space-5), 2.5vw, var(--space-6));
+  }
+
+  .c-result-panel__critical-reporter-name {
+    font-size: clamp(20px, 2.2vw, 26px);
+  }
+
+  .c-result-panel__critical-reporter-role {
+    font-size: clamp(17px, 1.9vw, 22px);
+    padding: 5px 14px;
+  }
+
+  .c-result-panel__critical-platform-badge {
+    font-size: clamp(17px, 1.9vw, 22px);
+  }
+
+  .c-result-panel__critical-complaint-text {
+    padding: clamp(var(--space-4), 2.5vw, var(--space-6));
+    font-size: clamp(20px, 2vw, 25px);
+  }
+
+  .c-result-panel__critical-source-link {
+    padding: clamp(14px, 2.2vw, 18px) clamp(18px, 3vw, 26px);
+    font-size: clamp(19px, 2vw, 24px);
+  }
+
+  .c-result-panel__scam-report-card {
+    padding: clamp(var(--space-6), 3.5vw, var(--space-8));
+  }
+
+  .c-result-panel__scam-reporter-name {
+    font-size: clamp(19px, 2vw, 24px);
+  }
+
+  .c-result-panel__scam-complaint {
+    font-size: clamp(19px, 2vw, 24px);
+    padding: clamp(var(--space-4), 2.5vw, var(--space-6));
+  }
+
+  .c-result-panel__location-verification {
+    padding: clamp(var(--space-6), 4vw, var(--space-10));
+  }
+
+  .c-result-panel__location-row {
+    font-size: clamp(19px, 2vw, 24px);
+  }
+}
 

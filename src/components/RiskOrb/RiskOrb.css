@@ -230,3 +230,144 @@
   }
 }
 
+/* 5. Large Screens / 1080p TV (1501px - 1920px) */
+@media (min-width: 1501px) and (max-width: 1920px) {
+  .c-result-panel__orb .c-risk-orb {
+    --orb-size: 100%;
+    width: 100%;
+    height: 100%;
+  }
+
+  .c-loading__orb .c-risk-orb {
+    --orb-size: clamp(130px, 24vw, 160px);
+  }
+
+  .c-risk-orb__swirl,
+  .c-risk-orb__swirl-inner {
+    border-width: 2.5px;
+  }
+
+  .c-risk-orb__swirl-inner {
+    border-width: 1.5px;
+  }
+}
+
+/* 6. Full HD TV / 1080p (1921px - 2560px) */
+@media (min-width: 1921px) and (max-width: 2560px) {
+  .c-result-panel__orb .c-risk-orb {
+    --orb-size: 100%;
+    width: 100%;
+    height: 100%;
+  }
+
+  .c-loading__orb .c-risk-orb {
+    --orb-size: clamp(160px, 26vw, 200px);
+  }
+
+  .c-risk-orb__swirl,
+  .c-risk-orb__swirl-inner {
+    border-width: 3px;
+  }
+
+  .c-risk-orb__swirl-inner {
+    border-width: 2px;
+  }
+
+  .c-risk-orb__glow {
+    background-image: radial-gradient(
+      circle,
+      transparent 0 40%,
+      var(--orb-accent) 60%,
+      transparent 82%
+    );
+    opacity: 0.5;
+  }
+
+  .c-risk-orb__swirl {
+    opacity: 0.6;
+  }
+
+  .c-risk-orb__swirl-inner {
+    opacity: 0.4;
+  }
+}
+
+/* 7. 2K / QHD Display (2561px - 3840px) */
+@media (min-width: 2561px) and (max-width: 3840px) {
+  .c-result-panel__orb .c-risk-orb {
+    --orb-size: 100%;
+    width: 100%;
+    height: 100%;
+  }
+
+  .c-loading__orb .c-risk-orb {
+    --orb-size: clamp(200px, 28vw, 280px);
+  }
+
+  .c-risk-orb__swirl,
+  .c-risk-orb__swirl-inner {
+    border-width: 4px;
+  }
+
+  .c-risk-orb__swirl-inner {
+    border-width: 2.5px;
+  }
+
+  .c-risk-orb__glow {
+    background-image: radial-gradient(
+      circle,
+      transparent 0 40%,
+      var(--orb-accent) 58%,
+      transparent 80%
+    );
+    opacity: 0.6;
+  }
+
+  .c-risk-orb__swirl {
+    opacity: 0.7;
+  }
+
+  .c-risk-orb__swirl-inner {
+    opacity: 0.5;
+  }
+}
+
+/* 8. 4K Display (3841px+) */
+@media (min-width: 3841px) {
+  .c-result-panel__orb .c-risk-orb {
+    --orb-size: 100%;
+    width: 100%;
+    height: 100%;
+  }
+
+  .c-loading__orb .c-risk-orb {
+    --orb-size: clamp(280px, 30vw, 400px);
+  }
+
+  .c-risk-orb__swirl,
+  .c-risk-orb__swirl-inner {
+    border-width: 5px;
+  }
+
+  .c-risk-orb__swirl-inner {
+    border-width: 3px;
+  }
+
+  .c-risk-orb__glow {
+    background-image: radial-gradient(
+      circle,
+      transparent 0 40%,
+      var(--orb-accent) 56%,
+      transparent 78%
+    );
+    opacity: 0.7;
+  }
+
+  .c-risk-orb__swirl {
+    opacity: 0.8;
+  }
+
+  .c-risk-orb__swirl-inner {
+    opacity: 0.6;
+  }
+}
