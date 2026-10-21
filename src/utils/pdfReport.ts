@@ -10,6 +10,8 @@ import { buildFinalVerdict } from "../components/ResultPanel/finalVerdict";
 import { jsPDF, GState } from "jspdf";
 import html2canvas from "html2canvas";
 import { LOGO_BASE64 } from "./logoBase64";
+import { createPdfLoadingOverlay } from "../components/PdfLoadingOverlay/PdfLoadingOverlay";
+import "../components/PdfLoadingOverlay/PdfLoadingOverlay.css";
 
 /**
  * Known job board platforms and ATS providers that must NEVER be used as company name.
@@ -1728,12 +1730,16 @@ function addPdfLink(
  * Directly generates and downloads a beautifully styled .pdf file via html2canvas & jsPDF.
  * Dynamically computes pages (up to a maximum of 6 pages) with zero split cards,
  * robust body padding, exact reference visual styles, and optimized JPEG compression.
+ * Shows a responsive loading overlay with spinner during generation.
  */
 export async function exportDirectPdfBlob(
   assessment: Assessment,
   jobUrl?: string,
   jobDescription?: string,
 ): Promise<void> {
+  // Show loading overlay immediately
+  const overlay = createPdfLoadingOverlay();
+
   const companyName = resolveCompanyName(assessment, jobUrl, jobDescription);
   const filename = getReportFilename(companyName);
   const htmlContent = generateAuditReportHtml(
@@ -1752,15 +1758,15 @@ export async function exportDirectPdfBlob(
   container.style.position = "fixed";
   container.style.left = "0";
   container.style.top = "0";
-  container.style.width = "794px"; // 210mm at 96 DPI
+  container.style.width = "850px"; // Increased from 794px to provide more horizontal space for content
   container.style.minHeight = "1123px"; // 297mm at 96 DPI
-  container.style.zIndex = "-99999";
-  container.style.opacity = "1";
+  container.style.zIndex = "-1"; // Below overlay but still in viewport for html2canvas to capture
+  container.style.opacity = "1"; // Visible so html2canvas can render it
   container.style.pointerEvents = "none";
   container.style.backgroundColor = "#ffffff";
   container.style.color = "#0f172a";
   container.style.boxSizing = "border-box";
-  container.style.padding = "20px 24px";
+  container.style.padding = "14mm 14mm 15mm 14mm"; // A4 margins: 14mm left/right, matches @page rule
 
   const styleEl = document.createElement("style");
   styleEl.textContent = styles;
@@ -1815,7 +1821,7 @@ export async function exportDirectPdfBlob(
       allowTaint: true,
       backgroundColor: "#ffffff",
       logging: false,
-      windowWidth: 794,
+      windowWidth: 850, // Updated to match container width
     });
 
     const pdf = new jsPDF({
@@ -2078,6 +2084,10 @@ export async function exportDirectPdfBlob(
 
     pdf.save(filename);
   } finally {
+    // Remove overlay
+    overlay.remove();
+
+    // Clean up container
     if (container.parentNode) {
       container.parentNode.removeChild(container);
     }
