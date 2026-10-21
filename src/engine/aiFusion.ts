@@ -34,15 +34,20 @@ export function applyAiIntelligence(
     const falsePositiveFlagIds = [
       "upfront-payment",        // If company warns "we never charge", don't penalize
       "lookalike-suspicious-tld", // Legitimate companies on common TLDs
+      "sender-domain-mismatch",  // Recruiting from different domain is normal
+      "free-email-warning",      // Recruiters often use personal emails
     ];
 
     assessment.findings = assessment.findings.filter(
       (f) => !falsePositiveFlagIds.includes(f.id)
     );
 
-    // Significantly reduce score when AI verifies legitimacy
-    // This ensures AI verdict overrides rule-based false positives
-    const scoreReduction = Math.min(assessment.score * 0.4, 40); // Reduce by 40% or 40 points, whichever is lower
+    // CRITICAL: When AI verifies legitimacy, we need aggressive score reduction
+    // Rules are intentionally aggressive to catch scams, but AI overrides that
+    // Score should drop to Medium or Low, not stay High
+    // Target: legitimate companies should end up in 0-40 range after AI override
+    let scoreReduction = assessment.score * 0.65; // Reduce by 65% first
+    scoreReduction = Math.min(scoreReduction, 75); // Cap at 75 points max reduction
     assessment.score = Math.max(0, assessment.score - scoreReduction);
 
     // Update level based on new score
@@ -51,13 +56,14 @@ export function applyAiIntelligence(
     } else if (assessment.score < 55) {
       assessment.level = "Medium";
     }
+    // If score still >= 55, it stays High, but that's only if AI override wasn't strong enough
 
-    // Add positive AI finding
+    // Add positive AI finding with stronger impact
     assessment.findings.unshift({
       id: "ai-verified-legitimate",
       kind: "trust",
       severity: "low",
-      points: -20,
+      points: -30, // Increased from -20 to -30
       reason: `AI Verification: Company verified as legitimate employer with established digital footprint and no scam reports.`,
       evidence: `${ai.companyName || "Company"} — Verified: ${ai.digitalFootprint}${ai.summary ? ` — ${ai.summary}` : ""}`,
     });
