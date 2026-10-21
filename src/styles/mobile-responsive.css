@@ -74,8 +74,8 @@
   .l-container {
     width: 100%;
     max-width: 100%;
-    padding-left: var(--space-3);
-    padding-right: var(--space-3);
+    padding-left: var(--space-2);
+    padding-right: var(--space-2);
     margin: 0;
   }
 
@@ -83,7 +83,7 @@
   .c-ent-section {
     width: 100%;
     max-width: 100%;
-    padding: var(--space-6) var(--space-3);
+    padding: var(--space-6) var(--space-2);
     gap: var(--space-4);
     margin: 0;
   }

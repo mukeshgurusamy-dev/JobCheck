@@ -662,8 +662,8 @@ body::before {
   }
 
   .l-container {
-    padding-left: var(--space-3);
-    padding-right: var(--space-3);
+    padding-left: var(--space-2);
+    padding-right: var(--space-2);
     max-width: none;
     width: 100%;
   }
