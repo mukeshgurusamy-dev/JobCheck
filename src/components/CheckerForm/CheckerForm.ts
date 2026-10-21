@@ -225,7 +225,7 @@ export function createCheckerForm(options: CheckerFormOptions): CheckerFormEleme
 
   const warningText = document.createElement("span");
   warningText.className = "c-checker-form__warning-text";
-  warningText.textContent = "Paste the job description for full analysis, or no worries — we'll extract it from the page";
+  warningText.textContent = "Paste the job description for full analysis, or no worries — we'll fetch it. Click Run Scam Check again";
 
   warningBox.appendChild(warningIcon);
   warningBox.appendChild(warningText);
