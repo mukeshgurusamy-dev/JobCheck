@@ -25,7 +25,7 @@ export function applyAiIntelligence(
   const aiSaysLegitimate =
     !ai.isScamLikely &&
     !ai.hasScamReviews &&
-    (ai.digitalFootprint === "verified" || ai.digitalFootprint === "moderate") &&
+    (ai.digitalFootprint === "verified" || ai.digitalFootprint === "moderate" || ai.digitalFootprint === undefined) &&
     (!ai.scamSignals || ai.scamSignals.length === 0);
 
   if (aiSaysLegitimate) {
