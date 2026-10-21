@@ -12,8 +12,8 @@ export interface KeyState {
 // 4 minutes cooldown preference
 const IDLE_COOLDOWN_MS = 4 * 60 * 1000;
 
-// Penalty cooldown if Google returns 429 (15 minutes)
-const PENALTY_COOLDOWN_MS = 15 * 60 * 1000;
+// Penalty cooldown if Google returns 429 (40 seconds)
+const PENALTY_COOLDOWN_MS = 40 * 1000;
 
 export class ApiKeyPoolManager {
   private keys: KeyState[] = [];
