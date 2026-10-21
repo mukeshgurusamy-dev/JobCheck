@@ -24,9 +24,22 @@ export class ApiKeyPoolManager {
 
     const rawKeys: string[] = [];
 
-    // 1. Check process.env.GEMINI_API_KEYS (comma or newline separated)
+    // 1. Check process.env.GEMINI_API_KEYS (comma or newline separated, possibly quoted)
     if (process.env.GEMINI_API_KEYS) {
-      rawKeys.push(...process.env.GEMINI_API_KEYS.split(/[\n,]/));
+      console.log(`[API_KEY_POOL] GEMINI_API_KEYS found: ${process.env.GEMINI_API_KEYS.substring(0, 80)}...`);
+
+      // Handle quoted CSV format: "key1","key2","key3"
+      // Also handle plain comma/newline separated: key1,key2 or key1\nkey2
+      const csvMatches = process.env.GEMINI_API_KEYS.match(/"([^"]+)"/g);
+      if (csvMatches && csvMatches.length > 0) {
+        // Format: "key1","key2","key3" — extract from quotes
+        rawKeys.push(...csvMatches.map(m => m.replace(/"/g, '')));
+        console.log(`[API_KEY_POOL] Parsed ${csvMatches.length} quoted keys`);
+      } else {
+        // Format: key1,key2,key3 or key1\nkey2\nkey3
+        rawKeys.push(...process.env.GEMINI_API_KEYS.split(/[\n,]/));
+        console.log(`[API_KEY_POOL] After split: ${rawKeys.length} raw keys`);
+      }
     }
 
     // 2. Check numbered keys GEMINI_API_KEY_1..20
@@ -65,10 +78,17 @@ export class ApiKeyPoolManager {
     const uniqueKeys = Array.from(
       new Set(
         rawKeys
-          .map((k) => k.replace(/["'\r\n\s]/g, "").replace(/,+$/, "").trim())
-          .filter((k) => k.length >= 10 && !k.includes("LepMOQMt8MXvDXUrZAX")), // filter out revoked key
+          .map((k) => k.trim().replace(/["'\r\n\s]/g, "").replace(/,+$/, ""))
+          .filter((k) => k.length >= 10), // Valid API keys are at least 10 chars
       ),
     );
+
+    console.log(`[API_KEY_POOL] Loaded ${uniqueKeys.length} unique API keys`);
+    if (uniqueKeys.length > 0) {
+      uniqueKeys.forEach((k, i) => {
+        console.log(`[API_KEY_POOL] Key ${i + 1}: ${k.substring(0, 30)}...`);
+      });
+    }
 
     // Initialize or preserve existing state
     const existingMap = new Map(this.keys.map((s) => [s.key, s]));
