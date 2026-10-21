@@ -212,30 +212,15 @@ export function analyzeJob(input: JobInput): Assessment {
         });
 
         // Surface risk signals from description links into main assessment
+        // BUT: Don't add link findings to main assessment findings
+        // The link's risk is shown separately in linkAssessments
+        // Adding it here creates a hard flag that forces the main job to High Risk
         const linkParts = extractDomainParts(linkUrl);
         if (subAssessment.level === "High") {
-          const topReason =
-            subAssessment.findings[0]?.reason ||
-            "Critical scam / security red flags detected";
-          mainAssessment.findings.unshift({
-            id: "link-in-description-high-risk",
-            kind: "risk",
-            severity: "high",
-            points: 40,
-            reason: `Link in description ('${linkParts.rootDomain}') is High Risk (${subAssessment.score}/100): ${topReason}`,
-            evidence: linkUrl,
-          });
+          // Don't add finding to main assessment - just show the link assessment separately
+          // This prevents a risky link from forcing the entire job posting to High Risk
         } else if (subAssessment.level === "Medium") {
-          const topReason =
-            subAssessment.findings[0]?.reason || "Suspicious signals detected";
-          mainAssessment.findings.push({
-            id: "link-in-description-medium-risk",
-            kind: "risk",
-            severity: "medium",
-            points: 20,
-            reason: `Link in description ('${linkParts.rootDomain}') has potential risk (${subAssessment.score}/100): ${topReason}`,
-            evidence: linkUrl,
-          });
+          // Same for medium risk links
         }
       } catch {
         // If link URL parsing fails, ignore safely
@@ -243,9 +228,12 @@ export function analyzeJob(input: JobInput): Assessment {
     }
 
     // Recompute score & risk level if sub-links added high/medium risk findings
+    // BUT: Don't force main assessment to High just because of a risky link
+    // The link's risk is separate from the job posting itself
+    // Only warn the user about the specific risky link
     if (linkAssessments.some((l) => l.assessment.level === "High")) {
-      mainAssessment.level = "High";
-      mainAssessment.score = Math.max(mainAssessment.score, 65);
+      // Don't change mainAssessment.level or mainAssessment.score
+      // Just add a warning in nextSteps
       mainAssessment.nextSteps.unshift(
         "⚠️ Warning: A link in the job description was identified as High Risk. Do not make payments or submit sensitive data to external forms.",
       );

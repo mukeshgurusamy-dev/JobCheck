@@ -78,9 +78,11 @@ describe("Engine Core: analyzeJob integration", () => {
     expect(subLink.assessment.level).toBe("High");
     expect(subLink.assessment.findings.some((f) => f.id === "upfront-payment")).toBe(true);
 
-    // Parent assessment should also be flagged High due to the high-risk embedded link
-    expect(res.level).toBe("High");
-    expect(res.findings.some((f) => f.id === "link-in-description-high-risk")).toBe(true);
+    // Parent assessment should stay Low since the JOB POSTING itself is safe
+    // The risky link is shown separately in linkAssessments
+    // Forcing parent to High just because of an embedded link is the bug we fixed
+    expect(res.level).toBe("Low");
+    expect(res.findings.some((f) => f.id === "link-in-description-high-risk")).toBe(false);
   });
 
   it("identifies official-portal-verified signal on corporate careers pages", () => {
