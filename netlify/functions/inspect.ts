@@ -10,6 +10,12 @@ import {
   SecureLogger,
 } from "./securityUtils";
 import { smartRateLimiter } from "./userValidation";
+import {
+  createBlockNotification,
+  generateNotifications,
+  logBlockNotification,
+  getNotificationHeaders
+} from "./notificationService";
 
 // Secure logger with PII redaction
 const logger = new SecureLogger("inspect");
@@ -129,18 +135,52 @@ export const handler: Handler = async (
 
   if (!validation.isValid) {
     const statusCode = validation.severity === "blocked" ? 429 : 400;
+
+    // Create notification for blocked/warned user
+    const blockNotification = createBlockNotification(
+      clientIp,
+      validation.reason || "Unknown reason",
+      validation.severity,
+      validation.requestsRemaining !== undefined ? 0 : undefined,
+      validation.severity === "blocked" ? 5 : undefined,
+      validation.blockedUntil
+    );
+
+    // Generate notifications across channels
+    const notifications = generateNotifications(blockNotification);
+
+    // Log for audit trail
+    logBlockNotification(blockNotification);
+
+    // Log which channels notified the user
+    notifications.forEach((notif) => {
+      logger.info(
+        `User blocked notification sent via ${notif.channel} to ${notif.recipientIdentifier}`
+      );
+    });
+
     logger.warn(
       `User validation failed for ${clientIp}: ${validation.reason} (severity: ${validation.severity})`
     );
+
     return {
       statusCode,
       headers: {
         "Content-Type": "application/json",
-        ...(validation.retryAfter ? { "Retry-After": String(validation.retryAfter) } : {}),
+        ...getNotificationHeaders(blockNotification),
+        ...(validation.blockedUntil && {
+          "Retry-After": String(Math.ceil((validation.blockedUntil - Date.now()) / 1000)),
+        }),
       },
       body: JSON.stringify({
-        error: validation.reason,
+        error: blockNotification.reason,
+        title: "🚫 Request Blocked",
+        message: blockNotification.reason,
+        details: blockNotification.suggestedAction,
+        severity: blockNotification.severity,
         requestsRemaining: validation.requestsRemaining,
+        blockedUntil: blockNotification.blockedUntil,
+        timestamp: blockNotification.timestamp,
       }),
     };
   }
