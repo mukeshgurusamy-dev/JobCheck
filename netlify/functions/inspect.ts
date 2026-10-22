@@ -9,6 +9,7 @@ import {
   RateLimiter,
   SecureLogger,
 } from "./securityUtils";
+import { smartRateLimiter } from "./userValidation";
 
 // Secure logger with PII redaction
 const logger = new SecureLogger("inspect");
@@ -116,6 +117,38 @@ export const handler: Handler = async (
       body: JSON.stringify({ error: "Invalid JSON in request body." }),
     };
   }
+
+  // 5a. SMART USER VALIDATION - Distinguish legitimate users from bots
+  // Valid users: Provide a URL (with or without description)
+  // Invalid/Bots: No URL, malformed URL, or suspicious patterns
+  const validation = smartRateLimiter.validateRequest(
+    clientIp,
+    targetUrl,
+    descriptionText
+  );
+
+  if (!validation.isValid) {
+    const statusCode = validation.severity === "blocked" ? 429 : 400;
+    logger.warn(
+      `User validation failed for ${clientIp}: ${validation.reason} (severity: ${validation.severity})`
+    );
+    return {
+      statusCode,
+      headers: {
+        "Content-Type": "application/json",
+        ...(validation.retryAfter ? { "Retry-After": String(validation.retryAfter) } : {}),
+      },
+      body: JSON.stringify({
+        error: validation.reason,
+        requestsRemaining: validation.requestsRemaining,
+      }),
+    };
+  }
+
+  // Valid user - log their usage
+  logger.info(
+    `Valid user from ${clientIp}. Requests remaining today: ${validation.requestsRemaining}`
+  );
 
   // 5b. Two-stage logic: Extract via Jina on second attempt if no description
   if (descriptionText.length === 0 && isSecondAttempt) {
