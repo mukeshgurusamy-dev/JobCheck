@@ -3,11 +3,15 @@ import path from "path";
 
 export interface KeyState {
   key: string;
-  usageCount: number;
+  usageCount: number; // Total usage (for tracking)
+  usageThisMinute: number; // Usage in current minute window
+  currentMinute: number; // Which minute window we're tracking
   isRateLimited: boolean;
   cooldownUntil: number;
 }
 
+// Soft limit: stop using a key at 55/60 to avoid hard 429
+const SOFT_LIMIT_PER_MINUTE = 55;
 // Penalty cooldown if Google returns 429 (40 seconds)
 const PENALTY_COOLDOWN_MS = 40 * 1000;
 
@@ -88,12 +92,16 @@ export class ApiKeyPoolManager {
 
     // Initialize or preserve existing state
     const existingMap = new Map(this.keys.map((s) => [s.key, s]));
+    const currentMinute = Math.floor(Date.now() / 60000);
+
     this.keys = uniqueKeys.map((k) => {
       const existing = existingMap.get(k);
       return (
         existing || {
           key: k,
           usageCount: 0,
+          usageThisMinute: 0,
+          currentMinute: currentMinute,
           isRateLimited: false,
           cooldownUntil: 0,
         }
@@ -104,39 +112,62 @@ export class ApiKeyPoolManager {
   }
 
   /**
-   * Simple algorithm: Always use the key with the lowest usage count.
-   * If rate limited, skip it and try the next least-used key.
-   * This ensures even distribution across all 5 keys.
+   * Advanced algorithm: Track usage per minute window.
+   * - Pick key with lowest usage in CURRENT minute
+   * - If key at soft limit (55/60), don't use it, queue instead
+   * - Prevents hitting hard 429 limit
+   * - Distributes load evenly across all keys (1-2-3-4-5 pattern)
+   *
+   * Returns: API key string OR undefined if all keys at soft limit
+   * Caller should queue the request if undefined is returned
    */
   public acquireKey(): string | undefined {
     this.loadKeys();
     if (this.keys.length === 0) return undefined;
 
     const now = Date.now();
+    const currentMinute = Math.floor(now / 60000);
+
+    // Reset usage counters if minute changed
+    for (const key of this.keys) {
+      if (key.currentMinute !== currentMinute) {
+        key.usageThisMinute = 0;
+        key.currentMinute = currentMinute;
+      }
+    }
 
     // Filter out keys still in penalty cooldown
     const availableKeys = this.keys.filter((k) => k.cooldownUntil <= now);
 
     if (availableKeys.length === 0) {
-      // All keys are rate limited, return the one with lowest usage count anyway
-      this.keys.sort((a, b) => a.usageCount - b.usageCount);
-      this.keys[0]!.usageCount++;
-      console.log(`[API_KEY_POOL] All keys rate limited, using least-used: usage=${this.keys[0]!.usageCount}`);
-      return this.keys[0]!.key;
+      // All keys are rate limited, cannot proceed
+      console.log(`[API_KEY_POOL] All keys in cooldown, request should be queued for retry`);
+      return undefined;
     }
 
-    // Pick the available key with the lowest usage count
-    availableKeys.sort((a, b) => a.usageCount - b.usageCount);
-    const chosen = availableKeys[0]!;
-    chosen.usageCount++;
+    // Filter keys that haven't hit soft limit this minute
+    const usableKeys = availableKeys.filter((k) => k.usageThisMinute < SOFT_LIMIT_PER_MINUTE);
 
-    console.log(`[API_KEY_POOL] Selected key with usage count: ${chosen.usageCount} (${chosen.key.substring(0, 30)}...)`);
-    return chosen.key;
+    if (usableKeys.length === 0) {
+      // All available keys at soft limit, need to queue
+      console.log(`[API_KEY_POOL] All keys at soft limit (${SOFT_LIMIT_PER_MINUTE}/60), request queued for next minute`);
+      return undefined;
+    }
+
+    // Pick the available key with lowest usage this minute
+    usableKeys.sort((a, b) => a.usageThisMinute - b.usageThisMinute);
+    const chosenKey = usableKeys[0]!;
+    chosenKey.usageCount++;
+    chosenKey.usageThisMinute++;
+
+    const minuteUsage = chosenKey.usageThisMinute;
+    console.log(`[API_KEY_POOL] Selected key: ${chosenKey.key.substring(0, 30)}... (${minuteUsage}/${SOFT_LIMIT_PER_MINUTE} this minute, total: ${chosenKey.usageCount})`);
+    return chosenKey.key;
   }
 
   /**
    * Called if a key hits an HTTP 429 (rate limit / quota exhaustion).
-   * Puts this key into a 40-second penalty cooldown.
+   * Puts this key into a penalty cooldown so it won't be used for 40 seconds.
    */
   public reportRateLimited(key: string): void {
     const entry = this.keys.find((k) => k.key === key);
@@ -148,26 +179,57 @@ export class ApiKeyPoolManager {
   }
 
   /**
-   * Called when a key successfully generates a response.
+   * Clear rate limit cooldown for a key (when cooldown expires or manually)
    */
-  public reportSuccess(key: string): void {
+  public clearCooldown(key: string): void {
     const entry = this.keys.find((k) => k.key === key);
     if (entry) {
-      entry.isRateLimited = false;
       entry.cooldownUntil = 0;
-      console.log(`[API_KEY_POOL] Key success: ${key.substring(0, 30)}... (cooldown cleared)`);
+      entry.isRateLimited = false;
+      console.log(`[API_KEY_POOL] Key cooldown cleared: ${key.substring(0, 30)}...`);
     }
   }
 
   /**
-   * Provides the next best available key if the current key failed.
-   * Always picks the key with the lowest usage count.
+   * Get current stats for monitoring and debugging
+   */
+  public getStats() {
+    return {
+      totalKeys: this.keys.length,
+      keys: this.keys.map((k) => ({
+        key: k.key.substring(0, 20) + "...",
+        usageThisMinute: k.usageThisMinute,
+        totalUsage: k.usageCount,
+        isRateLimited: k.isRateLimited,
+        cooldownUntil: k.cooldownUntil,
+        nextAvailableIn: k.cooldownUntil > Date.now() ? Math.ceil((k.cooldownUntil - Date.now()) / 1000) + "s" : "now"
+      }))
+    };
+  }
+
+  /**
+   * Get pool statistics (total, ready, cooling)
+   */
+  public getPoolStats(): { total: number; ready: number; cooling: number } {
+    this.loadKeys();
+    const now = Date.now();
+    const ready = this.keys.filter((k) => k.cooldownUntil <= now).length;
+    const cooling = this.keys.length - ready;
+    return {
+      total: this.keys.length,
+      ready,
+      cooling,
+    };
+  }
+
+  /**
+   * Get next available key, excluding a specific key (useful for fallback on failure)
    */
   public getNextAvailableKey(excludeKey?: string): string | undefined {
     this.loadKeys();
     const now = Date.now();
     const candidates = this.keys.filter(
-      (k) => k.key !== excludeKey && k.cooldownUntil <= now,
+      (k) => k.key !== excludeKey && k.cooldownUntil <= now
     );
     if (candidates.length === 0) {
       return this.keys.find((k) => k.key !== excludeKey)?.key;
@@ -180,20 +242,17 @@ export class ApiKeyPoolManager {
     return next.key;
   }
 
-  public getPoolStats(): {
-    total: number;
-    ready: number;
-    cooling: number;
-  } {
-    this.loadKeys();
-    const now = Date.now();
-    const ready = this.keys.filter((k) => k.cooldownUntil <= now).length;
-    const cooling = this.keys.length - ready;
-    return {
-      total: this.keys.length,
-      ready,
-      cooling,
-    };
+  /**
+   * Called when a key successfully generates a response.
+   * Clears its cooldown if it was rate limited before.
+   */
+  public reportSuccess(key: string): void {
+    const entry = this.keys.find((k) => k.key === key);
+    if (entry) {
+      entry.isRateLimited = false;
+      entry.cooldownUntil = 0;
+      console.log(`[API_KEY_POOL] Key success: ${key.substring(0, 30)}... (cooldown cleared)`);
+    }
   }
 }
 
