@@ -2,6 +2,7 @@ import "./styles/tokens.css";
 import "./styles/fonts.css";
 import "./styles/reset.css";
 import "./styles/base.css";
+import "./styles/smooth-scroll.css";
 import "./styles/homepage.css";
 import "./styles/loading.css";
 import "./styles/motion.css";
@@ -16,6 +17,7 @@ import "./styles/hero-video-prompt.css";
 import { parseHandoff } from "./utils/handoff";
 import { initQuality, revealOnScroll, initAOS } from "./utils/motion";
 import { preloadNonCriticalBundles } from "./utils/lazyLoading";
+import { initAllSmoothScrollFeatures } from "./utils/smoothScroll";
 import { CRITERIA, PILLAR_ORDER } from "./criteria/definitions";
 import { PATTERN_GROUPS } from "./rules/patterns";
 import { ALL_URL_RULES } from "./rules/urlRules";
@@ -441,16 +443,6 @@ function initApp(): void {
   initAnalytics();
 
   app.innerHTML = "";
-
-  // Skip link. First focusable element in the document, so one Tab press
-  // reaches it and Enter drops the focus ring past the nav. The stylesheet
-  // hides it off-screen with a transform, which means it is still focusable —
-  // `display: none` would have taken it out of the tab order entirely.
-  const skipLink = document.createElement("a");
-  skipLink.className = "c-skip-link";
-  skipLink.href = "#main-content";
-  skipLink.textContent = "Skip to main content";
-  app.appendChild(skipLink);
 
   // 1. Sticky Navigation Bar
   const nav = document.createElement("nav");
@@ -1396,6 +1388,9 @@ function initApp(): void {
 
   // Initialize AOS (Animate On Scroll) across document
   initAOS(document);
+
+  // Initialize premium smooth scroll system with momentum physics
+  initAllSmoothScrollFeatures();
 
   // Register service worker for offline support and caching (Priority 3)
   if ('serviceWorker' in navigator) {
