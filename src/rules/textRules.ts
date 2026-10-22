@@ -36,7 +36,8 @@ export function evaluateTextRules(ctx: TextRuleContext): Finding[] {
 
   // CRITICAL: Detect anti-fraud warnings (company warning about fake jobs/fees)
   // If present, this is a TRUST signal, not a risk signal
-  const antifraudWarnings = /(?:recruitment\s*fraud|fraudulent\s*recruitment|fake\s*(?:job|offer|recruitment)|be\s*cautious|beware\s*of|do\s*not\s*(?:share|pay|give)|will\s*never\s*charge|never\s*(?:charge|request|ask)\s*(?:fee|payment|money)|no\s*(?:registration|hiring|application|processing|joining)\s*fee|fraud\s*alert|scam\s*alert)/i;
+  // IMPORTANT: Patterns must include negation (never, not, do not, will not) to avoid false positives
+  const antifraudWarnings = /(?:recruitment\s*fraud|fraudulent\s*recruitment|fake\s*(?:job|offer|recruitment|recruiter|employer)|be\s*cautious|beware\s*of|do\s*not\s*(?:share|pay|give)|will\s*never\s*charge|never\s*(?:charge|request|ask)\s*(?:fee|payment|money)|no\s*(?:registration|hiring|application|processing|joining)\s*fee|fraud\s*alert|scam\s*alert|we\s+(?:do\s+)?not\s+(?:charge|request|ask)\s+(?:any\s+)?(?:fee|payment|money)|official\s*(?:channels?|portal|email|recruiter|careers\s+page)|verify\s+(?:recruiter|employer|company)|legitimate\s*(?:employer|company|recruiter)|beware\s+of\s+(?:imposters|scammers|fake|fraud)|only\s+(?:through|via)\s+(?:official|legitimate|verified)|do\s+not\s+pay|will\s+not\s+(?:charge|request|ask)|never\s+(?:request|ask)\s+(?:upfront|registration|hiring|interview|laptop))/i;
   const hasAntifraudWarning = antifraudWarnings.test(normalizedText);
 
   // 1. Evaluate standard regex pattern groups
