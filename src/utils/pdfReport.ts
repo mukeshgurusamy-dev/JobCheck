@@ -625,7 +625,7 @@ export function generateAuditReportHtml(
   <style>
     @page {
       size: A4 portrait;
-      margin: 12mm 14mm 15mm 14mm;
+      margin: 12mm 16mm 15mm 16mm;
     }
     *, *::before, *::after {
       box-sizing: border-box;
@@ -644,11 +644,11 @@ export function generateAuditReportHtml(
       overflow-wrap: break-word;
     }
     .c-report-container {
-      width: 794px;
-      max-width: 794px;
+      width: 100%;
+      max-width: 100%;
       margin: 0 auto;
       background: #ffffff;
-      padding: 12mm 14mm 15mm 14mm;
+      padding: 12mm 16mm 15mm 16mm;
       box-sizing: border-box;
     }
     
@@ -1758,15 +1758,15 @@ export async function exportDirectPdfBlob(
   container.style.position = "fixed";
   container.style.left = "0";
   container.style.top = "0";
-  container.style.width = "794px"; // Standard A4 at 96 DPI
-  container.style.minHeight = "1123px"; // 297mm at 96 DPI
-  container.style.zIndex = "-1"; // Below overlay but still in viewport for html2canvas to capture
-  container.style.opacity = "1"; // Visible so html2canvas can render it
+  container.style.width = "210mm"; // Full A4 width in mm
+  container.style.minHeight = "297mm"; // Full A4 height in mm
+  container.style.zIndex = "-1";
+  container.style.opacity = "1";
   container.style.pointerEvents = "none";
   container.style.backgroundColor = "#ffffff";
   container.style.color = "#0f172a";
   container.style.boxSizing = "border-box";
-  container.style.padding = "12mm 14mm 15mm 14mm"; // Match @page rule: top, right, bottom, left (equal left/right: 14mm)
+  container.style.padding = "0"; // NO padding on outer container
 
   const styleEl = document.createElement("style");
   styleEl.textContent = styles;
@@ -1793,7 +1793,10 @@ export async function exportDirectPdfBlob(
     ]);
 
     const initialRect = container.getBoundingClientRect();
-    const pageHeightPx = Math.floor(initialRect.width * (297 / 210));
+    // Use actual measured container width instead of hardcoded value
+    // This fixes differences between npm run dev and netlify dev
+    const actualContainerWidthPx = initialRect.width > 0 ? initialRect.width : 210 * 3.78;
+    const pageHeightPx = Math.floor(actualContainerWidthPx * (297 / 210));
 
     // Measure exact content bottom to eliminate all trailing blank pages
     const footerEl = container.querySelector<HTMLElement>(".c-footer");
@@ -1814,6 +1817,9 @@ export async function exportDirectPdfBlob(
     pageBreaks = pageBreaks.filter((cut) => cut < actualContentBottomCss - 25);
     const totalPages = Math.max(1, pageBreaks.length + 1);
 
+    // Detect environment and adjust rendering accordingly
+    const isNetlifyDev = typeof window !== 'undefined' && window.location?.hostname === 'localhost' && window.location?.port === '8888';
+
     // Rasterize with html2canvas at scale 2 for razor-sharp typography
     const canvas = await html2canvas(container, {
       scale: 2,
@@ -1821,7 +1827,9 @@ export async function exportDirectPdfBlob(
       allowTaint: true,
       backgroundColor: "#ffffff",
       logging: false,
-      windowWidth: 794, // Standard A4 at 96 DPI
+      windowWidth: actualContainerWidthPx, // Use actual measured width for consistency
+      // Netlify dev needs slightly different rendering
+      imageTimeout: isNetlifyDev ? 5000 : 3000,
     });
 
     const pdf = new jsPDF({

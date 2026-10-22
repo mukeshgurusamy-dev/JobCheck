@@ -140,7 +140,7 @@ export const handler: Handler = async (
     const blockNotification = createBlockNotification(
       clientIp,
       validation.reason || "Unknown reason",
-      validation.severity,
+      validation.severity as "warning" | "blocked",
       validation.requestsRemaining !== undefined ? 0 : undefined,
       validation.severity === "blocked" ? 5 : undefined,
       validation.blockedUntil

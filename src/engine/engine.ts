@@ -215,7 +215,6 @@ export function analyzeJob(input: JobInput): Assessment {
         // BUT: Don't add link findings to main assessment findings
         // The link's risk is shown separately in linkAssessments
         // Adding it here creates a hard flag that forces the main job to High Risk
-        const linkParts = extractDomainParts(linkUrl);
         if (subAssessment.level === "High") {
           // Don't add finding to main assessment - just show the link assessment separately
           // This prevents a risky link from forcing the entire job posting to High Risk
