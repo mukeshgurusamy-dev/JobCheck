@@ -347,9 +347,9 @@ export function createResultPanel(options: ResultPanelOptions): HTMLElement {
       "no-api-key":
         "No Gemini API key is configured, so the web investigation could not run.",
       timeout: "The AI investigation took too long to complete. This can happen with slow-loading job platforms (like Telegram channels). The automated rule-based scan is still reliable for this link.",
-      "rate-limited": "Google's API is currently rate-limited. Try checking this link again in a few moments.",
+      "rate-limited": "Server is cooling down. Try checking this link again in a few moments.",
       network: "Could not connect to Google's search service. Check your internet connection and try again.",
-      "bad-response": "Google returned unexpected data. Try checking this link again.",
+      "bad-response": "Server returned unexpected data. Try checking this link again.",
     };
     const reason =
       assessment.aiIntel.status === "skipped"
