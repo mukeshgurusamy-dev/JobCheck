@@ -1,8 +1,6 @@
 [build]
   command = "npm run build"
   publish = "dist"
-  # Lock Node version for consistent rendering across all environments
-  node_version = "24.22.1"
 
 [functions]
   directory = "netlify/functions"
@@ -19,8 +17,6 @@
   framework = "#static"
   publish = "dist"
   port = 8888
-  # Consistent Node version in dev environment
-  node_version = "24.22.1"
 
 [[headers]]
   for = "/*"
