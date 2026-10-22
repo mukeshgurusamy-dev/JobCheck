@@ -85,6 +85,14 @@ export function applyAiIntelligence(
     });
 
     assessment.confidence = "High";
+
+    // If any anti-fraud warnings were in the findings, keep them as positive indicators
+    const hasAntifraudWarning = assessment.findings.some(f => f.id === "anti-fraud-warning-legitimate");
+    if (hasAntifraudWarning) {
+      assessment.nextSteps.unshift(
+        "✅ Company verified legitimate. Any fraud warnings in the posting are legitimate company protections, not scam indicators."
+      );
+    }
   }
 
   // If employer was evaluated by AI, remove the naive "Hosted on a recognized job platform" finding
