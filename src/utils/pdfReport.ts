@@ -632,6 +632,11 @@ export function generateAuditReportHtml(
       margin: 0;
       padding: 0;
     }
+    .jc-pdf-offscreen-render {
+      all: initial;
+      display: block;
+      box-sizing: border-box;
+    }
     body, .c-report-container, .jc-pdf-offscreen-render {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       color: #0f172a !important;

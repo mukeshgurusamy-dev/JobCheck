@@ -25,7 +25,7 @@
   for = "/*"
   [headers.values]
     # Enhanced Content Security Policy
-    Content-Security-Policy = "default-src 'self'; script-src 'self'; script-src-attr 'none'; style-src 'self'; img-src 'self' data: https:; connect-src 'self' https://generativelanguage.googleapis.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests; block-all-mixed-content"
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; connect-src 'self' https://generativelanguage.googleapis.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests; block-all-mixed-content"
 
     # Prevent MIME type sniffing
     X-Content-Type-Options = "nosniff"
@@ -46,7 +46,6 @@
     X-XSS-Protection = "1; mode=block"
 
     # Cross-Origin Policies (defense in depth)
-    Cross-Origin-Embedder-Policy = "require-corp"
     Cross-Origin-Opener-Policy = "same-origin"
     Cross-Origin-Resource-Policy = "same-origin"
 
