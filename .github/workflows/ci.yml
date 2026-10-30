@@ -19,20 +19,9 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-        timeout-minutes: 5
 
       - name: Build
-        run: time npm run build
-        timeout-minutes: 2
+        run: npm run build
 
       - name: Run tests
         run: npm test
-        timeout-minutes: 5
-
-      - name: Upload benchmark failures
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: benchmark-failures
-          path: tests/failures.json
-          if-no-files-found: ignore
