@@ -69,7 +69,12 @@ function netlifyFunctionsDev(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [netlifyFunctionsDev()],
+  plugins: [
+    {
+      ...netlifyFunctionsDev(),
+      apply: 'serve', // Only apply during dev serve, NOT during build
+    }
+  ],
   server: {
     port: 3000,
     open: false,
