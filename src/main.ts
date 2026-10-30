@@ -647,6 +647,8 @@ function initApp(): void {
             couldNotReadNotice = `✅ Site index & careers profile retrieved via search engine (${wordCount.toLocaleString()} words analyzed). Deep analysis completed for fraud patterns.`;
           } else if (src === "duckduckgo") {
             couldNotReadNotice = `✅ Organization summary retrieved from search directory. Analyzed domain reputation and official profile.`;
+          } else if (src === "ai-grounding") {
+            couldNotReadNotice = `✅ Job listing extracted via AI Search Grounding (${wordCount.toLocaleString()} words indexed). Deep analysis completed for fee demands, employer legitimacy, and fraud patterns.`;
           } else {
             couldNotReadNotice = `✅ Live page content successfully extracted (${wordCount.toLocaleString()} words scanned). Deep analysis completed for fee demands, contact methods, and fraud patterns.`;
           }

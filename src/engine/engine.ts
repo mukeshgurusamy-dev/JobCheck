@@ -198,6 +198,8 @@ export function analyzeJob(input: JobInput): Assessment {
             fetchNotice = `✅ Content retrieved from web cache (${wordCount} words scanned).`;
           } else if (linkPageData.fetchSource === "search-index") {
             fetchNotice = `✅ Domain profile retrieved via search index (${wordCount} words analyzed).`;
+          } else if (linkPageData.fetchSource === "ai-grounding") {
+            fetchNotice = `✅ Job details extracted via AI Grounding (${wordCount} words analyzed).`;
           } else {
             fetchNotice = `✅ Page content analyzed (${wordCount} words scanned).`;
           }

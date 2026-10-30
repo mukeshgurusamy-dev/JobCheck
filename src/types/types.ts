@@ -19,7 +19,15 @@ export interface PageData {
   domainAgeDays: number | null;
   safeBrowsingFlagged: boolean | null;
   /** Which fallback strategy fetched this content, if not direct fetch */
-  fetchSource?: "jina" | "google-cache" | "duckduckgo" | "search-index";
+  fetchSource?: "jina" | "google-cache" | "duckduckgo" | "search-index" | "ai-grounding";
+}
+
+export interface ExtractedJobDetails {
+  jobTitle?: string;
+  companyName?: string;
+  jobLocation?: string;
+  salaryOrStipend?: string;
+  jobDescriptionText?: string;
 }
 
 export interface ClaimVerification {
@@ -235,6 +243,7 @@ export interface AiIntelligenceResult {
   overallReviewScore?: number; // Aggregated 0-5 rating
   hasScamReviews?: boolean; // True if any review mentions scam/fraud
   trustPlatformHosted?: boolean; // True if hosted on trusted job platform
+  extractedJobDetails?: ExtractedJobDetails;
 }
 
 export interface JobInput {

@@ -626,7 +626,7 @@ ${companyVariants.map((v, i) => `  ${i + 1}. "${v}"`).join("\n")}
 
   const platformInfo = extractJobPlatformInfo(targetUrl);
   const platformLookupHint = platformInfo.isPlatform
-    ? `\n- CRITICAL JOB BOARD SEARCH INSTRUCTION (${platformInfo.platformName}):
+    ? `\n- CRITICAL JOB BOARD SEARCH & EXTRACTION INSTRUCTION (${platformInfo.platformName}):
   The target URL is from ${platformInfo.platformName}. Direct web scrapers cannot load this page because the platform protects job postings with Cloudflare / Akamai bot verification.
   You MUST search Google Search to locate Google's indexed copy of this specific job posting:
   - Search query to run: ${platformInfo.searchHint || targetUrl}
@@ -634,8 +634,12 @@ ${companyVariants.map((v, i) => `  ${i + 1}. "${v}"`).join("\n")}
   From the Google Search results:
   1. Identify the EXACT Job Title and the actual HIRING COMPANY / EMPLOYER NAME (do NOT use "${platformInfo.platformName}" as the company name!).
   2. Identify the Job Location, Offered Salary/Stipend, and Role Details.
-  3. Once you determine the hiring company name, proceed with the complete 6-point background check for that company!`
-    : "";
+  3. Extract the complete job posting text, candidate requirements, responsibilities, and eligibility into "extractedJobDetails" so our engine can run fee-demand, contact, and fraud algorithms.
+  4. Once you determine the hiring company name, proceed with the complete 6-point background check for that company!`
+    : (descriptionSnippet.length < 100
+        ? `\n- JOB DETAILS SEARCH INSTRUCTION:
+  The user provided minimal or no job description. Search Google Search for this URL (${targetUrl}) and extract the indexed job title, hiring company, location, salary, and job description into "extractedJobDetails".`
+        : "");
 
   const prompt = `
 You are a senior cybersecurity investigator specializing in employment fraud, fresher recruitment scams, and employer verification in India.
@@ -749,6 +753,13 @@ Return ONLY a valid JSON object (no markdown, no explanation outside JSON):
   "confidence": "High" | "Medium" | "Low",
   "summary": "1-2 sentence verdict for the jobseeker",
   "companyName": "Company name found, or null",
+  "extractedJobDetails": {
+    "jobTitle": "Job title found in listing",
+    "companyName": "Hiring company name",
+    "jobLocation": "Job location or Remote",
+    "salaryOrStipend": "Salary if mentioned, or null",
+    "jobDescriptionText": "Detailed description, role responsibilities, qualifications, and requirements from the listing"
+  },
   "companyLocation": {
     "fullAddress": "Complete address if found (e.g., 'Mylapore, Chennai, Tamil Nadu 600004, India')",
     "city": "City name",
@@ -1067,6 +1078,13 @@ Return ONLY a valid JSON object (no markdown, no explanation outside JSON):
       };
       overallReviewScore?: number;
       hasScamReviews?: boolean;
+      extractedJobDetails?: {
+        jobTitle?: string | null;
+        companyName?: string | null;
+        jobLocation?: string | null;
+        salaryOrStipend?: string | null;
+        jobDescriptionText?: string | null;
+      };
     };
 
     // Extract search citations / sources
@@ -1294,6 +1312,15 @@ Return ONLY a valid JSON object (no markdown, no explanation outside JSON):
         : undefined,
       overallReviewScore: typeof parsed.overallReviewScore === "number" ? parsed.overallReviewScore : undefined,
       hasScamReviews: Boolean(parsed.hasScamReviews),
+      extractedJobDetails: parsed.extractedJobDetails
+        ? {
+            jobTitle: parsed.extractedJobDetails.jobTitle || undefined,
+            companyName: parsed.extractedJobDetails.companyName || undefined,
+            jobLocation: parsed.extractedJobDetails.jobLocation || undefined,
+            salaryOrStipend: parsed.extractedJobDetails.salaryOrStipend || undefined,
+            jobDescriptionText: parsed.extractedJobDetails.jobDescriptionText || undefined,
+          }
+        : undefined,
     };
   } catch (err) {
     logger.error("Unexpected AI search failure", err);

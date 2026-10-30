@@ -247,6 +247,32 @@ export const handler: Handler = async (
     ...descriptionLinksPromises,
   ]);
 
+  // Fallback: If direct fetch failed (or returned bot-block / empty text) and Gemini AI Search Grounding extracted the job details
+  if (
+    (!mainResult.fetched || !mainResult.data?.text || mainResult.data.text.length < 50) &&
+    aiIntelResult?.status === "completed" &&
+    aiIntelResult.extractedJobDetails?.jobDescriptionText
+  ) {
+    const jobDetails = aiIntelResult.extractedJobDetails;
+    const title = jobDetails.jobTitle
+      ? `${jobDetails.jobTitle} - ${jobDetails.companyName || targetDomainParts.rootDomain}`
+      : (mainResult.data?.title || targetUrl);
+
+    mainResult.fetched = true;
+    mainResult.data = {
+      status: 200,
+      finalUrl: targetUrl,
+      redirectChain: mainResult.data?.redirectChain || [],
+      title,
+      text: jobDetails.jobDescriptionText || "",
+      domainAgeDays: mainResult.data?.domainAgeDays ?? null,
+      safeBrowsingFlagged: mainResult.data?.safeBrowsingFlagged ?? null,
+      fetchSource: "ai-grounding",
+    };
+    mainResult.error = undefined;
+    logger.info(`Synthesized job posting text via Gemini Search Grounding for: ${targetUrl}`);
+  }
+
   return {
     statusCode: 200,
     headers: { "Content-Type": "application/json" },
