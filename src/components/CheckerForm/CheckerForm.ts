@@ -138,7 +138,7 @@ export function createCheckerForm(options: CheckerFormOptions): CheckerFormEleme
   bannerIcon.appendChild(createIcon({ name: "shield-alert", size: "sm", colorClass: "c-icon--primary" }));
 
   const bannerText = document.createElement("div");
-  bannerText.innerHTML = "<strong>📱 Mobile App & Portal Tip:</strong> Platforms like Indeed and Naukri block automated scraping and disable text selection inside their native apps.<br>To analyze this job: Open the link in your <strong>mobile browser (Chrome/Safari)</strong> or view it on a <strong>computer</strong>, copy the job description, and paste it below for a full 10-point scam check!";
+  bannerText.innerHTML = "<strong>📱 Mobile App &amp; Portal Tip:</strong> Platforms like Indeed and Naukri and other secure job platforms block automated scraping and disable text selection inside their native apps.<br>To analyze this job: Open the link in your <strong>mobile browser (Chrome/Safari)</strong> or view it on a <strong>computer</strong>, copy the job link and description(optional), paste it below for a full 10-point scam check!";
 
   platformBanner.appendChild(bannerIcon);
   platformBanner.appendChild(bannerText);
