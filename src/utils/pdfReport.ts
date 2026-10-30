@@ -1779,19 +1779,6 @@ export async function exportDirectPdfBlob(
   document.body.appendChild(container);
 
   try {
-    const images = Array.from(container.querySelectorAll("img"));
-    await Promise.all([
-      new Promise((r) => setTimeout(r, 200)),
-      ...images.map((img) => {
-        if (img.complete) return Promise.resolve();
-        return new Promise((resolve) => {
-          img.onload = resolve;
-          img.onerror = resolve;
-          setTimeout(resolve, 300);
-        });
-      }),
-    ]);
-
     const initialRect = container.getBoundingClientRect();
     // Use actual measured container width instead of hardcoded value
     // This fixes differences between npm run dev and netlify dev
@@ -1817,8 +1804,18 @@ export async function exportDirectPdfBlob(
     pageBreaks = pageBreaks.filter((cut) => cut < actualContentBottomCss - 25);
     const totalPages = Math.max(1, pageBreaks.length + 1);
 
-    // Detect environment and adjust rendering accordingly
-    const isNetlifyDev = typeof window !== 'undefined' && window.location?.hostname === 'localhost' && window.location?.port === '8888';
+    // Ensure all images are fully loaded before rendering to PDF
+    // This prevents text overlay and layout issues in production
+    await Promise.all(
+      Array.from(container.querySelectorAll("img")).map((img) => {
+        if (img.complete) return Promise.resolve();
+        return new Promise<void>((resolve) => {
+          const timeout = setTimeout(() => resolve(), 5000); // 5s timeout per image
+          img.onload = () => { clearTimeout(timeout); resolve(); };
+          img.onerror = () => { clearTimeout(timeout); resolve(); };
+        });
+      })
+    );
 
     // Rasterize with html2canvas at scale 2 for razor-sharp typography
     const canvas = await html2canvas(container, {
@@ -1828,8 +1825,7 @@ export async function exportDirectPdfBlob(
       backgroundColor: "#ffffff",
       logging: false,
       windowWidth: actualContainerWidthPx, // Use actual measured width for consistency
-      // Netlify dev needs slightly different rendering
-      imageTimeout: isNetlifyDev ? 5000 : 3000,
+      imageTimeout: 8000, // Increased timeout across all environments for production stability
     });
 
     const pdf = new jsPDF({

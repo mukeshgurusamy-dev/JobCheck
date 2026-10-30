@@ -158,17 +158,6 @@ export function compareLocations(jobLocation: string, companyLocation: string): 
 }
 
 /**
- * Pre-compiled regex for common Indian cities (avoids creating regex in loop)
- */
-const INDIAN_CITIES_REGEX = /\b(?:Mumbai|Delhi|Bangalore|Bengaluru|Hyderabad|Chennai|Kolkata|Pune|Ahmedabad|Gurgaon|Gurugram|Noida|Chandigarh|Jaipur|Indore|Bhopal|Lucknow|Kochi|Coimbatore|Visakhapatnam|Nagpur)\b/i;
-
-const INDIAN_CITIES = [
-  "Mumbai", "Delhi", "Bangalore", "Bengaluru", "Hyderabad", "Chennai", "Kolkata",
-  "Pune", "Ahmedabad", "Gurgaon", "Gurugram", "Noida", "Chandigarh", "Jaipur",
-  "Indore", "Bhopal", "Lucknow", "Kochi", "Coimbatore", "Visakhapatnam", "Nagpur"
-];
-
-/**
  * GLOBAL LOCATION EXTRACTION
  *
  * This is a two-tier system:
@@ -241,7 +230,7 @@ function extractJobLocation(text: string): string | null {
   if (locMatch1?.[1]) {
     const candidate = locMatch1[1].trim();
     // Stop at common terminators to avoid capturing metadata
-    const cleaned = candidate.split(/\n|salary|requirements|experience|benefits|skills|qualifications|education/i)[0].trim();
+    const cleaned = (candidate.split(/\n|salary|requirements|experience|benefits|skills|qualifications|education/i)?.[0] ?? candidate).trim();
     if (cleaned && isValidLocationCandidate(cleaned)) {
       return cleaned;
     }

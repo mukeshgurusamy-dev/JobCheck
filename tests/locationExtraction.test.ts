@@ -84,7 +84,7 @@ function extractJobLocation(text: string): string | null {
   );
   if (locMatch1?.[1]) {
     const candidate = locMatch1[1].trim();
-    const cleaned = candidate.split(/\n|[Ss]alary|[Rr]equirements|[Ee]xperience|[Bb]enefits/)[0].trim();
+    const cleaned = (candidate.split(/\n|[Ss]alary|[Rr]equirements|[Ee]xperience|[Bb]enefits/)?.[0] ?? candidate).trim();
     if (isValidLocationCandidate(cleaned)) {
       return cleaned;
     }
