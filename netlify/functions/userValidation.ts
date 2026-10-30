@@ -247,6 +247,10 @@ export class SmartRateLimiter {
         `[SECURITY] Cleanup: ${this.validUsers.size} active IPs, ${this.invalidAttempts.size} blocked IPs`
       );
     }, this.CLEANUP_INTERVAL_MS);
+
+    if (this.cleanupInterval && typeof (this.cleanupInterval as any).unref === "function") {
+      (this.cleanupInterval as any).unref();
+    }
   }
 
   /**

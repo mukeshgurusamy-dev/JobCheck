@@ -1,6 +1,4 @@
 import { defineConfig, Plugin } from "vite";
-import { handler as inspectHandler } from "./netlify/functions/inspect";
-import { handler as trackHandler } from "./netlify/functions/track";
 
 function netlifyFunctionsDev(): Plugin {
   return {
@@ -41,7 +39,10 @@ function netlifyFunctionsDev(): Plugin {
                 rawUrl: req.url || "",
               };
 
-              const targetHandler = isInspect ? inspectHandler : trackHandler;
+              const mod = isInspect
+                ? await import("./netlify/functions/inspect")
+                : await import("./netlify/functions/track");
+              const targetHandler = mod.handler;
               const result = await targetHandler(event as any, {} as any);
               res.statusCode = result?.statusCode || 200;
               if (result?.headers) {

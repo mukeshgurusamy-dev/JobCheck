@@ -173,6 +173,9 @@ export class NonceCache {
         }
       }
     }, 60000); // Every minute
+    if (this.cleanupInterval && typeof (this.cleanupInterval as any).unref === "function") {
+      (this.cleanupInterval as any).unref();
+    }
   }
 
   stopCleanup(): void {

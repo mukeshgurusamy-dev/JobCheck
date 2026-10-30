@@ -156,6 +156,9 @@ export class RateLimiter {
         }
       }
     }, this.config.cleanupIntervalMs);
+    if (this.cleanupInterval && typeof (this.cleanupInterval as any).unref === "function") {
+      (this.cleanupInterval as any).unref();
+    }
   }
 
   /**
