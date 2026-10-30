@@ -118,11 +118,58 @@ export function isPrivateOrReservedIp(ip: string): boolean {
 }
 
 /**
+ * Strips tracking query parameters and canonicalizes URLs from job platforms (Indeed, Naukri, LinkedIn).
+ */
+export function cleanJobBoardUrl(url: string): string {
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.toLowerCase();
+
+    // Indeed: keep only jk or vjk parameter, strip mobile share parameters (from=appshareandroid, etc.)
+    if (host.includes("indeed.")) {
+      const jk = parsed.searchParams.get("jk") || parsed.searchParams.get("vjk");
+      if (jk) {
+        return `https://${parsed.hostname}/viewjob?jk=${encodeURIComponent(jk)}`;
+      }
+    }
+
+    // Naukri: strip mobile tracking parameters
+    if (host.includes("naukri.com")) {
+      const TRACKING_PARAMS = ["src", "xp", "px", "sid", "q", "k", "from", "utm_source", "utm_medium", "utm_campaign"];
+      TRACKING_PARAMS.forEach((p) => parsed.searchParams.delete(p));
+      return parsed.toString();
+    }
+
+    // LinkedIn: strip tracking parameters
+    if (host.includes("linkedin.com")) {
+      const TRACKING_PARAMS = ["refId", "trackingId", "trk", "midToken", "from", "utm_source", "utm_medium"];
+      TRACKING_PARAMS.forEach((p) => parsed.searchParams.delete(p));
+      return parsed.toString();
+    }
+
+    // Generic tracking parameter cleanup
+    const COMMON_TRACKING = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "fbclid", "gclid"];
+    let changed = false;
+    COMMON_TRACKING.forEach((p) => {
+      if (parsed.searchParams.has(p)) {
+        parsed.searchParams.delete(p);
+        changed = true;
+      }
+    });
+
+    return changed ? parsed.toString() : url;
+  } catch {
+    return url;
+  }
+}
+
+/**
  * Normalizes user URL input:
  * - Trims whitespace
  * - Adds https:// if protocol is missing
  * - Rejects unsupported schemes (javascript:, data:, file:)
  * - Rejects localhost and private/internal IPs
+ * - Cleans mobile app share and tracking parameters
  */
 export function validateAndNormalizeUrl(input: string): NormalizedUrlResult {
   const trimmed = input.trim();
@@ -163,9 +210,11 @@ export function validateAndNormalizeUrl(input: string): NormalizedUrlResult {
       return { valid: false, error: "Localhost and private network addresses are blocked." };
     }
 
+    const cleanedUrl = cleanJobBoardUrl(parsed.toString());
+
     return {
       valid: true,
-      normalizedUrl: parsed.toString()
+      normalizedUrl: cleanedUrl
     };
   } catch {
     return { valid: false, error: "Please enter a valid web address." };

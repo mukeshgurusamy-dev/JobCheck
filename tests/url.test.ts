@@ -5,7 +5,8 @@ import {
   isIpAddress,
   isPrivateOrReservedIp,
   extractUrlsFromText,
-  isTrustedPlatformUrl
+  isTrustedPlatformUrl,
+  cleanJobBoardUrl
 } from "../src/utils/url";
 
 describe("URL Utilities: validateAndNormalizeUrl", () => {
@@ -128,6 +129,30 @@ describe("URL Utilities: extractUrlsFromText and isTrustedPlatformUrl", () => {
     expect(isTrustedPlatformUrl("https://glassdoor.co.in/job-listing/123")).toBe(true);
     expect(isTrustedPlatformUrl("https://tcs-interview.xyz/apply")).toBe(false);
     expect(isTrustedPlatformUrl("https://tcs.com/careers")).toBe(false);
+  });
+});
+
+describe("URL Utilities: cleanJobBoardUrl & mobile app share normalization", () => {
+  it("normalizes mobile Indeed share links by stripping tracking and retaining jk", () => {
+    const raw = "https://in.indeed.com/viewjob?jk=7f0e77b07c8087cc&from=appshareandroid";
+    const cleaned = cleanJobBoardUrl(raw);
+    expect(cleaned).toBe("https://in.indeed.com/viewjob?jk=7f0e77b07c8087cc");
+
+    const validated = validateAndNormalizeUrl(raw);
+    expect(validated.valid).toBe(true);
+    expect(validated.normalizedUrl).toBe("https://in.indeed.com/viewjob?jk=7f0e77b07c8087cc");
+  });
+
+  it("normalizes Naukri links by stripping mobile tracking params", () => {
+    const raw = "https://www.naukri.com/job-listings-react-developer-xyz-123?src=jobsearchDesk&sid=1710000000&xp=1&px=1&utm_source=mobile_app";
+    const cleaned = cleanJobBoardUrl(raw);
+    expect(cleaned).toBe("https://www.naukri.com/job-listings-react-developer-xyz-123");
+  });
+
+  it("normalizes LinkedIn links by stripping refId and trackingId", () => {
+    const raw = "https://www.linkedin.com/jobs/view/3800123456/?refId=abc123xyz&trackingId=def456uvw&trk=flagship3_search_srp_jobs";
+    const cleaned = cleanJobBoardUrl(raw);
+    expect(cleaned).toBe("https://www.linkedin.com/jobs/view/3800123456/");
   });
 });
 

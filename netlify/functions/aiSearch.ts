@@ -494,6 +494,80 @@ function validateScamReportUrl(
   return trimmed; // Default: return if it passed basic sanitization
 }
 
+export interface JobPlatformInfo {
+  isPlatform: boolean;
+  platformName?: string;
+  jobId?: string;
+  searchHint?: string;
+}
+
+export function extractJobPlatformInfo(url: string): JobPlatformInfo {
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.toLowerCase();
+
+    // Indeed
+    if (host.includes("indeed.")) {
+      const jk = parsed.searchParams.get("jk") || parsed.searchParams.get("vjk");
+      return {
+        isPlatform: true,
+        platformName: "Indeed",
+        jobId: jk || undefined,
+        searchHint: jk ? `site:indeed.com ${jk}` : `site:indeed.com ${parsed.pathname}`,
+      };
+    }
+
+    // Naukri
+    if (host.includes("naukri.com")) {
+      const match = parsed.pathname.match(/\/job-listings-([^?#]+)/i);
+      const slug = match?.[1] ? match[1].replace(/-/g, " ") : "";
+      return {
+        isPlatform: true,
+        platformName: "Naukri",
+        searchHint: slug ? `site:naukri.com ${slug.slice(0, 80)}` : "site:naukri.com",
+      };
+    }
+
+    // LinkedIn
+    if (host.includes("linkedin.com")) {
+      const match = parsed.pathname.match(/\/jobs\/view\/([0-9]+)/i);
+      const jobId = match?.[1] ?? undefined;
+      return {
+        isPlatform: true,
+        platformName: "LinkedIn",
+        jobId,
+        searchHint: jobId ? `site:linkedin.com/jobs/view ${jobId}` : "site:linkedin.com/jobs",
+      };
+    }
+
+    // Internshala
+    if (host.includes("internshala.com")) {
+      const match = parsed.pathname.match(/\/internship\/detail\/([^?#]+)/i);
+      const slug = match?.[1] ? match[1].replace(/-/g, " ") : "";
+      return {
+        isPlatform: true,
+        platformName: "Internshala",
+        searchHint: slug ? `site:internshala.com ${slug.slice(0, 80)}` : "site:internshala.com",
+      };
+    }
+
+    // Foundit
+    if (host.includes("foundit.in") || host.includes("foundit.com")) {
+      const match = parsed.pathname.match(/\/job\/([^?#]+)/i);
+      const slug = match?.[1] ? match[1].replace(/-/g, " ") : "";
+      return {
+        isPlatform: true,
+        platformName: "Foundit",
+        searchHint: slug ? `site:foundit.in ${slug.slice(0, 80)}` : "site:foundit.in",
+      };
+    }
+
+    return { isPlatform: false };
+  } catch {
+    return { isPlatform: false };
+  }
+}
+
 /**
  * Queries Google Gemini with live Google Search Grounding to evaluate link
  * legitimacy, company digital footprint, Glassdoor/AmbitionBox employee reviews,
@@ -550,13 +624,26 @@ ${companyVariants.map((v, i) => `  ${i + 1}. "${v}"`).join("\n")}
 - CRITICAL: You MUST verify this location against the company's official registered address or known office locations. If there is a mismatch, flag it immediately as a major red flag (scam indicator).`
     : "";
 
+  const platformInfo = extractJobPlatformInfo(targetUrl);
+  const platformLookupHint = platformInfo.isPlatform
+    ? `\n- CRITICAL JOB BOARD SEARCH INSTRUCTION (${platformInfo.platformName}):
+  The target URL is from ${platformInfo.platformName}. Direct web scrapers cannot load this page because the platform protects job postings with Cloudflare / Akamai bot verification.
+  You MUST search Google Search to locate Google's indexed copy of this specific job posting:
+  - Search query to run: ${platformInfo.searchHint || targetUrl}
+  ${platformInfo.jobId ? `- Targeted Job ID / Key: "${platformInfo.jobId}"` : ""}
+  From the Google Search results:
+  1. Identify the EXACT Job Title and the actual HIRING COMPANY / EMPLOYER NAME (do NOT use "${platformInfo.platformName}" as the company name!).
+  2. Identify the Job Location, Offered Salary/Stipend, and Role Details.
+  3. Once you determine the hiring company name, proceed with the complete 6-point background check for that company!`
+    : "";
+
   const prompt = `
 You are a senior cybersecurity investigator specializing in employment fraud, fresher recruitment scams, and employer verification in India.
 Investigate this job listing and perform a thorough background audit of the employer:
 - URL: ${targetUrl}
 - Domain: ${rootDomain}
 - Hosted on Open Job Board: ${isJobPlatform ? "YES (LinkedIn, Naukri, Indeed, Internshala, etc. — these platforms verify employer identity, so legitimate small/new companies are common)" : "NO"}
-- Listing / Description Details: ${descriptionSnippet.slice(0, 1500)}${embeddedLinksStr}${companyHint}${locationHint}
+- Listing / Description Details: ${descriptionSnippet.slice(0, 1500)}${embeddedLinksStr}${companyHint}${locationHint}${platformLookupHint}
 
 == CRITICAL INSTRUCTIONS ==
 - ONLY set isScamLikely to TRUE if you find ACTUAL scam reports, fraud complaints, or clear red flags (fee demands, fake offers, etc.)

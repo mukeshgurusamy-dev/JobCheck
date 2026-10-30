@@ -347,6 +347,10 @@ function isBotOrCaptchaBlock(text: string): boolean {
     lower.includes("attention required! | cloudflare") ||
     lower.includes("checking your browser before accessing") ||
     lower.includes("please enable cookies") ||
+    lower.includes("just a moment...") ||
+    lower.includes("bot-detection-anonymous") ||
+    lower.includes("abusealleviationerror") ||
+    lower.includes("cf$cv$params") ||
     (lower.includes("access denied") && text.length < 350) ||
     (lower.includes("403 forbidden") && text.length < 350) ||
     lower.includes("target url returned error 404") ||
@@ -415,8 +419,26 @@ async function fetchViaGoogleCache(targetUrl: string, timeoutMs = 4000): Promise
  * Fetch search index snippets for the domain / job posting.
  * Uses DuckDuckGo HTML search for 'site:domain careers' or URL keywords.
  */
-async function fetchViaSearchSnippet(_targetUrl: string, rootDomain: string, timeoutMs = 6000): Promise<string | null> {
-  const query = encodeURIComponent(`site:${rootDomain} careers job vacancy`);
+async function fetchViaSearchSnippet(targetUrl: string, rootDomain: string, timeoutMs = 6000): Promise<string | null> {
+  let queryText = `site:${rootDomain} careers job vacancy`;
+  try {
+    const parsed = new URL(targetUrl);
+    const host = parsed.hostname.toLowerCase();
+    if (host.includes("indeed.")) {
+      const jk = parsed.searchParams.get("jk") || parsed.searchParams.get("vjk");
+      if (jk) queryText = `site:indeed.com ${jk}`;
+    } else if (host.includes("naukri.com")) {
+      const m = parsed.pathname.match(/\/job-listings-([^?#]+)/i);
+      if (m?.[1]) queryText = `site:naukri.com ${m[1].replace(/-/g, " ").slice(0, 80)}`;
+    } else if (host.includes("linkedin.com")) {
+      const m = parsed.pathname.match(/\/jobs\/view\/([0-9]+)/i);
+      if (m?.[1]) queryText = `site:linkedin.com/jobs/view ${m[1]}`;
+    }
+  } catch {
+    // Fallback to domain careers query
+  }
+
+  const query = encodeURIComponent(queryText);
   const ddgUrl = `https://html.duckduckgo.com/html/?q=${query}`;
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
