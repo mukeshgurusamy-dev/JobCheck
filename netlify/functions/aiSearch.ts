@@ -169,38 +169,203 @@ const INDIAN_CITIES = [
 ];
 
 /**
- * Extracts location from job description text.
+ * GLOBAL LOCATION EXTRACTION
+ *
+ * This is a two-tier system:
+ * 1. Extract candidate text using structural patterns (no hardcoded cities)
+ * 2. Validate using structure rules (comma separators, word count, keyword filters)
+ * 3. Let AI verify during investigation (AI validates if it's a real place)
+ *
+ * This works globally for 150+ countries without maintaining city lists.
+ */
+
+/**
+ * Terms that are NEVER locations - common non-geographic words that often
+ * appear after "location:" in structured data or metadata
+ */
+const NON_LOCATION_TERMS = new Set([
+  // Skills/technologies
+  'assets', 'skills', 'technical', 'programming', 'database', 'frontend', 'backend',
+  'fullstack', 'devops', 'cloud', 'aws', 'azure', 'gcp', 'python', 'java', 'javascript',
+  'react', 'nodejs', 'typescript', 'golang', 'rust', 'csharp', 'dotnet',
+
+  // Job/role metadata
+  'requirements', 'benefits', 'salary', 'experience', 'qualification', 'education',
+  'department', 'team', 'project', 'role', 'position', 'designation', 'title',
+
+  // Time/scheduling
+  'deadline', 'date', 'time', 'duration', 'hours', 'shift', 'schedule', 'timing',
+
+  // Work type
+  'remote', 'hybrid', 'onsite', 'office', 'home', 'work', 'full-time', 'fulltime',
+  'part-time', 'parttime', 'contract', 'temporary', 'permanent', 'seasonal',
+
+  // Experience level
+  'fresher', 'entry-level', 'junior', 'mid-level', 'senior', 'lead', 'principal',
+  'executive', 'manager', 'director', 'cto', 'ceo', 'cfo', 'experienced',
+
+  // Contact/communication
+  'contact', 'email', 'phone', 'telegram', 'whatsapp', 'message', 'apply',
+  'communication', 'contact-us', 'reach', 'call',
+
+  // Common metadata fields
+  'description', 'details', 'info', 'information', 'about', 'company',
+  'industry', 'sector', 'type', 'category', 'status', 'level'
+]);
+
+/**
+ * Geographic keywords that validate a location candidate
+ * (not exhaustive, just indicators that this is likely a place)
+ */
+const GEO_KEYWORDS = /\b(city|town|village|state|province|region|district|county|area|zone|territory|country|nation|land|place|loc|location|street|avenue|road|drive|boulevard|lane|alley|court|square|plaza|market|park|building|address|zip|postal|code|pincode|floor|bay|coast|island|river|valley|mountain|lake|sea|ocean|peninsula|continent|office|campus|headquarters|hq|branch|center|hub|quarter|suite|unit)\b/i;
+
+/**
+ * Extracts location from job description text using global patterns.
+ * Returns raw candidate text for AI to validate (no hardcoded city/region lists).
+ *
+ * STRATEGY:
+ * - Extract using broad structural patterns
+ * - Filter obvious non-location strings (metadata artifacts)
+ * - Validate basic structure (commas, word count, geo keywords)
+ * - Return candidate for AI final verification
  */
 function extractJobLocation(text: string): string | null {
-  if (!text) return null;
+  if (!text || text.length === 0) return null;
 
-  // Pattern 1: "Location: City, State" or "Place: City"
-  const locMatch1 = text.match(/(?:location|office|work\s+location|place)[:\s]+([A-Za-z0-9\s,–-]+?)(?:\n|,\s*(?:India|Bharat)|\.|$)/i);
+  // PATTERN 1: Explicit location markers
+  // "Location: City, State" or "Place: City" or "Office: Address"
+  // Using [\s\S]*? instead of specific chars to capture Unicode (São Paulo, etc.)
+  const locMatch1 = text.match(
+    /(?:location|office|work\s+location|place|based\s+(?:at|in)|headquarters|hq)[:\s]+([^:\n]{1,120}?)(?:\n|:|;|$)/i
+  );
   if (locMatch1?.[1]) {
-    return locMatch1[1].trim();
+    const candidate = locMatch1[1].trim();
+    // Stop at common terminators to avoid capturing metadata
+    const cleaned = candidate.split(/\n|salary|requirements|experience|benefits|skills|qualifications|education/i)[0].trim();
+    if (cleaned && isValidLocationCandidate(cleaned)) {
+      return cleaned;
+    }
   }
 
-  // Pattern 2: LinkedIn / job board header bullet "• City, State, Country"
-  const locMatchBullet = text.match(/[•·]\s*([A-Za-z\s,]+?(?:India|Tamil\s*Nadu|Karnataka|Maharashtra|Delhi|Telangana|Gujarat|Kerala|West\s*Bengal))/i);
+  // PATTERN 2: Bullet point format (LinkedIn/job boards)
+  // "• City, State, Country" or "• City, State"
+  const locMatchBullet = text.match(
+    /[•·\-]\s+([^\n•·\-]{3,120}?)(?:\n|$)/i
+  );
   if (locMatchBullet?.[1]) {
-    return locMatchBullet[1].trim();
+    const candidate = locMatchBullet[1].trim();
+    // Bullet points are usually location + job type, so be selective
+    if (candidate.includes(',') || hasGeoKeywords(candidate)) {
+      if (isValidLocationCandidate(candidate)) {
+        return candidate;
+      }
+    }
   }
 
-  // Pattern 3: "Based in City" or "City-based"
-  const locMatch2 = text.match(/(?:based\s+in|located\s+in)\s+([A-Za-z\s,]+?)(?:\n|,|\.|$)/i);
+  // PATTERN 3: "Based in", "Located in", "Situated in"
+  const locMatch2 = text.match(
+    /(?:based\s+in|located\s+in|situated\s+in|works?\s+(?:from|in)|operates?\s+(?:from|in))\s+([^\n,;]{1,120}?)(?:\n|,|;|$)/i
+  );
   if (locMatch2?.[1]) {
-    return locMatch2[1].trim();
+    const candidate = locMatch2[1].trim();
+    if (isValidLocationCandidate(candidate)) {
+      return candidate;
+    }
   }
 
-  // Pattern 4: Common Indian cities mentioned (optimized with single regex)
-  const cityMatch = text.match(INDIAN_CITIES_REGEX);
-  if (cityMatch?.[0]) {
-    // Find which city matched to return proper casing
-    const matchedCity = INDIAN_CITIES.find(city => city.toLowerCase() === cityMatch[0].toLowerCase());
-    return matchedCity || cityMatch[0];
+  // PATTERN 4: Geographic prepositions
+  // "in Delhi", "across Mumbai", "at Singapore"
+  const locMatch3 = text.match(
+    /(?:^|\s)(?:in|at|from|across|throughout)\s+([^\n,;]{1,120}?)(?:\n|,|;|$)/i
+  );
+  if (locMatch3?.[1]) {
+    const candidate = locMatch3[1].trim();
+    if (isValidLocationCandidate(candidate) && hasGeoKeywords(candidate)) {
+      return candidate;
+    }
   }
 
   return null;
+}
+
+/**
+ * Validates if a candidate string is likely a location (not metadata artifact)
+ *
+ * Uses structural heuristics only (no hardcoded city/region lists):
+ * - Rejects known non-location terms
+ * - Checks word count and structure
+ * - Looks for comma-separated patterns (city, state)
+ */
+function isValidLocationCandidate(candidate: string): boolean {
+  if (!candidate || candidate.length < 2) return false;
+
+  const trimmed = candidate.trim();
+  const lowerTrimmed = trimmed.toLowerCase();
+
+  // ❌ REJECT: Exact match to non-location term
+  if (NON_LOCATION_TERMS.has(lowerTrimmed)) {
+    return false;
+  }
+
+  // ✅ ACCEPT: Has comma (usually means "City, State" pattern)
+  if (trimmed.includes(',')) {
+    // Extract parts and check if at least one is NOT a non-location term
+    const parts = trimmed.split(',').map(p => p.trim().toLowerCase());
+    // If ALL parts are non-location terms, reject it
+    const allNonLocation = parts.every(p => NON_LOCATION_TERMS.has(p) || p.length < 2);
+    if (allNonLocation) return false;
+
+    // At least one part is not a non-location term - good sign it's a location
+    const hasAtLeastOneValidPart = parts.some(p => !NON_LOCATION_TERMS.has(p) && p.length >= 2);
+    if (hasAtLeastOneValidPart) return true;
+    return false;
+  }
+
+  // ✅ ACCEPT: Multi-word with geographic keywords
+  const wordCount = trimmed.split(/\s+/).length;
+  if (wordCount >= 2 && hasGeoKeywords(trimmed)) {
+    return true;
+  }
+
+  // ✅ ACCEPT: Multi-word (likely city + state)
+  if (wordCount >= 2) {
+    // But reject if ALL words are from non-location list
+    const words = trimmed.split(/[\s,]+/).map(w => w.toLowerCase());
+    const allNonLocation = words.every(w => NON_LOCATION_TERMS.has(w) || w.length < 2);
+    if (!allNonLocation) {
+      return true;
+    }
+  }
+
+  // ❌ REJECT: Single word (unless it's clearly geographic)
+  if (wordCount === 1) {
+    // Single word is OK only if it's 3+ chars and doesn't look technical
+    if (trimmed.length >= 3 && !hasNonLocationPatterns(trimmed)) {
+      return true;
+    }
+    return false;
+  }
+
+  return false;
+}
+
+/**
+ * Checks if text contains geographic keywords
+ */
+function hasGeoKeywords(text: string): boolean {
+  return GEO_KEYWORDS.test(text);
+}
+
+/**
+ * Checks if text looks like non-location (technical, metadata, etc.)
+ */
+function hasNonLocationPatterns(text: string): boolean {
+  // Technical patterns
+  if (/^[a-z0-9]+$/.test(text)) return true; // All lowercase alphanumeric (technical terms)
+  if (/\.(com|io|net|org|dev|ai|co|in)$/i.test(text)) return true; // Domain extensions
+  if (/[0-9]{2,}/.test(text)) return true; // Too many numbers (likely code)
+
+  return false;
 }
 
 /**
@@ -418,13 +583,23 @@ Investigate this job listing and perform a thorough background audit of the empl
 
 2. COMPANY LOCATION VERIFICATION:
    - Find the company's official registered address or known office location with full address details (street, city, state, postal code)
-   - If job description has a location (extracted: "${jobLocation}"), verify it matches the company's actual location
+   - If job description has a location (extracted: "${jobLocation}"), FIRST validate if it's actually a real geographic location
+
+   ⚠️ CRITICAL VALIDATION STEP:
+   If the extracted location is "${jobLocation}", determine:
+   a) Is it a VALID LOCATION? (city, state, country, region name)
+      - YES → Verify it matches company's actual location
+      - NO → This is a metadata artifact or system error (e.g., "assets", "skills", "requirements")
+        * Report: jobLocationFromDescription: "assets (NOT a geographic location)"
+        * Report: verificationStatus: "no_info"
+        * Reason: "Job posting contains artifact text instead of valid location"
+
    - Provide complete address in format: "Street/Area, City, State, Postal Code, Country"
    - Location Match Status:
      * "verified" = Exact match or hierarchical match (e.g., Mylapore office of company based in Chennai)
      * "unverified" = Locations don't match (e.g., job says Bangalore but company only has Mumbai offices)
-     * "no_info" = No location found in job description
-   - CRITICAL: Location mismatch is a MAJOR red flag for scams
+     * "no_info" = No valid location found in job description OR extracted location is not geographic
+   - CRITICAL: Location mismatch between job claims and company's actual offices is a MAJOR red flag for scams
 
 3. EMPLOYEE REVIEWS & COMPANY SENTIMENT (search for detailed reviews):
    Search Glassdoor, AmbitionBox, Indeed, LinkedIn reviews for "${companyCoreName || rootDomain}":
