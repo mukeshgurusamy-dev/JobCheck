@@ -18,16 +18,11 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci --prefer-offline --no-audit
+        run: npm ci --omit=dev --legacy-peer-deps
 
-      # Type-check locally before pushing; CI just runs Vite for speed
       - name: Build
         run: npm run build
 
-      # Full Vitest suite. This includes the two evaluation gates:
-      #   tests/evaluate.test.ts     -> accuracy >= 90%, zero false negatives
-      #   tests/benchmark100.test.ts -> accuracy >= 95%, zero false negatives
-      # A scam posting rated "Low" fails the build by design.
       - name: Run tests
         run: npm test
 
