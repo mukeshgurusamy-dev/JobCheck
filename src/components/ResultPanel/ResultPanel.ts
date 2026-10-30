@@ -151,6 +151,7 @@ export function createResultPanel(options: ResultPanelOptions): HTMLElement {
 
     const textEl = document.createElement("span");
     textEl.className = "c-result-panel__notice-text";
+    textEl.style.whiteSpace = "pre-line";
     textEl.textContent = displayNotice;
     noticeEl.appendChild(textEl);
 

@@ -657,11 +657,21 @@ function initApp(): void {
             fetchedData = inspectRes.data;
           }
           if (inspectRes.isTrustedPlatform) {
-            couldNotReadNotice =
-              "Major job portals (LinkedIn, Naukri, Glassdoor, etc.) require user login. Analysis is based on your submitted job description and any embedded links.";
+            if (data.description && data.description.trim().length > 30) {
+              couldNotReadNotice =
+                "✅ Deep scam analysis completed using your submitted job description and employer verification. (Note: Direct page scraping was blocked by the portal's Cloudflare/Akamai anti-bot protection).";
+            } else {
+              couldNotReadNotice =
+                "🔒 Automated Scraping Blocked by Job Portal: Indeed, Naukri, and major platforms protect listings behind Cloudflare/Akamai anti-bot challenges and login walls that block automated crawlers.\n\n📱 Mobile App Users: Native apps disable selecting text on job cards. To get a complete analysis:\n1. Open this job link in your mobile browser (Chrome/Safari) or view it on a computer website.\n2. Copy the job description text and paste it into the box above.\n3. Run the check to analyze fee demands, suspicious contacts, and offer authenticity!";
+            }
           } else {
-            couldNotReadNotice =
-              "Could not read remote page content directly. Analysis is based on URL structure, domain records, and your submitted job description.";
+            if (data.description && data.description.trim().length > 30) {
+              couldNotReadNotice =
+                "✅ Deep scam analysis completed using your submitted job description and domain records. (Remote page access was blocked by the server's firewall).";
+            } else {
+              couldNotReadNotice =
+                "🔒 Automated Page Access Blocked: This website's server or firewall blocked automated web scrapers from reading the listing directly.\n\n💡 How to get a full analysis:\n• Open the website in your browser, copy the job description text, and paste it into the description box above.\n• Our detection engine will instantly analyze fee demands, suspicious WhatsApp/Telegram contacts, and employer legitimacy!";
+            }
           }
         }
 

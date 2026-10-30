@@ -1,5 +1,5 @@
 import { assertSafeUrl } from "./ssrf";
-import { extractDomainParts } from "../../src/utils/url";
+import { extractDomainParts, isTrustedPlatformUrl } from "../../src/utils/url";
 import { PageData } from "../../src/types/types";
 
 export interface ExtractionResult {
@@ -654,49 +654,59 @@ export async function inspectSingleUrl(targetUrl: string): Promise<ExtractionRes
     };
   }
 
-  // ── Strategy 6: Search Snippet Fallback (Google / DuckDuckGo search) ──────
-  const snippetText = await fetchViaSearchSnippet(targetUrl, rootDomain);
-  if (snippetText && snippetText.trim().length > 50) {
-    return {
-      fetched: true,
-      data: {
-        status: 200,
-        finalUrl,
-        redirectChain,
-        title: "",
-        text: snippetText,
-        domainAgeDays,
-        safeBrowsingFlagged,
-        fetchSource: "search-index",
-      },
-    };
-  }
+  const isPlatform = isTrustedPlatformUrl(targetUrl);
 
-  // ── Strategy 7: DuckDuckGo Instant Answer (domain summary) ────────────────
-  const ddgText = await fetchViaDuckDuckGo(rootDomain);
-  if (ddgText && ddgText.trim().length > 20) {
-    return {
-      fetched: true,
-      data: {
-        status: 200,
-        finalUrl,
-        redirectChain,
-        title: "",
-        text: ddgText,
-        domainAgeDays,
-        safeBrowsingFlagged,
-        fetchSource: "duckduckgo",
-      },
-    };
+  // ── Strategy 6: Search Snippet Fallback (Google / DuckDuckGo search) ──────
+  // For trusted job platforms (Indeed, Naukri, etc.), search snippets return generic platform
+  // marketing text rather than the specific job listing. Only use for employer career sites.
+  if (!isPlatform) {
+    const snippetText = await fetchViaSearchSnippet(targetUrl, rootDomain);
+    if (snippetText && snippetText.trim().length > 50) {
+      return {
+        fetched: true,
+        data: {
+          status: 200,
+          finalUrl,
+          redirectChain,
+          title: "",
+          text: snippetText,
+          domainAgeDays,
+          safeBrowsingFlagged,
+          fetchSource: "search-index",
+        },
+      };
+    }
+
+    // ── Strategy 7: DuckDuckGo Instant Answer (domain summary) ────────────────
+    const ddgText = await fetchViaDuckDuckGo(rootDomain);
+    if (ddgText && ddgText.trim().length > 20) {
+      return {
+        fetched: true,
+        data: {
+          status: 200,
+          finalUrl,
+          redirectChain,
+          title: "",
+          text: ddgText,
+          domainAgeDays,
+          safeBrowsingFlagged,
+          fetchSource: "duckduckgo",
+        },
+      };
+    }
   }
 
   // ── All strategies failed ─────────────────────────────────────────────────
+  const platformError =
+    "Major job portals (Indeed, Naukri, LinkedIn) protect listings with Cloudflare/Akamai bot challenges and login requirements. Automated web crawlers cannot load this content directly.";
+  const genericError =
+    directFetchStatus >= 400
+      ? `Server blocked access (HTTP ${directFetchStatus}). Tried reader proxy and cache — no content retrieved.`
+      : "Unable to reach remote server. All extraction strategies failed.";
+
   return {
     fetched: false,
-    error:
-      directFetchStatus >= 400
-        ? `Server blocked access (HTTP ${directFetchStatus}). Tried reader proxy, cache, and search index — no content retrieved.`
-        : "Unable to reach remote server. All extraction strategies failed.",
+    error: isPlatform ? platformError : genericError,
     data: {
       status: directFetchStatus,
       finalUrl,

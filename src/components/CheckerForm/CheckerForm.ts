@@ -138,7 +138,7 @@ export function createCheckerForm(options: CheckerFormOptions): CheckerFormEleme
   bannerIcon.appendChild(createIcon({ name: "shield-alert", size: "sm", colorClass: "c-icon--primary" }));
 
   const bannerText = document.createElement("div");
-  bannerText.innerHTML = "<strong>Why paste the job description?</strong> Portals like LinkedIn and Naukri require login, and scammers often hide shady payment links inside the job post. Paste the description for instant analysis, or we'll extract it automatically on your second click.";
+  bannerText.innerHTML = "<strong>📱 Mobile App & Portal Tip:</strong> Platforms like Indeed, Naukri, and LinkedIn block automated scraping and disable text selection inside their native apps.<br>To analyze this job: Open the link in your <strong>mobile browser (Chrome/Safari)</strong> or view it on a <strong>computer</strong>, copy the job description, and paste it below for a full 10-point scam check!";
 
   platformBanner.appendChild(bannerIcon);
   platformBanner.appendChild(bannerText);
@@ -183,8 +183,8 @@ export function createCheckerForm(options: CheckerFormOptions): CheckerFormEleme
     const isTrusted = isTrustedPlatformUrl(urlStr);
     if (isTrusted) {
       platformBanner.style.display = "flex";
-      toggleLabel.textContent = "Job description (paste for faster analysis, or we'll extract it)";
-      toggleLabel.style.fontWeight = "";
+      toggleLabel.textContent = "Paste Job Description (Recommended — portals block automated scraping)";
+      toggleLabel.style.fontWeight = "600";
       if (!disclosure.classList.contains("c-checker-form__disclosure--open")) {
         disclosure.classList.add("c-checker-form__disclosure--open");
         disclosureToggle.setAttribute("aria-expanded", "true");
@@ -225,7 +225,7 @@ export function createCheckerForm(options: CheckerFormOptions): CheckerFormEleme
 
   const warningText = document.createElement("span");
   warningText.className = "c-checker-form__warning-text";
-  warningText.textContent = "Paste the job description for full analysis, or no worries — we'll fetch it. Click Run Scam Check again";
+  warningText.innerHTML = "<strong>Paste the job description for full analysis.</strong> Portals like Indeed &amp; Naukri block automated scraping and mobile apps disable copying text. Open the link in your <strong>mobile browser (Chrome/Safari)</strong> or on a <strong>computer</strong> to copy &amp; paste the text, or click Run Scam Check again to check the URL only.";
 
   warningBox.appendChild(warningIcon);
   warningBox.appendChild(warningText);
@@ -295,7 +295,7 @@ export function createCheckerForm(options: CheckerFormOptions): CheckerFormEleme
     onSubmit({
       url: normalizedUrl,
       description: desc,
-      isSecondAttempt: desc.length === 0 // true if no description but warning was shown
+      isSecondAttempt: desc.length === 0
     } as any);
   });
 
