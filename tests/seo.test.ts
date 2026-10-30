@@ -14,9 +14,9 @@ import {
 describe("SEO Metadata Generation", () => {
   describe("getCanonicalUrl", () => {
     it("should generate canonical URL with trailing slash normalization", () => {
-      expect(getCanonicalUrl("/")).toBe("https://jobcheck.live/");
-      expect(getCanonicalUrl("/help/")).toBe("https://jobcheck.live/help");
-      expect(getCanonicalUrl("/about")).toBe("https://jobcheck.live/about");
+      expect(getCanonicalUrl("/")).toBe("https://jobcheck.tech/");
+      expect(getCanonicalUrl("/help/")).toBe("https://jobcheck.tech/help");
+      expect(getCanonicalUrl("/about")).toBe("https://jobcheck.tech/about");
     });
 
     it("should support custom base URL", () => {
@@ -24,7 +24,7 @@ describe("SEO Metadata Generation", () => {
     });
 
     it("should handle empty pathname", () => {
-      expect(getCanonicalUrl("")).toBe("https://jobcheck.live/");
+      expect(getCanonicalUrl("")).toBe("https://jobcheck.tech/");
     });
   });
 
@@ -183,7 +183,7 @@ describe("SEO Metadata Generation", () => {
 
       expect(config.title).toBe("JobCheck");
       expect(config.description).toContain("Scam vs. legit");
-      expect(config.url).toBe("https://jobcheck.live");
+      expect(config.url).toBe("https://jobcheck.tech");
     });
 
     it("should chain setters", () => {

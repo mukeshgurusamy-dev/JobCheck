@@ -2,7 +2,7 @@
 
 > **Detect job scams in seconds. Protect yourself before you apply. Globally.**
 
-[![Live Site](https://img.shields.io/badge/live-jobcheck.live-brightgreen)](https://jobcheck.live)
+[![Live Site](https://img.shields.io/badge/live-jobcheck.tech-brightgreen)](https://jobcheck.tech)
 [![License](https://img.shields.io/badge/license-MIT-blue)](#license)
 [![Tests](https://img.shields.io/badge/tests-256%2F256%20passing-brightgreen)](./tests)
 [![Accuracy](https://img.shields.io/badge/accuracy-100%25%20%28100%2F100%29-brightgreen)](#accuracy)
@@ -512,13 +512,13 @@ See [`LICENSE`](./LICENSE) for full text.
 
 **Questions? We're here to help.**
 
-- **Website:** [jobcheck.live](https://jobcheck.live)
-- **Email:** support@jobcheck.live
+- **Website:** [jobcheck.tech](https://jobcheck.tech)
+- **Email:** support@jobcheck.tech
 - **Support by Language:**
-  - 🇺🇸 English: support@jobcheck.live
-  - 🇮🇳 Hindi: hindi-support@jobcheck.live
-  - 🇪🇸 Spanish: es-support@jobcheck.live
-  - 🇫🇷 French: fr-support@jobcheck.live
+  - 🇺🇸 English: support@jobcheck.tech
+  - 🇮🇳 Hindi: hindi-support@jobcheck.tech
+  - 🇪🇸 Spanish: es-support@jobcheck.tech
+  - 🇫🇷 French: fr-support@jobcheck.tech
 - **Issues:** [GitHub Issues](https://github.com/mukeshgurusamy-dev/JobCheck/issues)
 - **Feedback:** In-app feedback form (all languages)
 - **Twitter:** [@jobcheck_live](https://twitter.com/jobcheck_live)

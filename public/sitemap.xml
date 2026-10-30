@@ -5,47 +5,47 @@
 
   <!-- Homepage -->
   <url>
-    <loc>https://jobcheck.live/</loc>
+    <loc>https://jobcheck.tech/</loc>
     <lastmod>2026-10-14T00:00:00Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://jobcheck.live/logo.png</image:loc>
+      <image:loc>https://jobcheck.tech/logo.png</image:loc>
       <image:title>JobCheck Logo</image:title>
     </image:image>
   </url>
 
   <!-- Help/Documentation Pages (if applicable) -->
   <url>
-    <loc>https://jobcheck.live/help</loc>
+    <loc>https://jobcheck.tech/help</loc>
     <lastmod>2026-10-14T00:00:00Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://jobcheck.live/about</loc>
+    <loc>https://jobcheck.tech/about</loc>
     <lastmod>2026-10-14T00:00:00Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://jobcheck.live/faq</loc>
+    <loc>https://jobcheck.tech/faq</loc>
     <lastmod>2026-10-14T00:00:00Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://jobcheck.live/privacy</loc>
+    <loc>https://jobcheck.tech/privacy</loc>
     <lastmod>2026-10-14T00:00:00Z</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
-    <loc>https://jobcheck.live/terms</loc>
+    <loc>https://jobcheck.tech/terms</loc>
     <lastmod>2026-10-14T00:00:00Z</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>

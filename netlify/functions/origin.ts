@@ -10,6 +10,8 @@ export function getAllowedOrigins(
   const origins = [
     env["URL"], // primary site URL on Netlify
     env["DEPLOY_PRIME_URL"], // branch / preview deploy URL
+    "https://jobcheck.tech",
+    "https://www.jobcheck.tech",
     "https://jobcheck.live",
     "https://www.jobcheck.live",
     "http://localhost:8888", // netlify dev
